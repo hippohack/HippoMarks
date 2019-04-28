@@ -30,6 +30,5 @@ class Api::TasksController < ApplicationController
         :name, :is_done
       )
     end
-  end
 
 end
