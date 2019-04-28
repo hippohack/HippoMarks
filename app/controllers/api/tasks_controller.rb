@@ -14,6 +14,10 @@ class Api::TasksController < ApplicationController
     end
   end
 
+  def show
+    # 
+  end
+
   def updated
     @task = Task.find(params[:id])
 
