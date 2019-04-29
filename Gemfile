@@ -39,9 +39,12 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # add: 2019-04-26
-gem "slim-rails"
 gem 'devise'
-gem "ransack"
+gem 'slim-rails'
+gem 'ransack'
+
+# add: 2019-04-29
+gem 'jquery-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
