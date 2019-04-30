@@ -14,3 +14,6 @@ export default new VueRouter({
     { path: '/contact', component: Contact },
   ],
 })
+
+// HTML5 History モード | Vue Router
+// https://router.vuejs.org/ja/guide/essentials/history-mode.html
