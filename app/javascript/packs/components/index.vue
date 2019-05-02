@@ -9,7 +9,7 @@
       </ul>
     </div>
 
-    <div class="btn">Display finished tasks</div>
+    <a href="javascript:void(0)" class="btn hoge" v-on:click="displayFinishedTasks">Display finished tasks</a>
 
     <div id="finished-tasks" class="d-none">
       <ul class="collection">
@@ -43,6 +43,10 @@ export default {
       }, (error) => {
         console.log(error)
       });
+    },
+    displayFinishedTasks: () => {
+      console.log('c')
+      document.querySelector('#finished-tasks').classList.toggle('d-none')
     }
   }
 }
