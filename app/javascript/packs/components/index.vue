@@ -57,7 +57,7 @@ export default {
     },
     createTask: function() {
       if (!this.newTask) return
-      axios.post('/api/tasks', { task: { name: this.newTask } }).then((response) => {
+      axios.post('/api/tasks', { task: { name: this.newTask, is_done: false } }).then((response) => {
         this.tasks.unshift(response.data.task)
         this.newTask = ''
       }, (error) => {
