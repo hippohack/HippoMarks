@@ -19,6 +19,13 @@
         </li>
       </ul>
     </div>
+
+    <div>
+      <input class="form-control" v-model="newTask" placeholder="Add your task!!">
+      <button v-on:click="createTask" class="btn-floating waves-effect waves-light red">
+        <i class="material-icons">add</i>
+      </button>
+    </div>
   </section>
 </template>
 
@@ -44,9 +51,18 @@ export default {
         console.log(error)
       });
     },
-    displayFinishedTasks: () => {
+    displayFinishedTasks: function() {
       console.log('c')
       document.querySelector('#finished-tasks').classList.toggle('d-none')
+    },
+    createTask: function() {
+      if (!this.newTask) return
+      axios.post('/api/tasks', { task: { name: this.newTask } }).then((response) => {
+        this.tasks.unshift(response.data.task)
+        this.newTask = ''
+      }, (error) => {
+        console.log(error)
+      })
     }
   }
 }
