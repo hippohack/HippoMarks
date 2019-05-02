@@ -1,12 +1,25 @@
 <template>
-  <div>
-    <ul>
-      <li v-for="task in tasks" v-if="!task.is_done" v-bind:id="'row_task_' + task.id" class="collection_item">
-        <input type="checkbox" v-bind:id="'task_' + task.id">
-        <label v-bind:for="'task_' + task.id">{{ task.name }}</label>
-      </li>
-    </ul>
-  </div>
+  <section>
+    <div>
+      <ul>
+        <li v-for="task in tasks" v-if="!task.is_done" v-bind:id="'row_task_' + task.id" class="collection_item">
+          <input type="checkbox" v-bind:id="'task_' + task.id">
+          <label v-bind:for="'task_' + task.id" v-cloak>{{ task.name }}</label>
+        </li>
+      </ul>
+    </div>
+
+    <div class="btn">Display finished tasks</div>
+
+    <div id="finished-tasks" class="d-none">
+      <ul class="collection">
+        <li v-for="task in tasks" v-if="task.is_done" v-bind:id="'row_task_' + task.id" class="collection-item">
+          <input type="checkbox" v-bind:id="'task_' + task.id" checked="checked" />
+          <label v-bind:for="'task_' + task.id" class="line-through" v-cloak>{{ task.name }}</label>
+        </li>
+      </ul>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -34,3 +47,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  [v-cloak] {
+    display: none;
+  }
+  .d-none {
+    display: none;
+  }
+  .line-through {
+    text-decoration: line-through;
+  }
+</style>
