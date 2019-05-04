@@ -4,26 +4,19 @@
       <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
       Bookmarks
     </router-link>
-    <ul class="flex-row navbar-nav">
-      <li class="nav-item active px-2">
-        <router-link to="/" class="nav-link">Top</router-link>
-      </li>
-      <li class="nav-item px-2">
-        <router-link to="/about" class="nav-link">About</router-link>
-      </li>
-      <li class="nav-item px-2">
-        <router-link to="/contact" class="nav-link">Contact</router-link>
-      </li>
-    </ul>
+    <a href="#home"><span><i class="fa fa-home" aria-hidden="true"></i></span></a>
+    <form>
+      <input type="search" class="form-control" id="search-input" placeholder="Search...">
+    </form>
     <ul class="flex-row navbar-nav ml-auto">
       <li class="nav-item dropdown ml-auto px-2">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown link
+          Menu
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item" href="#">アカウント設定</a>
+          <a class="dropdown-item" href="#">システム設定</a>
+          <a class="dropdown-item" href="#">ログアウト</a>
         </div>
       </li>
     </ul>
