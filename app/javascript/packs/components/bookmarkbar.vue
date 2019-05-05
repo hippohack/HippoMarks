@@ -2,9 +2,8 @@
   <div class="bookmarkbar d-flex">
     <div class="bookmarkbar__item" v-for="item in items" v-bind:key="item.id">
       <a v-if="!item.folder_id" :href="item.url" class="text-dark"><i class="fa fa-link" aria-hidden="true"></i> {{ item.name }}</a>
-      <a
+      <div
         v-if="item.folder_id"
-        href="javascript:void(0)"
         class="text-dark dropdown-toggle"
         :id="'folder_' + item.id"
         role="button"
@@ -12,8 +11,8 @@
         aria-haspopup="true"
         aria-expanded="false">
         <i class="fa fa-folder-o" aria-hidden="true"></i> {{ item.folder_id }}
-      </a>
-      <div class="dropdown-menu" :aria-labelledby="'folder_' + item.id">
+      </div>
+      <div v-if="item.folder_id" class="dropdown-menu" :aria-labelledby="'folder_' + item.id">
         <bookmark :nest_items="nest_items"></bookmark>
       </div>
     </div>

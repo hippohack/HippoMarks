@@ -2,3 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.bookmarkbar {
+  &__item {
+    font-size: 14px;
+  }
+}
+
+.dropdown-item,
+.nest-items__item {
+  font-size: 14px;
+  min-width: 320px;
+}
