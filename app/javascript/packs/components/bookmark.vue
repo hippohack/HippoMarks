@@ -9,7 +9,7 @@
         class="text-dark dropdown-item"
         :id="'folder_' + nest_item.id">
         <i class="fa fa-folder-o" aria-hidden="true"></i> {{ nest_item.folder_id }}
-        <NestItems :items="items" v-if="nest_item.folder_id"></NestItems>
+        <nest-items :items="items" v-if="nest_item.folder_id"></nest-items>
       </div>
     </div>
   </div>
