@@ -13,3 +13,17 @@
   font-size: 14px;
   min-width: 320px;
 }
+
+@media (min-width: 576px) {
+  .card-deck {
+    margin-top: 60px;
+  }
+  .card-deck .card {
+    width: 22.2%;
+    flex: none;
+    margin-bottom: 30px;
+  }
+  .card-body {
+    padding: 1rem;
+  }
+}

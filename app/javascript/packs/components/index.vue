@@ -1,22 +1,60 @@
 <template>
-  <div class="col-12 col-md-3 col-xl-2">
-    <sidebar></sidebar>
+  <div class="card-deck container flex-wrap mx-auto">
+    <div class="card">
+      <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+      <div class="card-body">
+        <p class="card-text">This is a wider card with s.</p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+    <div class="card">
+      <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+      <div class="card-body">
+        <p class="card-text">This is a wider card with su</p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+    <div class="card">
+      <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+      <div class="card-body">
+        <p class="card-text">This is a wider card with sup</p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+    <div class="card">
+      <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+      <div class="card-body">
+        <p class="card-text">This card has supporting text below as </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+    <div class="card">
+      <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+      <div class="card-body">
+        <p class="card-text">This is a wider card with supporting text below a</p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import Sidebar from './sidebar.vue'
-
+import axios from 'axios';
 export default {
   data: function() {
     return {
-      tasks: [],
-      newTask: ""
+      histories: [],
     };
-  },
-  components: {
-    'sidebar': Sidebar,
   },
   mounted: function() {
     this.fetchTasks();
@@ -26,7 +64,7 @@ export default {
       axios.get("/api/tasks").then(
         response => {
           for (var i = 0; i < response.data.tasks.length; i++) {
-            this.tasks.push(response.data.tasks[i]);
+            this.histories.push(response.data.tasks[i]);
           }
         },
         error => {
@@ -34,36 +72,6 @@ export default {
         }
       );
     },
-    displayFinishedTasks: function() {
-      console.log("c");
-      document.querySelector("#finished-tasks").classList.toggle("d-none");
-    },
-    createTask: function() {
-      if (!this.newTask) return;
-      axios
-        .post("/api/tasks", { task: { name: this.newTask, is_done: false } })
-        .then(
-          response => {
-            this.tasks.unshift(response.data.task);
-            this.newTask = "";
-          },
-          error => {
-            console.log(error);
-          }
-        );
-    }
   }
-};
+}
 </script>
-
-<style lang="scss" scoped>
-[v-cloak] {
-  display: none;
-}
-.d-none {
-  display: none;
-}
-.line-through {
-  text-decoration: line-through;
-}
-</style>
