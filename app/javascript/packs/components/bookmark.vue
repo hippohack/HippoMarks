@@ -9,7 +9,7 @@
         class="text-dark dropdown-item"
         :id="'folder_' + nest_item.id">
         <i class="fa fa-folder-o" aria-hidden="true"></i> {{ nest_item.folder_id }}
-        <nestitems :items="items" v-if="nest_item.folder_id"></nestitems>
+        <NestItems :items="items" v-if="nest_item.folder_id"></NestItems>
       </div>
     </div>
   </div>
@@ -34,7 +34,7 @@
     data: function() {
       return {
         items: items,
-        upHere: false
+        upHere: false,
       }
     },
     methods: {
@@ -46,7 +46,7 @@
       },
     },
     components: {
-      nestitems: NestItems
+      NestItems
     }
   }
 </script>

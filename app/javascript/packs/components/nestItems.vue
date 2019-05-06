@@ -7,17 +7,36 @@
         class="text-dark nest-items__item"
         :id="'folder_' + item.id">
         <i class="fa fa-folder-o" aria-hidden="true"></i> {{ item.folder_id }}
+        <nest-items :items="nest_items" v-if="item.folder_id"></nest-items>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import NestItems from './nestItems.vue'
+
+var nest_items = [
+  { id: 21, name: "hoge", url: "fuga", folder_id: 3 },
+  { id: 22, name: "hoge", url: "fuga", folder_id: 0 },
+  { id: 23, name: "hoge", url: "fuga", folder_id: 3 },
+  { id: 24, name: "hoge", url: "fuga", folder_id: 0 },
+]
+
 export default {
+  name: 'nest-items',
+  data: function() {
+    return {
+      nest_items,
+    }
+  },
   props: {
     items: {
       type: Array
-    }
+    },
+  },
+  components: {
+    NestItems
   }
 }
 </script>
