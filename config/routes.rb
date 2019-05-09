@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root to: 'home#index'
   # get 'home/index'
 
+  resources :bookmarks
+
   get '/about',   to: 'home#index'
   get '/contact', to: 'home#index'
 
