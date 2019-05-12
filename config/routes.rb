@@ -3,7 +3,14 @@ Rails.application.routes.draw do
   root to: 'home#index'
   # get 'home/index'
 
+  get '/bookmarks/add', to: 'bookmarks#add', as: 'add_bookmark'
+  get '/bookmarks/manage', to: 'bookmarks#manage', as: 'manage_bookmarks'
+  get '/bookmarks/import', to: 'bookmarks#import', as: 'import_bookmarks'
+  get '/bookmarks/export', to: 'bookmarks#export', as: 'export_bookmarks'
   resources :bookmarks
+
+  get '/folders/manage', to: 'folders#manage', as: 'manage_folders'
+  resources :folders
 
   get '/about',   to: 'home#index'
   get '/contact', to: 'home#index'

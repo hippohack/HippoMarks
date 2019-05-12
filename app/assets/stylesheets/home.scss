@@ -14,16 +14,39 @@
   min-width: 320px;
 }
 
-@media (min-width: 576px) {
-  .card-deck {
-    margin-top: 60px;
+.card-deck {
+  margin-top: 60px;
+}
+.card-deck .card {
+  width: 22.2%;
+  flex: none;
+  margin-bottom: 30px;
+}
+.card-body {
+  padding: 1rem;
+}
+.card-footer {
+  padding: 0.25rem 1.25rem;
+}
+
+.sidebar {
+  border-right: solid 1px #ccc;
+  padding: 15px;
+  min-width: 270px;
+  height: calc(100vh - 97px);
+  &__items {
+    position: absolute;
+    bottom: 30px;
   }
-  .card-deck .card {
-    width: 22.2%;
-    flex: none;
-    margin-bottom: 30px;
+  &__item {
+    font-size: 14px;
   }
-  .card-body {
-    padding: 1rem;
+  &__link {
+    display: block;
+    padding: 10px 15px;
   }
+}
+
+.main {
+  width: 100%;
 }

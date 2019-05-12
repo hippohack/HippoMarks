@@ -1,0 +1,34 @@
+#app
+  navbar
+  bookmarkbar
+  .container-fluid
+    .row.flex-xl-nowrap
+      aside.sidebar
+        .sidebar__items
+          .sidebar__item
+            = link_to 'Add Bookmark', new_bookmark_path, class: 'sidebar__link'
+          .sidebar__item
+            = link_to 'Manage Bookmarks', manage_bookmarks_path, class: 'sidebar__link'
+          .sidebar__item
+            = link_to 'Manage Folders', manage_folders_path, class: 'sidebar__link'
+          .sidebar__item
+            = link_to 'Import Bookmarks', import_bookmarks_path, class: 'sidebar__link'
+          .sidebar__item
+            = link_to 'Export Bookmarks', export_bookmarks_path, class: 'sidebar__link'
+      main.main
+        = form_for @bookmark, :remote => true do |f|
+          = f.label :name
+          |:
+          = f.text_field :name
+          br
+
+          = f.label :url
+          |:
+          = f.text_field :url
+          br
+
+          = f.submit
+
+.footer
+
+= javascript_pack_tag 'bookmark'
