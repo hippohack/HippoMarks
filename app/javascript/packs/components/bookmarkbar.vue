@@ -1,6 +1,6 @@
 <template>
   <div class="bookmarkbar d-flex">
-    <div class="bookmarkbar__item" v-for="item in items" v-bind:key="item.id">
+    <div class="bookmarkbar__item" v-for="item in bookmarks" v-bind:key="item.id">
       <a v-if="!item.folder_id" :href="item.url" class="text-dark"><i class="fa fa-link" aria-hidden="true"></i> {{ item.name }}</a>
       <div
         v-if="item.folder_id"
@@ -35,6 +35,7 @@
 
 <script>
   import Bookmark from './bookmark.vue'
+  import axios from 'axios';
 
   var items = [
     { id: 1, name: "hoge", url: "fuga", folder_id: 1 },
@@ -54,11 +55,24 @@
       return {
         items: items,
         nest_items: nest_items,
+        bookmarks: {}
       };
     },
+    mounted: function() {
+      this.fetchBookmarks();
+    },
     methods: {
-      test: function() {
-        alert('hoge')
+      fetchBookmarks: function() {
+        axios.get("/api/bookmarks").then(
+          response => {
+            console.log(response.data)
+            this.bookmarks = response.data.bookmarks
+            // for (var i = 0; i < response.data.bookmarks.length; i++) {
+            //   this.bookmarks.push(response.data.bookmarks[i]);
+            // }
+          },
+          error => { console.log(error); }
+        );
       }
     },
     components: {

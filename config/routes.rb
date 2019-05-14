@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get '/contact', to: 'home#index'
 
   namespace :api, format: 'json' do
+    get '/bookmarks', to: 'bookmarks#index', as: 'bookmarks'
     resources :tasks, only: [:index, :create, :update]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
