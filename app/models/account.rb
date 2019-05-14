@@ -4,6 +4,7 @@ class Account < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :bookmarkbar_items, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :folders, dependent: :destroy
   has_many :profiles, dependent: :destroy

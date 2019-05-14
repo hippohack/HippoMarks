@@ -12,6 +12,12 @@
       = f.text_field :url
       br
 
+      / TODO: フォルダーのセレクト
+      = f.label :folder_id
+      |:
+      = f.select_field :folder_id
+      br
+
       = f.submit
 
 = javascript_pack_tag 'bookmark'
