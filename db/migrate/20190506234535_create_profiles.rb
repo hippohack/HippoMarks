@@ -5,6 +5,7 @@ class CreateProfiles < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :twitter_account
       t.string :avatar
+      t.integer :lock_version, default: 0
 
       t.timestamps
     end

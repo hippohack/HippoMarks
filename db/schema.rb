@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2019_05_14_231609) do
     t.string "name"
     t.string "twitter_account"
     t.string "avatar"
+    t.integer "lock_version", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -66,6 +67,7 @@ ActiveRecord::Schema.define(version: 2019_05_14_231609) do
     t.integer "account_id"
     t.string "key"
     t.string "value"
+    t.integer "lock_version", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

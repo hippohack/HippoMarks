@@ -4,6 +4,7 @@ class CreateSettings < ActiveRecord::Migration[5.2]
       t.integer :account_id
       t.string :key
       t.string :value
+      t.integer :lock_version, default: 0
 
       t.timestamps
     end
