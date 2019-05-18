@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 2019_05_14_231609) do
 
   create_table "bookmarkbar_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "account_id"
-    t.integer "bookmark_id"
-    t.integer "folder_id"
+    t.string "item_type"
+    t.integer "item_id"
     t.integer "order_num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2019_05_14_231609) do
     t.string "name"
     t.text "url"
     t.integer "folder_id"
+    t.integer "bookmarkbar_item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(version: 2019_05_14_231609) do
     t.string "name"
     t.integer "level"
     t.integer "parent_folder_id"
+    t.integer "bookmarkbar_item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

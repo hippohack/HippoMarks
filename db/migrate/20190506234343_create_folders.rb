@@ -5,6 +5,7 @@ class CreateFolders < ActiveRecord::Migration[5.2]
       t.string :name
       t.integer :level
       t.integer :parent_folder_id
+      t.integer :bookmarkbar_item_id
 
       t.timestamps
     end

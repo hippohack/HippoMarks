@@ -2,7 +2,7 @@
 # logger.debug @bookmarks.inspect
 # logger.debug '<<< DEBUG'
 
-json.set! :bookmarks do
-  json.merge! @bookmarks
+json.set! :bookmarkbar_items do
+  json.merge! @bookmarkbar_items
 end
 

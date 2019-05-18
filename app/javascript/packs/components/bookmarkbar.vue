@@ -1,6 +1,6 @@
 <template>
   <div class="bookmarkbar d-flex">
-    <div class="bookmarkbar__item" v-for="item in bookmarks" v-bind:key="item.id">
+    <div class="bookmarkbar__item" v-for="(item, index) in bookmarks" v-bind:key="index">
       <a v-if="!item.folder_id" :href="item.url" class="text-dark"><i class="fa fa-link" aria-hidden="true"></i> {{ item.name }}</a>
       <div
         v-if="item.folder_id"
@@ -18,20 +18,6 @@
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-  .bookmarkbar {
-    background-color: #ccc;
-    padding: 10px;
-
-    &__item {
-      margin: 0 10px;
-    }
-  }
-  .dropdown-toggle::after {
-    display: none;
-  }
-</style>
 
 <script>
   import Bookmark from './bookmark.vue'
@@ -53,7 +39,7 @@
   export default {
     data: function() {
       return {
-        items: items,
+        // items: items,
         nest_items: nest_items,
         bookmarks: {}
       };
@@ -66,7 +52,7 @@
         axios.get("/api/bookmarks").then(
           response => {
             console.log(response.data)
-            this.bookmarks = response.data.bookmarks
+            this.bookmarks = response.data.bookmarkbar_items
             // for (var i = 0; i < response.data.bookmarks.length; i++) {
             //   this.bookmarks.push(response.data.bookmarks[i]);
             // }
@@ -80,3 +66,17 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  .bookmarkbar {
+    background-color: #ccc;
+    padding: 10px;
+
+    &__item {
+      margin: 0 10px;
+    }
+  }
+  .dropdown-toggle::after {
+    display: none;
+  }
+</style>

@@ -5,6 +5,7 @@ class CreateBookmarks < ActiveRecord::Migration[5.2]
       t.string :name
       t.text :url
       t.integer :folder_id
+      t.integer :bookmarkbar_item_id
 
       t.timestamps
     end
