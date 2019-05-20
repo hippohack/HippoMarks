@@ -14,6 +14,10 @@ class Api::BookmarksController < ApplicationController
     @bookmark = Bookmark.find(params[:id])
   end
 
+  def folder
+    @folder = Folder.find(params[:folder_id])
+  end
+
   def folder_items
     # @folder_items = ['hoge', 'fuga']
     @folder_items = Folder.find(params[:folder_id]).bookmarks
