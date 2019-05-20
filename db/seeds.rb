@@ -18,28 +18,86 @@ a = Account.create!(
   encrypted_password: '$2a$11$W5qWWly1reTS93AxlYYqmeQpBSu9BcMzXDBV4/Kyfk35A6BDYQarq'
 )
 
+Folder.all.delete_all
 Bookmark.all.delete_all
+BookmarkbarItem.all.delete_all
 
-20.times do |i|
-  Folder.create(
-    account_id: 1,
-    name: "name-#{i}",
-    level: [nil, 1, 2, 3].sample,
-    parent_folder_id: [nil, 1, 2, 3].sample
-  )
+Folder.create(
+  account_id: a.id,
+  name: "Folder1",
+  level: nil,
+  parent_folder_id: nil
+)
 
-  Bookmark.create(
-    account_id: 1,
-    # account_id: 1..10.sample,
-    folder_id: [nil, 1, 2, 3].sample,
-    name: "Bookmark name-#{i}",
-    url: "https://www.url-#{i}.com",
-  )
+Folder.create(
+  account_id: a.id,
+  name: "Folder2",
+  level: nil,
+  parent_folder_id: nil
+)
 
-  BookmarkbarItem.create(
-    account_id: 1,
-    item_type: ['bookmark', 'folder'].sample,
-    item_id: [1, 2, 3].sample,
-    order_num: [1, 2, 3].sample
-  )
-end
+Bookmark.create(
+  account_id: a.id,
+  folder_id: 1,
+  name: "Bookmark1",
+  url: "https://www.url-1.com",
+)
+
+Bookmark.create(
+  account_id: a.id,
+  folder_id: 2,
+  name: "Bookmark2",
+  url: "https://www.url-2.com",
+)
+
+Bookmark.create(
+  account_id: a.id,
+  folder_id: nil,
+  name: "Bookmark3",
+  url: "https://www.url-3.com",
+)
+
+BookmarkbarItem.create(
+  account_id: a.id,
+  item_type: 'folder',
+  item_id: 1,
+  order_num: 1
+)
+
+BookmarkbarItem.create(
+  account_id: a.id,
+  item_type: 'folder',
+  item_id: 2,
+  order_num: 2
+)
+
+BookmarkbarItem.create(
+  account_id: a.id,
+  item_type: 'bookmark',
+  item_id: 3,
+  order_num: 3
+)
+
+# 20.times do |i|
+#   Folder.create(
+#     account_id: 1,
+#     name: "name-#{i}",
+#     level: [nil, 1, 2, 3].sample,
+#     parent_folder_id: [nil, 1, 2, 3].sample
+#   )
+
+#   Bookmark.create(
+#     account_id: 1,
+#     # account_id: 1..10.sample,
+#     folder_id: [nil, 1, 2, 3].sample,
+#     name: "Bookmark name-#{i}",
+#     url: "https://www.url-#{i}.com",
+#   )
+
+#   BookmarkbarItem.create(
+#     account_id: 1,
+#     item_type: ['bookmark', 'folder'].sample,
+#     item_id: [1, 2, 3].sample,
+#     order_num: [1, 2, 3].sample
+#   )
+# end
