@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2019_05_14_231609) do
     t.text "url"
     t.integer "folder_id"
     t.integer "bookmarkbar_item_id"
+    t.string "item_type", default: 'bookmark'
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 2019_05_14_231609) do
     t.integer "level"
     t.integer "parent_folder_id"
     t.integer "bookmarkbar_item_id"
+    t.string "item_type", default: 'folder'
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

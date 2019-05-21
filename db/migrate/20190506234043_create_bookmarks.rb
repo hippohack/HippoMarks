@@ -6,6 +6,7 @@ class CreateBookmarks < ActiveRecord::Migration[5.2]
       t.text :url
       t.integer :folder_id
       t.integer :bookmarkbar_item_id
+      t.string :item_type, default: 'bookmark'
 
       t.timestamps
     end
