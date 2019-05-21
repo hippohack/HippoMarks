@@ -16,10 +16,6 @@ class Api::BookmarksController < ApplicationController
 
   def folder
     @folder = Folder.find(params[:folder_id])
-  end
-
-  def folder_items
-    # @folder_items = ['hoge', 'fuga']
     @folder_items = Folder.find(params[:folder_id]).bookmarks
   end
 

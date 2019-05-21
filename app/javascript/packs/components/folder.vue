@@ -2,16 +2,18 @@
   <span>
     <div
       class="text-dark dropdown-toggle text-nowrap text-truncate"
-      :id="'folder_' + item.id"
+      :id="'folder_' + current_folder_data.id"
       role="button"
       data-toggle="dropdown"
       aria-haspopup="true"
       aria-expanded="false">
-      <i class="fa fa-folder-o" aria-hidden="true"></i> {{ item.item_id }}
+      <i class="fa fa-folder-o" aria-hidden="true"></i> {{ current_folder_data.name }}
     </div>
-    <div class="dropdown-menu" :aria-labelledby="'folder_' + item.id">
-      <bookmark-link v-if="item.item_type == 'bookmark'" :item="item"></bookmark-link>
-      <folder v-if="item.item_type == 'folder'" :item="item"></folder>
+    <div class="dropdown-menu" :aria-labelledby="'folder_' + current_folder_data.id">
+      <div class="" v-for="(item, index) in child_folder_items" v-bind:key="index">
+        <bookmark-link v-if="item.item_type == 'bookmark'" :item="item"></bookmark-link>
+        <folder v-if="item.item_type == 'folder'" :item="item"></folder>
+      </div>
     </div>
   </span>
 </template>
@@ -31,23 +33,13 @@ export default {
   },
   mounted: function() {
     this.fetch();
-    this.fetchChild();
   },
   methods: {
     fetch: function() {
       axios.get(`/api/bookmarks/${this.item.item_id}/folder`).then(
         response => {
-          console.log(response.data)
+          console.log({response})
           this.current_folder_data = response.data.folder
-        },
-        error => { console.log(error); }
-      );
-    },
-    fetchChild: function() {
-      axios.get(`/api/bookmarks/${this.item.item_id}/folder_items`)
-      .then(
-        response => {
-          console.log(response.data)
           this.child_folder_items = response.data.folder_items
         },
         error => { console.log(error); }

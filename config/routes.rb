@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   namespace :api, format: 'json' do
     get '/bookmarks', to: 'bookmarks#index', as: 'bookmarks'
-    get '/bookmarks/:folder_id/folder_items', to: 'bookmarks#folder_items', as: 'folder_items'
+    get '/bookmarks/:folder_id/folder', to: 'bookmarks#folder', as: 'folder'
     resources :bookmarks
     resources :tasks, only: [:index, :create, :update]
   end

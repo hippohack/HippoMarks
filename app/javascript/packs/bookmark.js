@@ -5,7 +5,7 @@ import Router from './router/router'
 import axios from 'axios'
 import Header from './components/header.vue'
 import Bookmarkbar from './components/bookmarkbar.vue'
-import Bookmark from './components/bookmark.vue'
+// import Bookmark from './components/bookmark.vue'
 import Folder from './components/folder.vue'
 
 Vue.use(TurbolinksAdapter)
@@ -25,7 +25,9 @@ Vue.component('bookmark-link', {
   },
   methods: {
     fetch: function() {
-      axios.get(`/api/bookmarks/${this.item.item_id}/`).then(
+      // TODO: リファクタリング → 強引にID当て込んでる
+      let id = this.item.item_id ? this.item.item_id : this.item.id
+      axios.get(`/api/bookmarks/${id}/`).then(
         response => {
           console.log(response.data)
           this.bookmark = response.data.bookmark
@@ -37,7 +39,7 @@ Vue.component('bookmark-link', {
 })
 
 Vue.component('folder', Folder)
-Vue.component('bookmark', Bookmark)
+// Vue.component('bookmark', Bookmark)
 
 document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
