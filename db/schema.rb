@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_14_231609) do
+ActiveRecord::Schema.define(version: 2019_05_23_233113) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -25,32 +25,25 @@ ActiveRecord::Schema.define(version: 2019_05_14_231609) do
   end
 
   create_table "bookmarkbar_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "account_id"
-    t.string "item_type"
-    t.integer "item_id"
-    t.integer "order_num"
+    t.integer "account_id", null: false
+    t.integer "bookmark_id", null: false
+    t.integer "order_num", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "account_id"
-    t.string "name"
-    t.text "url"
-    t.integer "folder_id"
-    t.integer "bookmarkbar_item_id"
-    t.string "item_type", default: 'bookmark'
+    t.integer "account_id", null: false
+    t.integer "parent_id"
+    t.string "type", default: "url", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "account_id"
-    t.string "name"
-    t.integer "level"
-    t.integer "parent_folder_id"
-    t.integer "bookmarkbar_item_id"
-    t.string "item_type", default: 'folder'
+    t.integer "account_id", null: false
+    t.string "name", null: false
+    t.integer "bookmark_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -85,6 +78,14 @@ ActiveRecord::Schema.define(version: 2019_05_14_231609) do
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.boolean "is_done", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "urls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.integer "account_id"
+    t.integer "bookmark_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

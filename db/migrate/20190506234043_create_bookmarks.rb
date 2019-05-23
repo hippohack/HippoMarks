@@ -1,12 +1,9 @@
 class CreateBookmarks < ActiveRecord::Migration[5.2]
   def change
     create_table :bookmarks do |t|
-      t.integer :account_id
-      t.string :name
-      t.text :url
-      t.integer :folder_id
-      t.integer :bookmarkbar_item_id
-      t.string :item_type, default: 'bookmark'
+      t.integer :account_id, null: false
+      t.integer :parent_id
+      t.string :type, default: 'url', null: false
 
       t.timestamps
     end
