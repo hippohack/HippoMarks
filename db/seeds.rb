@@ -20,63 +20,34 @@ a = Account.create!(
 
 Folder.all.delete_all
 Bookmark.all.delete_all
+Url.all.delete_all
 BookmarkbarItem.all.delete_all
 
-Folder.create(
-  account_id: a.id,
-  name: "Folder1",
-  level: nil,
-  parent_folder_id: nil
-)
+b = Bookmark.create( account_id: a.id, item_type: "url" )
+Url.create( account_id: a.id, name: 'benzoh.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
+BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 1 )
 
-Folder.create(
-  account_id: a.id,
-  name: "Folder2",
-  level: nil,
-  parent_folder_id: nil
-)
+b = Bookmark.create( account_id: a.id, item_type: "url" )
+Url.create( account_id: a.id, name: 'start30blog.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
+BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 2 )
 
-Bookmark.create(
-  account_id: a.id,
-  folder_id: 1,
-  name: "Bookmark1",
-  url: "https://www.url-1.com",
-)
+b = Bookmark.create( account_id: a.id, item_type: "folder" )
+f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder1" )
+BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 3 )
+b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
+Url.create( account_id: a.id, name: 'hoge.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
 
-Bookmark.create(
-  account_id: a.id,
-  folder_id: 2,
-  name: "Bookmark2",
-  url: "https://www.url-2.com",
-)
+b = Bookmark.create( account_id: a.id, parent_id: b.id, item_type: "folder" )
+f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder2" )
+BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 4 )
+b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
+Url.create( account_id: a.id, name: 'fuga.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
 
-Bookmark.create(
-  account_id: a.id,
-  folder_id: nil,
-  name: "Bookmark3",
-  url: "https://www.url-3.com",
-)
-
-BookmarkbarItem.create(
-  account_id: a.id,
-  item_type: 'folder',
-  item_id: 1,
-  order_num: 1
-)
-
-BookmarkbarItem.create(
-  account_id: a.id,
-  item_type: 'folder',
-  item_id: 2,
-  order_num: 2
-)
-
-BookmarkbarItem.create(
-  account_id: a.id,
-  item_type: 'bookmark',
-  item_id: 3,
-  order_num: 3
-)
+b = Bookmark.create( account_id: a.id, parent_id: b.id, item_type: "folder" )
+f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder3" )
+BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 5 )
+b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
+Url.create( account_id: a.id, name: 'piyo.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
 
 # 20.times do |i|
 #   Folder.create(

@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_233113) do
   create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "account_id", null: false
     t.integer "parent_id"
-    t.string "type", default: "url", null: false
+    t.string "item_type", default: "url", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -83,7 +83,8 @@ ActiveRecord::Schema.define(version: 2019_05_23_233113) do
   end
 
   create_table "urls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.string "url", null: false
     t.integer "account_id"
     t.integer "bookmark_id"
     t.datetime "created_at", null: false

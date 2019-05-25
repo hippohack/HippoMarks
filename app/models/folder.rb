@@ -1,6 +1,6 @@
 class Folder < ApplicationRecord
   belongs_to :account
-  has_many :bookmarks, dependent: :destroy
+  belongs_to :bookmark
 
   validates :name, presence: true
 end
