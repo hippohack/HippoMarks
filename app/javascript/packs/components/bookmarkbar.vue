@@ -1,8 +1,8 @@
 <template>
   <div class="bookmarkbar d-flex">
     <div class="bookmarkbar__item" v-for="(item, index) in bar_items" v-bind:key="index">
-      <bookmark-link v-if="item.item_type == 'bookmark'" :item="item"></bookmark-link>
-      <folder v-if="item.item_type == 'folder'" :item="item"></folder>
+      <url v-if="item.type == 'url'" :item="item"></url>
+      <folder v-if="item.type == 'folder'" :item="item"></folder>
     </div>
   </div>
 </template>
@@ -27,21 +27,10 @@
           response => {
             console.log(response.data)
             this.bar_items = response.data.bookmarkbar_items
-            // this.bookmarks = response.data.bookmarkbar_items
-            // for (var i = 0; i < response.data.bookmarks.length; i++) {
-            //   this.bookmarks.push(response.data.bookmarks[i]);
-            // }
           },
           error => { console.log(error); }
         );
-      },
-      test: function() {
-        alert('hoge')
-        console.log('hoge')
       }
-    },
-    components: {
-      // 'bookmark': Bookmark,
     }
   }
 </script>

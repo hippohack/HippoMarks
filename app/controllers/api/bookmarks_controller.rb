@@ -1,8 +1,8 @@
 class Api::BookmarksController < ApplicationController
 
   def index
-    @bookmarkbar_items = BookmarkbarItem.bar_items(current_account.id)
-    # @bookmarkbar_items = BookmarkbarItem.get_bookmarkbar_item(current_account.id)
+    # bookmarkbar_items = BookmarkbarItem.bar_items(current_account.id)
+    @bookmarkbar_items = BookmarkbarItem.get_bookmarkbar_item(current_account.id)
     # bookmarks = Bookmark.where(account_id: current_account.id).limit(10)
     # # TODO: フォルダー振り分けしたデータ返す
     # @bookmarks = bookmarks.group_by { |item|
@@ -15,8 +15,19 @@ class Api::BookmarksController < ApplicationController
   end
 
   def folder
-    @folder = Folder.find(params[:folder_id])
-    @folder_items = Folder.find(params[:folder_id]).bookmarks
+    children = Bookmark.get_child_bookmarks(params[:bookmark_id])
+    @folder_items = []
+
+    children.each do |i|
+      bookmark = Bookmark.find(i.id)
+      if bookmark.item_type == 'url'
+        @folder_items.push({ type: 'url', values: bookmark.url })
+      else
+        @folder_items.push({ type: 'folder', values: bookmark.folder })
+      end
+    end
+    # raise
+    @folder_items
   end
 
 end
