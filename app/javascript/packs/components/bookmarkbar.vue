@@ -44,9 +44,6 @@
       margin: 0 10px;
     }
   }
-  .dropdown-toggle::after {
-    display: none;
-  }
   .text-truncate {
     max-width: 132px;
     display: inline-block;

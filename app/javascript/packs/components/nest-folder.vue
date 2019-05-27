@@ -1,22 +1,23 @@
 <template>
-  <div class="folder dropdown">
+  <div
+    class="folder is_nest"
+    @mouseover="folder_open"
+    @mouseleave="folder_open"
+  >
     <div
-      class="folder__head text-dark text-nowrap text-truncate dropdown-toggle"
+      class="folder__head text-dark text-nowrap text-truncate"
       :id="'folder_' + item.values.bookmark_id"
-      role="button"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
     >
       <i class="fa fa-folder-o"></i> {{ item.values.name }}
     </div>
     <div
-      class="folder__items dropdown-menu"
-      :aria-labelledby="'folder_' + item.values.bookmark_id"
+      v-if="is_folder_active == true"
+      class="folder__items"
+      :data-folder-id="'folder_' + item.values.bookmark_id"
     >
       <div class="folder__item" v-for="(child, index) in child_folder_items" v-bind:key="index">
         <url v-if="child.type == 'url'" :item="child"></url>
-        <nest-folder v-if="child.type == 'folder'" :item="child"></nest-folder>
+        <folder v-if="child.type == 'folder'" :item="child" :is_nest='true'></folder>
       </div>
     </div>
   </div>
@@ -28,7 +29,6 @@ import axios from 'axios';
 export default {
   props: {
     item: { type: Object },
-    is_nest: { type: Boolean }
   },
   data: function() {
     return {
@@ -62,7 +62,7 @@ export default {
 .folder {
   position: relative;
   &__head {
-
+    font-size: 14px;
   }
   &__items {
     position: absolute;
@@ -73,32 +73,21 @@ export default {
     background-color: #fff;
     padding-top: 10px;
     padding-bottom: 10px;
+    left: 303px;
+    top: -13px;
   }
   &__item {
     padding: 2px 15px;
-  }
-
-  &.is_nest {
-    // TODO: 幅調整
-    // left: 320px;
-    // top: 0;
-
-    &.is_active {
-      display: block;
-    }
+    font-size: 14px;
   }
 }
 
 .text-truncate {
   width: 100%;
   max-width: 300px;
-  display: inline-block;
+  padding: 3px 0;
   position: relative;
   top: 2px;
-}
-
-.dropdown-toggle::after {
-  display: none;
 }
 </style>
 

@@ -12,3 +12,9 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+a {
+  font-size: 14px;
+}
+</style>
+
