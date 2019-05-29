@@ -56,6 +56,7 @@ group :development, :test do
   
   # add: 2019-05-30
   gem 'rspec-rails'
+  gem 'guard-rspec', require: false
 end
 
 group :development do
