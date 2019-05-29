@@ -1,8 +1,8 @@
 <template>
   <div class="bookmarkbar d-flex">
     <div class="bookmarkbar__item" v-for="(item, index) in bar_items" v-bind:key="index">
-      <url v-if="item.type == 'url'" :item="item"></url>
-      <folder v-if="item.type == 'folder'" :item="item"></folder>
+      <url v-if="item.type == 'url'" :item="item" :level='1'></url>
+      <folder v-if="item.type == 'folder'" :item="item" :level='1'></folder>
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@
     }
   }
   .text-truncate {
-    max-width: 132px;
+    max-width: 160px;
     display: inline-block;
     position: relative;
     top: 2px;

@@ -1,6 +1,7 @@
 <template>
-  <div class="folder dropdown">
+  <div class="folder dropdown" @click="set_state('open')">
     <div
+      v-bind:class="[level == 1 ? 'px-0' : '']"
       class="folder__head text-dark text-nowrap text-truncate dropdown-toggle"
       :id="'folder_' + item.values.bookmark_id"
       role="button"
@@ -28,13 +29,15 @@ import axios from 'axios';
 export default {
   props: {
     item: { type: Object },
-    is_nest: { type: Boolean }
+    is_nest: { type: Boolean },
+    level: ''
   },
   data: function() {
     return {
       child_folder_items: {},
       is_bookmark_bar_active: false,
-      is_folder_active: false
+      is_folder_active: false,
+      state: ''
     }
   },
   mounted: function() {
@@ -52,6 +55,9 @@ export default {
     },
     folder_open: function(e) {
       this.is_folder_active = !this.is_folder_active
+    },
+    set_state: function(state) {
+      this.state = state
     }
   },
 }
@@ -62,30 +68,17 @@ export default {
 .folder {
   position: relative;
   &__head {
-
+    padding: 2px 15px;
   }
   &__items {
     position: absolute;
-    width: 320px;
+    width: 300px;
     border: solid 1px #ccc;
     border-radius: 5px;
     z-index: 2000;
     background-color: #fff;
     padding-top: 10px;
     padding-bottom: 10px;
-  }
-  &__item {
-    padding: 2px 15px;
-  }
-
-  &.is_nest {
-    // TODO: 幅調整
-    // left: 320px;
-    // top: 0;
-
-    &.is_active {
-      display: block;
-    }
   }
 }
 
