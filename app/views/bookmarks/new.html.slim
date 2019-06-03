@@ -1,23 +1,28 @@
 #app
   navbar
-  main
+  main.p-3
     = form_for @bookmark, :remote => true do |f|
-      = f.label :name
-      |:
-      = f.text_field :name
-      br
+      = f.fields_for :url do |url|
+        .form-group
+          = url.label :name
+          |: 
+          = url.text_field :name, class: 'form-control'
 
-      = f.label :url
-      |:
-      = f.text_field :url
-      br
+        .form-group
+          = url.label :url
+          |:
+          = url.text_field :url, class: 'form-control'
 
-      / TODO: フォルダーのセレクト
-      = f.label :folder_id
-      |:
-      = f.select_field :folder_id
-      br
+      / / TODO: フォルダーのセレクト
+      .folders
+        .folder ブックマークバー
+        .folder その他のブックマーク
 
-      = f.submit
+      .d-flex
+        a.btn.btn-outline-primary.mr-auto href="#" 新しいフォルダ
+        a.btn.btn-outline-primary href="javascript:window.close();" キャンセル
+        = f.submit '保存', {class: 'btn btn-primary ml-2'}
+      
+      = f.hidden_field :item_type, :value => 'url'
 
 = javascript_pack_tag 'bookmark'

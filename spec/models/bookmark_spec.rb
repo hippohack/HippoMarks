@@ -3,6 +3,20 @@ require 'rails_helper'
 RSpec.describe Bookmark, type: :model do
   # pending "add some examples to (or delete) #{__FILE__}"
 
+  # it 'ブックマークの保存' do
+  #   bookmark = 
+  # end
+
+  describe "#hogehoge" do
+    context "Factoryを作成した場合" do
+      it "テストデータが作成される" do 
+        model = FactoryGirl.create(:bookmark)
+
+        p model
+      end
+    end
+  end
+
   before do
     @params = { account_id: 1 }
   end

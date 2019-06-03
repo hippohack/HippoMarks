@@ -19,7 +19,7 @@
         .w-100.text-center.py-3.mt-3
           p
             | Bookmark pages more easily. Drag this bookmarklet to the Bookmarks bar of your browser:
-            a.btn.btn-sm.btn-primary.ml-2 href='javascript:(function(){var a=window,b=document,c=encodeURIComponent,d=a.open(&quot;http://localhost:3000/bookmarks/new?op=edit&amp;output=popup&amp;bkmk=&quot;+c(b.location)+&quot;&amp;title=&quot;+c(b.title),&quot;bkmk_popup&quot;,&quot;left=&quot;+((a.screenX||a.screenLeft)+700)+&quot;,top=&quot;+((a.screenY||a.screenTop)+10)+&quot;,height=510px,width=550px,resizable=1,alwaysRaised=1&quot;);a.setTimeout(function(){d.focus()},300)})();' Bookmark
+            a.btn.btn-sm.btn-primary.ml-2 href='javascript: (function () { var a = window, b = document, c = encodeURIComponent, d = a.open("http://localhost:3000/bookmarks/new?op=edit&output=popup&bkmk=" + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();' Bookmark
         router-view
 
 .footer
