@@ -13,12 +13,10 @@
           |:
           = url.text_field :url, class: 'form-control'
 
-      / / TODO: フォルダーのセレクト
-      .folders
-        .folder ブックマークバー
-        .folder その他のブックマーク
+      / TODO: フォルダーのセレクト
+      folders
 
-      .d-flex
+      .d-flex.mt-4
         a.btn.btn-outline-primary.mr-auto href="#" 新しいフォルダ
         a.btn.btn-outline-primary href="javascript:window.close();" キャンセル
         = f.submit '保存', {class: 'btn btn-primary ml-2'}

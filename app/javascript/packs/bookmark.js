@@ -7,6 +7,7 @@ import Bookmarkbar from './components/bookmarkbar.vue'
 import Url from './components/url.vue'
 import Folder from './components/folder.vue'
 import NestFolder from './components/nest-folder.vue'
+import FolderItems from './components/folders/list.vue'
 
 Vue.use(TurbolinksAdapter)
 
@@ -21,6 +22,7 @@ document.addEventListener('turbolinks:load', () => {
     components: {
       'navbar': Header,
       'bookmarkbar': Bookmarkbar,
+      'folders': FolderItems
     }
   })
   // console.log(app)

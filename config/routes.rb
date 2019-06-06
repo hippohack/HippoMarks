@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     get '/bookmarks', to: 'bookmarks#index', as: 'bookmarks'
     get '/bookmarks/:bookmark_id/folder', to: 'bookmarks#folder', as: 'folder'
     resources :bookmarks
+    resources :folders
     resources :tasks, only: [:index, :create, :update]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
