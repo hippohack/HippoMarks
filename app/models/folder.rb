@@ -1,6 +1,6 @@
 class Folder < ApplicationRecord
-  belongs_to :account
-  belongs_to :bookmark
+  belongs_to :account, primary_key: 'bookmarkbar_folder_id'
+  belongs_to :bookmark, optional: true
 
   validates :name, presence: true
 

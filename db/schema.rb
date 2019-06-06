@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_233113) do
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.integer "bookmarkbar_folder_id", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -25,25 +26,23 @@ ActiveRecord::Schema.define(version: 2019_05_23_233113) do
   end
 
   create_table "bookmarkbar_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.integer "bookmark_id", null: false
-    t.integer "order_num", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "account_id", null: false
-    t.integer "parent_id"
-    t.string "item_type", default: "url", null: false
+    t.integer "folder_id"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "account_id", null: false
+    t.integer "folder_id", null: false
+    t.integer "parent_count", default: 0, null: false
     t.string "name", null: false
-    t.integer "bookmark_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -83,10 +82,6 @@ ActiveRecord::Schema.define(version: 2019_05_23_233113) do
   end
 
   create_table "urls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "url", null: false
-    t.integer "account_id"
-    t.integer "bookmark_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

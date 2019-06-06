@@ -7,6 +7,7 @@ class Account < ApplicationRecord
   has_many :bookmarkbar_items, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :folders, dependent: :destroy
+  accepts_nested_attributes_for :folders, allow_destroy: true
   has_many :profiles, dependent: :destroy
   has_many :settings, dependent: :destroy
   has_many :share_urls, dependent: :destroy

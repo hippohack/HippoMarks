@@ -10,44 +10,53 @@
 # 2.times { Task.create!(name: 'Sample Task', is_done: true) }
 
 Account.all.delete_all
+Folder.all.delete_all
+Bookmark.all.delete_all
+# Url.all.delete_all
+# BookmarkbarItem.all.delete_all
 
-a = Account.create!(
+account = Account.new(
   id: 1,
   email: 'admin@example.com',
   password: 'hirakegoma',
-  encrypted_password: '$2a$11$W5qWWly1reTS93AxlYYqmeQpBSu9BcMzXDBV4/Kyfk35A6BDYQarq'
+  encrypted_password: '$2a$11$W5qWWly1reTS93AxlYYqmeQpBSu9BcMzXDBV4/Kyfk35A6BDYQarq',
+  bookmarkbar_folder_id: 0
 )
+account.folders.build(
+  account_id: account.id,
+  name: 'user_bookmarkber',
+  folder_id: nil,
+  parent_count: 0
+)
+account.save!
+account.bookmarkbar_folder_id = account.folders[0].id
+account.save!
 
-Folder.all.delete_all
-Bookmark.all.delete_all
-Url.all.delete_all
-BookmarkbarItem.all.delete_all
+# b = Bookmark.create( account_id: a.id, item_type: "url" )
+# Url.create( account_id: a.id, name: 'benzoh.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
+# BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 1 )
 
-b = Bookmark.create( account_id: a.id, item_type: "url" )
-Url.create( account_id: a.id, name: 'benzoh.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
-BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 1 )
+# b = Bookmark.create( account_id: a.id, item_type: "url" )
+# Url.create( account_id: a.id, name: 'start30blog.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
+# BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 2 )
 
-b = Bookmark.create( account_id: a.id, item_type: "url" )
-Url.create( account_id: a.id, name: 'start30blog.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
-BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 2 )
+# b = Bookmark.create( account_id: a.id, item_type: "folder" )
+# f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder1" )
+# BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 3 )
+# b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
+# Url.create( account_id: a.id, name: 'hoge.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
 
-b = Bookmark.create( account_id: a.id, item_type: "folder" )
-f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder1" )
-BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 3 )
-b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
-Url.create( account_id: a.id, name: 'hoge.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
+# b = Bookmark.create( account_id: a.id, parent_id: b.id, item_type: "folder" )
+# f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder2" )
+# BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 4 )
+# b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
+# Url.create( account_id: a.id, name: 'fuga.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
 
-b = Bookmark.create( account_id: a.id, parent_id: b.id, item_type: "folder" )
-f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder2" )
-BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 4 )
-b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
-Url.create( account_id: a.id, name: 'fuga.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
-
-b = Bookmark.create( account_id: a.id, parent_id: b.id, item_type: "folder" )
-f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder3" )
-BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 5 )
-b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
-Url.create( account_id: a.id, name: 'piyo.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
+# b = Bookmark.create( account_id: a.id, parent_id: b.id, item_type: "folder" )
+# f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder3" )
+# BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 5 )
+# b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
+# Url.create( account_id: a.id, name: 'piyo.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
 
 # 20.times do |i|
 #   Folder.create(
