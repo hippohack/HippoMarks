@@ -16,68 +16,76 @@ Bookmark.all.delete_all
 # BookmarkbarItem.all.delete_all
 
 account = Account.new(
-  id: 1,
   email: 'admin@example.com',
   password: 'hirakegoma',
   encrypted_password: '$2a$11$W5qWWly1reTS93AxlYYqmeQpBSu9BcMzXDBV4/Kyfk35A6BDYQarq',
   bookmarkbar_folder_id: 0
 )
 account.folders.build(
-  account_id: account.id,
   name: 'user_bookmarkber',
   folder_id: nil,
   parent_count: 0
 )
 account.save!
+print "account saved.\n"
+
 account.bookmarkbar_folder_id = account.folders[0].id
+account.folders[0][:account_id] = account.id
 account.save!
+print "account updated.\n"
 
-# b = Bookmark.create( account_id: a.id, item_type: "url" )
-# Url.create( account_id: a.id, name: 'benzoh.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
-# BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 1 )
+folder = account.folders.find(account.bookmarkbar_folder_id)
 
-# b = Bookmark.create( account_id: a.id, item_type: "url" )
-# Url.create( account_id: a.id, name: 'start30blog.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
-# BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 2 )
+folder.bookmarks.build(
+  account_id: account.id,
+  name: 'hoge',
+  url: 'https://www.hoge.com'
+)
+folder.save!
+print "bookmark saved.\n"
 
-# b = Bookmark.create( account_id: a.id, item_type: "folder" )
-# f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder1" )
-# BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 3 )
-# b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
-# Url.create( account_id: a.id, name: 'hoge.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
+folder2 = account.folders.build(
+  account_id: account.id,
+  name: 'fuga',
+  folder_id: account.bookmarkbar_folder_id,
+  parent_count: 1
+)
+folder2.bookmarks.build(
+  [
+    {
+      account_id: account.id,
+      name: 'one',
+      url: 'www.one.com',
+    },
+    {
+      account_id: account.id,
+      name: 'two',
+      url: 'www.two.com',
+    }
+  ]
+)
+folder2.save!
+print "folder2 saved.\n"
 
-# b = Bookmark.create( account_id: a.id, parent_id: b.id, item_type: "folder" )
-# f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder2" )
-# BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 4 )
-# b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
-# Url.create( account_id: a.id, name: 'fuga.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
-
-# b = Bookmark.create( account_id: a.id, parent_id: b.id, item_type: "folder" )
-# f = Folder.create( account_id: a.id, bookmark_id: b.id, name: "Folder3" )
-# BookmarkbarItem.create( account_id: a.id, bookmark_id: b.id, order_num: 5 )
-# b = Bookmark.create( account_id: a.id, item_type: "url", parent_id: b.id)
-# Url.create( account_id: a.id, name: 'piyo.com', url: 'https://www.benzoh.com', bookmark_id: b.id )
-
-# 20.times do |i|
-#   Folder.create(
-#     account_id: 1,
-#     name: "name-#{i}",
-#     level: [nil, 1, 2, 3].sample,
-#     parent_folder_id: [nil, 1, 2, 3].sample
-#   )
-
-#   Bookmark.create(
-#     account_id: 1,
-#     # account_id: 1..10.sample,
-#     folder_id: [nil, 1, 2, 3].sample,
-#     name: "Bookmark name-#{i}",
-#     url: "https://www.url-#{i}.com",
-#   )
-
-#   BookmarkbarItem.create(
-#     account_id: 1,
-#     item_type: ['bookmark', 'folder'].sample,
-#     item_id: [1, 2, 3].sample,
-#     order_num: [1, 2, 3].sample
-#   )
-# end
+folder3 = account.folders.build(
+  account_id: account.id,
+  name: 'maccho',
+  folder_id: folder2.id,
+  parent_count: 2
+)
+folder3.bookmarks.build(
+  [
+    {
+      account_id: account.id,
+      name: 'three',
+      url: 'www.three.com',
+    },
+    {
+      account_id: account.id,
+      name: 'four',
+      url: 'www.four.com',
+    }
+  ]
+)
+folder3.save!
+print "folder3 saved.\n"

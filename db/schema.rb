@@ -34,13 +34,14 @@ ActiveRecord::Schema.define(version: 2019_05_23_233113) do
     t.integer "account_id", null: false
     t.integer "folder_id"
     t.string "name", null: false
+    t.string "url", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "account_id", null: false
-    t.integer "folder_id", null: false
+    t.integer "folder_id"
     t.integer "parent_count", default: 0, null: false
     t.string "name", null: false
     t.datetime "created_at", null: false

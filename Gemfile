@@ -56,8 +56,8 @@ group :development, :test do
   
   # add: 2019-05-30
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  # gem "factory_bot"
+  # gem 'factory_girl_rails'
+  gem "factory_bot"
   gem 'guard-rspec', require: false
 end
 

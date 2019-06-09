@@ -4,6 +4,7 @@ class CreateBookmarks < ActiveRecord::Migration[5.2]
       t.integer :account_id, null: false
       t.integer :folder_id
       t.string :name, null: false
+      t.string :url, null: false
 
       t.timestamps
     end
