@@ -1,27 +1,66 @@
 #app
-  navbar
-  bookmarkbar
+  = render "shared/navbar"
+  .bookmarklet.bg-light
+    .text-center.py-2
+      p.m-0
+        | Bookmark pages more easily. Drag this bookmarklet to the Bookmarks bar of your browser:
+        a.btn.btn-sm.btn-primary.ml-2 href='javascript: (function () { var a = window, b = document, c = encodeURIComponent, d = a.open("http://localhost:3000/bookmarks/new?op=edit&output=popup&bkmk=" + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();' Bookmark
   .container-fluid
-    .row.flex-xl-nowrap
-      aside.sidebar
-        .sidebar__items
-          .sidebar__item
-            = link_to 'Add Bookmark', add_bookmark_path, class: 'sidebar__link'
-          .sidebar__item
-            = link_to 'Manage Bookmarks', '#', class: 'sidebar__link'
-          .sidebar__item
-            = link_to 'Manage Folders', '#', class: 'sidebar__link'
-          .sidebar__item
-            = link_to 'Import Bookmarks', '#', class: 'sidebar__link'
-          .sidebar__item
-            = link_to 'Export Bookmarks', '#', class: 'sidebar__link'
-      main.main
-        .w-100.text-center.py-3.mt-3
-          p
-            | Bookmark pages more easily. Drag this bookmarklet to the Bookmarks bar of your browser:
-            a.btn.btn-sm.btn-primary.ml-2 href='javascript: (function () { var a = window, b = document, c = encodeURIComponent, d = a.open("http://localhost:3000/bookmarks/new?op=edit&output=popup&bkmk=" + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();' Bookmark
-        router-view
+    main.main.bookmarks
+      .row.flex-xl-nowrap
+        .col-2.bookmarks__col.bookmarks__col--first
+          .bookmarks__items
+            .bookmarks__item
+              a.bookmarks__link href="" <i class="fa fa-folder-o mr-1"></i> FOLDER_NAME
+            .bookmarks__item
+              a.bookmarks__link href="" <i class="fa fa-link mr-1"></i> BOOKMARK_NAME
+          .sidebar
+            .sidebar__items
+              .sidebar__item
+                = link_to 'Add Bookmark', add_bookmark_path, class: 'sidebar__link'
+              .sidebar__item
+                = link_to 'Manage Bookmarks', '#', class: 'sidebar__link'
+              .sidebar__item
+                = link_to 'Manage Folders', '#', class: 'sidebar__link'
+              .sidebar__item
+                = link_to 'Import Bookmarks', '#', class: 'sidebar__link'
+              .sidebar__item
+                = link_to 'Export Bookmarks', '#', class: 'sidebar__link'
+        .col-10
+          .row
+            .col.bookmarks__col
+              .bookmarks__items
+                .bookmarks__item
+                  a.bookmarks__link href="" <i class="fa fa-folder-o mr-1"></i> FOLDER_NAME
+                .bookmarks__item
+                  a.bookmarks__link href="" <i class="fa fa-link mr-1"></i> BOOKMARK_NAME
+            .col.bookmarks__col
+              .bookmarks__items
+                .bookmarks__item
+                  a.bookmarks__link href="" <i class="fa fa-folder-o mr-1"></i> FOLDER_NAME
+                .bookmarks__item
+                  a.bookmarks__link href="" <i class="fa fa-link mr-1"></i> BOOKMARK_NAME
+            .col.bookmarks__col
+              .bookmarks__items
+                .bookmarks__item
+                  a.bookmarks__link href="" <i class="fa fa-folder-o mr-1"></i> FOLDER_NAME
+                .bookmarks__item
+                  a.bookmarks__link href="" <i class="fa fa-link mr-1"></i> BOOKMARK_NAME
+            .col.bookmark__col.bookmark__col--last
+              .bookmarks__capture
+                img src="https://dummyimage.com/600x400/000/fff" alt=""/
+              .bookmarks__description
+                div hoge
+                div fuga
+                div piyo
+          .row
+            .col-12.bookmarks__crumb
+              .crumb.d-flex.justify-content-start
+                .crumb__item <i class="fa fa-folder-o mr-1"></i> FOLDER_NAME
+                .crumb__item <i class="fa fa-folder-o mr-1"></i> FOLDER_NAME
+                .crumb__item <i class="fa fa-folder-o mr-1"></i> FOLDER_NAME
 
-.footer
-
+.footer.bg-dark
+  .text-right.text-white.p-1.px-3
+    a.copyright.text-white href="https://www.benzoh.com/" target="_blank" © Benzoh.com
 = javascript_pack_tag 'bookmark'

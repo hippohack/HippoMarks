@@ -2,10 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.bookmarkbar {
-  &__item {
-    font-size: 14px;
-  }
+.navbar-nav .dropdown-menu {
+  position: absolute;
+  left: -90px;
+}
+
+#search-input {
+  border-radius: 1.5rem;
 }
 
 .card-deck {
@@ -24,23 +27,81 @@
 }
 
 .sidebar {
-  border-right: solid 1px #ccc;
+  border-top: solid 1px #ccc;
   padding: 15px;
-  min-width: 270px;
-  height: calc(100vh - 97px);
-  &__items {
-    position: absolute;
-    bottom: 30px;
-  }
-  &__item {
-    font-size: 14px;
-  }
+  min-width: 210px;
+  position: absolute;
+  bottom: 0;
   &__link {
     display: block;
-    padding: 10px 15px;
+    padding: 10px 0;
   }
 }
 
 .main {
   width: 100%;
+}
+
+.bookmarklet {
+  border-bottom: solid 1px #ccc;
+}
+
+.bookmarks {
+  font-size: 0.9rem;
+  &__col {
+    border-right: solid 1px #ccc;
+    // ヘッダー分引いてる;
+    height: calc(100vh - 155px);
+    max-width: 240px;
+  }
+  &__col--first {
+    height: calc(100vh - 128px);
+  }
+  &__col--last {
+    border-right: 0;
+  }
+  &__items {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  &__link {
+    display: block;
+    padding: 5px 0;
+  }
+  &__capture {
+    padding: 15px 0;
+    img {
+      width: 100%;
+      max-width: 372px;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  &__description {
+    text-align: center;
+  }
+  &__crumb {
+    border-top: solid 1px #ccc;
+  }
+}
+
+.crumb {
+  padding: 5px 15px;
+  &__item {
+    font-size: 0.7rem;
+    &:after {
+      content: ">";
+      padding: 0 10px;
+    }
+  }
+}
+
+.footer {
+  font-size: 0.7rem;
+}
+
+.copyright {
+  &:hover {
+    text-decoration: none;
+  }
 }

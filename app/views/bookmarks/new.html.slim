@@ -1,5 +1,5 @@
 #app
-  navbar
+  = render "shared/navbar"
   main.p-3
     = form_for @bookmark, :remote => true do |f|
       = f.fields_for :url do |url|
