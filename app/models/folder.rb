@@ -6,5 +6,12 @@ class Folder < ApplicationRecord
   validates :name, presence: true
 
   # default_scope { order(order_num: :asc) }
-  # scope :bar_items, ->(account_id) { where(account_id: account_id) }
+  scope :top_folder, ->(account) { find(account.bookmarkbar_folder_id) }
+
+  # TODO: self joinにすべき？
+  # Active Record Associations — Ruby on Rails Guides
+  # https://guides.rubyonrails.org/association_basics.html#self-joins
+  def folders
+    Folder.where(folder_id: id)
+  end
 end

@@ -4,7 +4,8 @@
 
 .navbar-nav .dropdown-menu {
   position: absolute;
-  left: -90px;
+  left: -235px;
+  width: 300px;
 }
 
 #search-input {
@@ -104,4 +105,10 @@
   &:hover {
     text-decoration: none;
   }
+}
+
+.pos-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

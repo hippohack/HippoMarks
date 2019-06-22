@@ -2,8 +2,7 @@ nav.navbar.navbar-light.bg-dark
   = link_to(root_path, class: 'navbar-brand text-white') do
     img.d-inline-block.align-top.mr-2 src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" alt=""
     | Bookmarks
-  end
-  a.px-2.mr-2.text-dark href="#home"
+  a.px-2.mr-2.text-white href="#home"
     i.fa.fa-home.fa-lg aria-hidden="true"
   form.flex-grow-1.mr-2
     input type="search" class="form-control" id="search-input" placeholder="Search..."
@@ -12,6 +11,12 @@ nav.navbar.navbar-light.bg-dark
       a.nav-link.dropdown-toggle.text-white href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
         | Menu
       .dropdown-menu aria-labelledby="navbarDropdownMenuLink"
+        = link_to 'Add Bookmark', add_bookmark_path, class: 'dropdown-item'
+        = link_to 'Manage Bookmarks', '#', class: 'dropdown-item'
+        = link_to 'Manage Folders', '#', class: 'dropdown-item'
+        = link_to 'Import Bookmarks', '#', class: 'dropdown-item'
+        = link_to 'Export Bookmarks', '#', class: 'dropdown-item'
+        hr.my-1
         a.dropdown-item href="#" アカウント設定
         a.dropdown-item href="#" システム設定
         hr.my-1

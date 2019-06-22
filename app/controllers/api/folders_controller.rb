@@ -1,9 +1,9 @@
 class Api::FoldersController < ApplicationController
 
-  def index
-    @folders = current_account.folders.group_by { |folder|
-      folder.bookmark.parent_id
-    }
+  def show
+    folder = current_account.folders.find(params[:id])
+    @folders = folder.folders
+    @bookmarks = folder.bookmarks
   end
 
 end
