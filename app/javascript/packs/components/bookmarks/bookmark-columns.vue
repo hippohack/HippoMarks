@@ -1,8 +1,10 @@
 <template>
   <div class="row">
     <bookmark-column
-      :_clicked_folder_id="folder_id"
-      :_level="0"
+      v-for="(column, index) in com_columns"
+      v-bind:key="index"
+      :_folder_id="column.folder_id"
+      :_level="column.level"
       @apply="receive"
     ></bookmark-column>
   </div>
@@ -13,28 +15,33 @@
     data: function() {
       return {
         is_active: false,
-        clicked_folder_id: "",
-        request_folder_id: "",
-        request_level: ""
+        columns: [],
+        clicked_folder_id: ""
       }
     },
     props: {
       _clicked_folder_id: { type: Number }
     },
+    mounted() {
+      this.clicked_folder_id = this._clicked_folder_id
+    },
     computed: {
-      folder_id() {
-        this.clicked_folder_id = this._clicked_folder_id
-        return this.clicked_folder_id
+      com_columns() {
+        if (this.clicked_folder_id != this._clicked_folder_id) {
+          this.columns = []
+        }
+        this.columns[0] = {
+          folder_id: this._clicked_folder_id,
+          level: 0
+        }
+        return this.columns
       }
     },
     methods: {
-      openFolder: function(folder_id) {
-        console.log({folder_id})
-        this.clicked_folder_id = folder_id
-        this.is_active = true
-      },
       receive(values) {
         console.log({values})
+        this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
+        this.$forceUpdate()
       }
     }
   }

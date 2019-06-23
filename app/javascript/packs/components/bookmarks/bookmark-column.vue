@@ -3,7 +3,6 @@
     <div class="bookmarks__items" v-if="items">
       <div
         class="bookmarks__item"
-        v-bind="items"
         v-for="(item, index) in items"
         v-bind:key="index"
       >
@@ -11,7 +10,7 @@
           class="bookmarks__link"
           href="javascript:void(0)"
           v-if="!item.url"
-          @click="$emit('apply', { folder_id: item.id, level: _level })"
+          @click="$emit('apply', { folder_id: item.id, level: _level+1 })"
         ><i class="fa fa-folder-o mr-2"></i>{{ item.name }}</a>
 
         <a
@@ -37,11 +36,11 @@
     },
     props: {
       _level: { type: Number },
-      _clicked_folder_id: { type: Number },
+      _folder_id: { type: Number },
     },
     computed: {
       items() {
-        this.fetchFolderItems(this._clicked_folder_id)
+        this.fetchFolderItems(this._folder_id)
         return this.fetch_items
       }
     },
