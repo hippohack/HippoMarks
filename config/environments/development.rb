@@ -61,4 +61,7 @@ Rails.application.configure do
 
   # Add: 2019-05-09
   BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
+
+  # Add: 2019-06-23
+  config.reload_classes_only_on_change = false
 end
