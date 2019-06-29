@@ -5,10 +5,6 @@ class BookmarksController < ApplicationController
 
   end
 
-  def add
-    @bookmark = Bookmark.new
-  end
-  
   def new
     @bookmark = Bookmark.new
     @bookmark.build_url
@@ -31,6 +27,35 @@ class BookmarksController < ApplicationController
 
   def show
 
+  end
+
+  def add
+    @bookmark = Bookmark.new
+    folders = current_account.folders.order("parent_count DESC")
+
+    # 階層構造に整形
+    @folders = {}
+
+    folders.each do |folder|
+      @folders[folder.parent_count] = {}
+    end
+
+    folders.each do |folder|
+      if @folders[folder.parent_count][folder.folder_id].is_a?(Array)
+        @folders[folder.parent_count][folder.folder_id].push(folder)
+      else
+        @folders[folder.parent_count][folder.folder_id ? folder.folder_id : "top_folder"] = [folder]
+      end
+    end
+
+    # TODO: リファクタリング
+    @top_folder_id = @folders[0]['top_folder'][0].id
+    
+    # topはいらないので消す
+    @folders.delete(0)
+    
+    @all_folders = folders
+    # raise
   end
 
   private

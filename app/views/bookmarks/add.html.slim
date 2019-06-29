@@ -1,32 +1,32 @@
 #app
   = render "shared/navbar"
   .container-fluid
-    .row.flex-xl-nowrap
-      aside.sidebar
-        .sidebar__items
-          .sidebar__item
-            = link_to 'Add Bookmark', new_bookmark_path, class: 'sidebar__link'
-          .sidebar__item
-            = link_to 'Manage Bookmarks', manage_bookmarks_path, class: 'sidebar__link'
-          .sidebar__item
-            = link_to 'Manage Folders', manage_folders_path, class: 'sidebar__link'
-          .sidebar__item
-            = link_to 'Import Bookmarks', import_bookmarks_path, class: 'sidebar__link'
-          .sidebar__item
-            = link_to 'Export Bookmarks', export_bookmarks_path, class: 'sidebar__link'
-      main.main
+    .row.flex-xl-nowrap.justify-content-center
+      main.main.col-6.mt-3
+        h1 Add a bookmark
         = form_for @bookmark, :remote => true do |f|
-          = f.label :name
-          |:
-          = f.text_field :name
-          br
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: 'form-control'
+            .form-text.text-muted ex: Benzoh's Website
 
-          = f.label :url
-          |:
-          = f.text_field :url
-          br
+          .form-group
+            = f.label :url
+            = f.text_field :url, class: 'form-control'
+            .form-text.text-muted ex: https://www.benzoh.com/
 
-          = f.submit
+          folders :_hierarchy_data="#{ @folders.to_json }" :_all_folders="#{ @all_folders.to_json }" :_level="1" :_id="#{@top_folder_id}"
+
+          / .form-group
+          /   = f.label :labels
+          /   = f.text_field :labels, class: 'form-control'
+          /   .form-text.text-muted hoge
+
+          / .form-group
+          /   = f.label :notes
+          /   = f.text :notes, class: 'form-control'
+
+          = f.submit "Add Bookmark", class: 'btn btn-primary'
 
 .footer
 
