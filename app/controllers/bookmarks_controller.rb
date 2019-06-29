@@ -10,29 +10,9 @@ class BookmarksController < ApplicationController
     @bookmark.build_url
   end
 
-  def create
-    @bookmark = Bookmark.new(bookmark_params)
-    @bookmark.account_id = current_account.id
-    @bookmark.item_type = 'url'
-    @bookmark.url.account_id = current_account.id
-
-    logger.debug 'DEBUG >>>'
-    logger.debug @bookmark.inspect
-    logger.debug '<<< DEBUG'
-
-    raise if @bookmark.save == false
-
-    render :show
-  end
-
-  def show
-
-  end
-
   def add
-    @bookmark = Bookmark.new
+    @bookmark = current_account.bookmarks.new
     folders = current_account.folders.order("parent_count DESC")
-
     # 階層構造に整形
     @folders = {}
 
@@ -50,23 +30,28 @@ class BookmarksController < ApplicationController
 
     # TODO: リファクタリング
     @top_folder_id = @folders[0]['top_folder'][0].id
-    
     # topはいらないので消す
     @folders.delete(0)
-    
     @all_folders = folders
-    # raise
+  end
+
+  def create
+    @bookmark = current_account.bookmarks.new(bookmark_params)
+    raise if @bookmark.save == false
+    redirect_to root_path
+  end
+
+  def show
+
   end
 
   private
     def bookmark_params
       params.fetch(:bookmark, {}).permit(
         :account_id,
-        :item_type,
-        url_attributes: [
-          :name,
-          :url
-        ]
+        :folder_id,
+        :name,
+        :url,
       )
     end
 end

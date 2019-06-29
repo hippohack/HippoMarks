@@ -1,7 +1,7 @@
 <template>
   <div v-bind:class="level === 1 ? null : 'pl-3'">
     <label :for="`item_${_folder.id}`">
-      <input type="checkbox" :id="`item_${_folder.id}`" :value="_folder.id" @change="is_active = !is_active"> {{ find_folder(_folder.id).name }}
+      <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" @change="is_active = !is_active"> {{ find_folder(_folder.id).name }}
     </label>
     <folders
       v-if="is_active && hierarchy_data[level+1]"

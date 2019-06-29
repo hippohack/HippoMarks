@@ -15,7 +15,10 @@
             = f.text_field :url, class: 'form-control'
             .form-text.text-muted ex: https://www.benzoh.com/
 
-          folders :_hierarchy_data="#{ @folders.to_json }" :_all_folders="#{ @all_folders.to_json }" :_level="1" :_id="#{@top_folder_id}"
+          .form-group
+            = f.label :folder_id
+            .folder-list.p-3
+              folders :_hierarchy_data="#{ @folders.to_json }" :_all_folders="#{ @all_folders.to_json }" :_level="1" :_id="#{@top_folder_id}"
 
           / .form-group
           /   = f.label :labels
@@ -26,7 +29,13 @@
           /   = f.label :notes
           /   = f.text :notes, class: 'form-control'
 
-          = f.submit "Add Bookmark", class: 'btn btn-primary'
+          .d-flex.mt-3
+            div.mr-auto
+              = link_to '新しいフォルダ', '#', class: 'btn btn-outline-primary'
+            div.mr-2
+              = link_to 'キャンセル', '#', class: 'btn btn-outline-primary'
+            div
+              = f.submit "Add Bookmark", class: 'btn btn-primary'
 
 .footer
 
