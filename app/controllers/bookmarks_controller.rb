@@ -1,6 +1,8 @@
 class BookmarksController < ApplicationController
   before_action :authenticate_account!
 
+  include FolderData
+
   def index
 
   end
@@ -12,27 +14,11 @@ class BookmarksController < ApplicationController
 
   def add
     @bookmark = current_account.bookmarks.new
-    folders = current_account.folders.order("parent_count DESC")
-    # 階層構造に整形
-    @folders = {}
-
-    folders.each do |folder|
-      @folders[folder.parent_count] = {}
-    end
-
-    folders.each do |folder|
-      if @folders[folder.parent_count][folder.folder_id].is_a?(Array)
-        @folders[folder.parent_count][folder.folder_id].push(folder)
-      else
-        @folders[folder.parent_count][folder.folder_id ? folder.folder_id : "top_folder"] = [folder]
-      end
-    end
-
-    # TODO: リファクタリング
-    @top_folder_id = @folders[0]['top_folder'][0].id
-    # topはいらないので消す
-    @folders.delete(0)
-    @all_folders = folders
+    folder_data = FolderData.folders(current_account)
+    @folders = folder_data[:folders]
+    @all_folders = folder_data[:all_folders]
+    @top_folder_id = folder_data[:top_folder_id]
+    # raise
   end
 
   def create
