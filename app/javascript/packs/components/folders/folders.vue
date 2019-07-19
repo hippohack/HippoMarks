@@ -1,5 +1,12 @@
 <template>
   <div>
+    <new-folder
+      v-if="_is_new_folder && _id == _new_folder_parent_id"
+      :_all_folders="all_folders"
+      :_hierarchy_data="hierarchy_data"
+      :_level="level"
+      :_new_folder_parent_id="new_folder_parent_id"
+    ></new-folder>
     <folder
       v-for="(folder, index) in hierarchy_data[level][_id]"
       v-bind:key="index"

@@ -8,16 +8,6 @@
         <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" @change="is_active = !is_active"> {{ _folder.name }}
       </span>
     </label>
-    <new-folder
-      v-if="_is_new_folder && _folder.id == _new_folder_parent_id"
-      :_folder_obj="_folder"
-      :_hierarchy_data="hierarchy_data"
-      :_all_folders="all_folders"
-      :_level="level+1"
-      :_id="_folder.id"
-      :_is_new_folder="is_new_folder"
-      :_new_folder_parent_id="new_folder_parent_id"
-    ></new-folder>
     <folders
       v-if="is_active && hierarchy_data[level+1]"
       :_hierarchy_data="hierarchy_data"
