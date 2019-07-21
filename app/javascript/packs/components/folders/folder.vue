@@ -1,12 +1,7 @@
 <template>
   <div v-bind:class="level === 1 ? null : 'pl-3'">
     <label :for="`item_${_folder.id}`">
-      <span v-if="!_created">
-        <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" @change="is_active = !is_active"> {{ find_folder(_folder.id).name }}
-      </span>
-      <span v-if="_created">
-        <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" @change="is_active = !is_active"> {{ _folder.name }}
-      </span>
+      <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" @change="is_active = !is_active"> {{ find_folder(_folder.id).name }}
     </label>
     <folders
       v-if="is_active && hierarchy_data[level+1]"
@@ -37,7 +32,6 @@ export default {
     _hierarchy_data: "",
     _is_new_folder: "",
     _new_folder_parent_id: "",
-    _created: ""
   },
   beforeMount() {
     this.hierarchy_data = this._hierarchy_data
@@ -57,7 +51,7 @@ export default {
       return this._all_folders.find(function(element) {
         return element['id'] === id;
       })
-    },
+    }
   }
 }
 </script>

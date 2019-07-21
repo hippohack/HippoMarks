@@ -7,7 +7,6 @@ import BookmarkColumns from './components/bookmarks/bookmark-columns.vue'
 import BookmarkColumn from './components/bookmarks/bookmark-column.vue'
 import Folders from './components/folders/folders.vue'
 import Folder from './components/folders/folder.vue'
-import NewFolder from './components/folders/new-folder.vue'
 
 Vue.use(TurbolinksAdapter)
 
@@ -15,7 +14,6 @@ Vue.component('bookmark-columns', BookmarkColumns)
 Vue.component('bookmark-column', BookmarkColumn)
 Vue.component('folders', Folders)
 Vue.component('folder', Folder)
-Vue.component('new-folder', NewFolder)
 
 document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
@@ -32,6 +30,7 @@ document.addEventListener('turbolinks:load', () => {
     },
     methods: {
       show_new_folder() {
+        // TODO: ここで調整するしかないか？
         console.log($("input[name='bookmark[folder_id]']:checked").val())
         this.new_folder_parent_id = $("input[name='bookmark[folder_id]']:checked").val()
         this.is_new_folder = true

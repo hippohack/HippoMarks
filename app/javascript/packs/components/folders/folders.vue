@@ -1,12 +1,10 @@
 <template>
   <div>
-    <new-folder
-      v-if="_is_new_folder && _id == _new_folder_parent_id"
-      :_all_folders="all_folders"
-      :_hierarchy_data="hierarchy_data"
-      :_level="level"
-      :_new_folder_parent_id="new_folder_parent_id"
-    ></new-folder>
+    <span v-if="!is_created && _is_new_folder && _id == _new_folder_parent_id" class='pl-3'>
+      <i class="fa fa-folder-o"></i>
+      <input type="text" name="folder[name]" v-model="name" @blur="create">
+    </span>
+
     <folder
       v-for="(folder, index) in hierarchy_data[level][_id]"
       v-bind:key="index"
@@ -21,9 +19,18 @@
 </template>
 
 <script>
+import axios from 'axios';
+axios.defaults.headers.common = {
+  'X-Requested-With': 'XMLHttpRequest',
+  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+};
+
 export default {
   data() {
     return {
+      name: "folder name...",
+      is_created: false,
+      created_folder: "",
       hierarchy_data: "",
       all_folders: "",
       level: "",
@@ -51,6 +58,28 @@ export default {
     },
   },
   methods: {
+    create() {
+      console.log('create...')
+      axios.post(`/api/folders/`, {
+          folder_id: this._new_folder_parent_id,
+          parent_count: this._level,
+          name: this.name
+        })
+        .then(response => {
+          console.log(response)
+          this.created_folder = response.data.folder
+          this.hierarchy_data = response.data.folders
+          this.all_folders = response.data.all_folders
+          this.show()
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    },
+    show() {
+      this.is_created = true
+      this.$forceUpdate()
+    },
     find_folder(id) {
       return this._all_folders.find(function(elm) {
         return elm.id == id
