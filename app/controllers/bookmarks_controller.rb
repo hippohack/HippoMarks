@@ -8,8 +8,14 @@ class BookmarksController < ApplicationController
   end
 
   def new
-    @bookmark = Bookmark.new
-    @bookmark.build_url
+    @bookmark = current_account.bookmarks.new
+    @bookmark.url = params[:bkmk]
+    @bookmark.name = params[:title]
+
+    folder_data = FolderData.folders(current_account)
+    @folders = folder_data[:folders]
+    @all_folders = folder_data[:all_folders]
+    @top_folder_id = folder_data[:top_folder_id]
   end
 
   def add
@@ -24,7 +30,12 @@ class BookmarksController < ApplicationController
   def create
     @bookmark = current_account.bookmarks.new(bookmark_params)
     raise if @bookmark.save == false
-    redirect_to root_path
+
+    if params[:popup]
+      render :show
+    else
+      redirect_to root_path
+    end
   end
 
   def show
