@@ -12,18 +12,13 @@ class BookmarksController < ApplicationController
     @bookmark.url = params[:bkmk]
     @bookmark.name = params[:title]
 
-    folder_data = FolderData.folders(current_account)
-    @folders = folder_data[:folders]
-    @all_folders = folder_data[:all_folders]
-    @top_folder_id = folder_data[:top_folder_id]
+    set_folder_data
   end
 
   def add
     @bookmark = current_account.bookmarks.new
-    folder_data = FolderData.folders(current_account)
-    @folders = folder_data[:folders]
-    @all_folders = folder_data[:all_folders]
-    @top_folder_id = folder_data[:top_folder_id]
+
+    set_folder_data
     # raise
   end
 
@@ -42,6 +37,18 @@ class BookmarksController < ApplicationController
 
   end
 
+  def edit
+    @bookmark = current_account.bookmarks.find(params[:id])
+
+    set_folder_data
+  end
+
+  def update
+    @bookmark = current_account.bookmarks.find(params[:id])
+    @bookmark.update!(bookmark_params)
+    render :show
+  end
+
   private
     def bookmark_params
       params.fetch(:bookmark, {}).permit(
@@ -50,5 +57,12 @@ class BookmarksController < ApplicationController
         :name,
         :url,
       )
+    end
+
+    def set_folder_data
+      folder_data = FolderData.folders(current_account)
+      @folders = folder_data[:folders]
+      @all_folders = folder_data[:all_folders]
+      @top_folder_id = folder_data[:top_folder_id]
     end
 end

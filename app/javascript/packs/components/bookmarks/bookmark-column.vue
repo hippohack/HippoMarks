@@ -19,6 +19,8 @@
           :href="item.url"
           v-if="item.url"
         ><i class="fa fa-link mr-2"></i>{{ item.name }}</a>
+
+        <a href="#">edit</a>
       </div>
     </div>
   </div>
