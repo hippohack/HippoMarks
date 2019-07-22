@@ -20,7 +20,8 @@
           v-if="item.url"
         ><i class="fa fa-link mr-2"></i>{{ item.name }}</a>
 
-        <a href="#">edit</a>
+        <a v-if="item.url" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="bookmark" @click="editBookmark(item.id)">edit</a>
+        <a v-if="!item.url" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="folder" @click="editFolder(item.id)">edit</a>
       </div>
     </div>
   </div>
@@ -61,6 +62,17 @@
         );
         this.last_request_id = folder_id
       },
+      editBookmark(id) {
+        (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`http://localhost:3000/bookmarks/${id}/edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
+      },
+      editFolder() {
+        
+      },
+      receive(values) {
+        console.log({values})
+        this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
+        this.$forceUpdate()
+      }
     }
   }
 </script>

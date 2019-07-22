@@ -7,22 +7,9 @@
           v-for="(item, index) in items"
           v-bind:key="index"
         >
-          <a
-            class="bookmarks__link"
-            href="javascript:void(0)"
-            v-if="!item.url"
-            @click="openFolder(item.id)"
-          ><i class="fa fa-folder-o mr-2"></i>{{ item.name }}</a>
-
-          <a
-            class="bookmarks__link"
-            target="_blank"
-            :href="item.url"
-            v-if="item.url"
-          ><i class="fa fa-link mr-2"></i>{{ item.name }}</a>
-
-          <a v-if="item.url" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="bookmark" @click="editBookmark(item.id)">edit</a>
-          <a v-if="!item.url" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="folder" @click="editFolder(item.id)">edit</a>
+          <bookmark-item
+            :_item="item"
+          ></bookmark-item>
         </div>
       </div>
     </div>
@@ -68,6 +55,7 @@
         is_active: false,
         clicked_folder_id: "",
         items: [],
+        folder_editing: false
       };
     },
     props: {
@@ -88,7 +76,15 @@
         (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`http://localhost:3000/bookmarks/${id}/edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
       },
       editFolder() {
-        
+        this.folder_editing = !this.folder_editing
+      },
+      update() {
+
+      },
+      receive(values) {
+        console.log({values})
+        this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
+        this.$forceUpdate()
       }
     }
   }
