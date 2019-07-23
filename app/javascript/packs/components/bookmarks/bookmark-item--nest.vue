@@ -5,6 +5,7 @@
       href="javascript:void(0)"
       v-if="!item.url && !folder_editing"
       @click="$emit('apply', { folder_id: item.id, level: _level+1 })"
+      @mouseover="edit_show = !edit_show"
     ><i class="fa fa-folder-o mr-2"></i>{{ item.name }}</a>
 
     <span v-if="folder_editing">
@@ -17,10 +18,11 @@
       target="_blank"
       :href="item.url"
       v-if="item.url"
+      @mouseover="edit_show = !edit_show"
     ><i class="fa fa-link mr-2"></i>{{ item.name }}</a>
 
-    <a v-if="item.url && !folder_editing" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="bookmark" @click="editBookmark(item.id)">edit</a>
-    <a v-if="!item.url && !folder_editing" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="folder" @click="editFolder(item.id)">edit</a>
+    <a v-if="item.url && !folder_editing && edit_show" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="bookmark" @click="editBookmark(item.id)">edit</a>
+    <a v-if="!item.url && !folder_editing && edit_show" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="folder" @click="editFolder(item.id)">edit</a>
   </div>
 </template>
 
@@ -33,7 +35,8 @@
         item: "",
         is_active: false,
         clicked_folder_id: "",
-        folder_editing: false
+        folder_editing: false,
+        edit_show: false
       };
     },
     props: {
