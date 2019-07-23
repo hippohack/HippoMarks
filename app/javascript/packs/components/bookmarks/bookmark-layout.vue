@@ -9,6 +9,7 @@
         >
           <bookmark-item
             :_item="item"
+            @apply="receive"
           ></bookmark-item>
         </div>
       </div>
@@ -83,8 +84,8 @@
       },
       receive(values) {
         console.log({values})
-        this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
-        this.$forceUpdate()
+        this.clicked_folder_id = values.clicked_folder_id
+        this.is_active = values.is_active
       }
     }
   }

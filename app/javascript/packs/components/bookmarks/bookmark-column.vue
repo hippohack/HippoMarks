@@ -6,22 +6,11 @@
         v-for="(item, index) in items"
         v-bind:key="index"
       >
-        <a
-          class="bookmarks__link"
-          href="javascript:void(0)"
-          v-if="!item.url"
-          @click="$emit('apply', { folder_id: item.id, level: _level+1 })"
-        ><i class="fa fa-folder-o mr-2"></i>{{ item.name }}</a>
-
-        <a
-          class="bookmarks__link"
-          target="_blank"
-          :href="item.url"
-          v-if="item.url"
-        ><i class="fa fa-link mr-2"></i>{{ item.name }}</a>
-
-        <a v-if="item.url" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="bookmark" @click="editBookmark(item.id)">edit</a>
-        <a v-if="!item.url" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="folder" @click="editFolder(item.id)">edit</a>
+        <bookmark-item-nest
+          :_item="item"
+          :_level="_level"
+          @apply="receive"
+        ></bookmark-item-nest>
       </div>
     </div>
   </div>
@@ -70,8 +59,9 @@
       },
       receive(values) {
         console.log({values})
-        this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
-        this.$forceUpdate()
+        // this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
+        this.$emit('apply', { folder_id: values.folder_id, level: values.level })
+        // this.$forceUpdate()
       }
     }
   }

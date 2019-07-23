@@ -21,6 +21,11 @@ class Api::FoldersController < ApplicationController
     @all_folders = folder_data[:all_folders]
   end
 
+  def update
+    @folder = current_account.folders.find(params[:id])
+    @folder.update!(folder_params)
+  end
+
   private
     def folder_params
       params.fetch(:folder, {}).permit(

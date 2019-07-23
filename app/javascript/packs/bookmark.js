@@ -6,6 +6,7 @@ import BookmarkLayout from './components/bookmarks/bookmark-layout.vue'
 import BookmarkColumns from './components/bookmarks/bookmark-columns.vue'
 import BookmarkColumn from './components/bookmarks/bookmark-column.vue'
 import BookmarkItem from './components/bookmarks/bookmark-item.vue'
+import BookmarkItemNest from './components/bookmarks/bookmark-item--nest.vue'
 import Folders from './components/folders/folders.vue'
 import Folder from './components/folders/folder.vue'
 
@@ -14,6 +15,7 @@ Vue.use(TurbolinksAdapter)
 Vue.component('bookmark-columns', BookmarkColumns)
 Vue.component('bookmark-column', BookmarkColumn)
 Vue.component('bookmark-item', BookmarkItem)
+Vue.component('bookmark-item-nest', BookmarkItemNest)
 Vue.component('folders', Folders)
 Vue.component('folder', Folder)
 

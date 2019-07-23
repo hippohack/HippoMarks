@@ -4,7 +4,7 @@
       class="bookmarks__link"
       href="javascript:void(0)"
       v-if="!item.url && !folder_editing"
-      @click="openFolder(item.id)"
+      @click="$emit('apply', { folder_id: item.id, level: _level+1 })"
     ><i class="fa fa-folder-o mr-2"></i>{{ item.name }}</a>
 
     <span v-if="folder_editing">
@@ -37,7 +37,8 @@
       };
     },
     props: {
-      _item: ""
+      _item: "",
+      _level: ""
     },
     mounted() {
       this.item = this._item
@@ -52,12 +53,12 @@
         (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`http://localhost:3000/bookmarks/${id}/edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
       },
       editFolder() {
-        this.folder_editing = !this.folder_editing
+        this.folder_editing = true
       },
       update() {
         this.item.name = this.folder_name
 
-        axios.patch(`/api/folders/${this.item.id}`, this.item)
+        let res = axios.patch(`/api/folders/${this.item.id}`, this.item)
           .then(function(response) {
             console.log(response)
           })
