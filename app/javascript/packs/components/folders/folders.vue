@@ -5,16 +5,18 @@
       <input type="text" name="folder[name]" v-model="name" @blur="create">
     </span>
 
-    <folder
-      v-for="(folder, index) in hierarchy_data[level][_id]"
-      v-bind:key="index"
-      :_folder="folder"
-      :_all_folders="all_folders"
-      :_hierarchy_data="hierarchy_data"
-      :_level="level"
-      :_is_new_folder="is_new_folder"
-      :_new_folder_parent_id="new_folder_parent_id"
-    ></folder>
+    <div v-if="hierarchy_data[level]">
+      <folder
+        v-for="(folder, index) in hierarchy_data[level][_id]"
+        v-bind:key="index"
+        :_folder="folder"
+        :_all_folders="all_folders"
+        :_hierarchy_data="hierarchy_data"
+        :_level="level"
+        :_is_new_folder="is_new_folder"
+        :_new_folder_parent_id="new_folder_parent_id"
+      ></folder>
+    </div>
   </div>
 </template>
 

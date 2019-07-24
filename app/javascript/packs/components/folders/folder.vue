@@ -4,7 +4,7 @@
       <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" @change="is_active = !is_active"> {{ find_folder(_folder.id).name }}
     </label>
     <folders
-      v-if="is_active && hierarchy_data[level+1]"
+      v-if="is_active"
       :_hierarchy_data="hierarchy_data"
       :_all_folders="all_folders"
       :_level="level+1"
