@@ -32,19 +32,23 @@
   export default {
     data: function() {
       return {
-        item: "",
         is_active: false,
         clicked_folder_id: "",
         folder_editing: false,
-        edit_show: false
+        edit_show: false,
+        folder_name: ""
       };
     },
     props: {
       _item: "",
       _level: ""
     },
+    computed: {
+      item() {
+        return this._item
+      }
+    },
     mounted() {
-      this.item = this._item
       this.folder_name = this._item.name
     },
     methods: {
