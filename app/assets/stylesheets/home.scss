@@ -53,7 +53,8 @@
     border-right: solid 1px #ccc;
     // ヘッダー分引いてる;
     height: calc(100vh - 155px);
-    // max-width: 220px;
+    min-width: 206px;
+    max-width: 206px;
   }
   &__col--first {
     height: calc(100vh - 128px);

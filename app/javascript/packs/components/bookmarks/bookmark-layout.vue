@@ -15,15 +15,15 @@
       </div>
     </div>
 
-    <div class="col-10">
+    <div class="col">
       <div class="row">
-        <div class="col">
+        <div class="col" style="overflow:auto;">
           <bookmark-columns
             v-if="is_active"
             :_clicked_folder_id="clicked_folder_id"
           ></bookmark-columns>
         </div>
-        <div class="col bookmark__col bookmark__col--last">
+        <div class="col-4 bookmark__col bookmark__col--last">
           <div class="bookmarks__capture">
             <img src="https://dummyimage.com/600x400/000/fff" alt="">
           </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row flex-nowrap">
     <bookmark-column
       v-for="(column, index) in com_columns"
       v-bind:key="index"
