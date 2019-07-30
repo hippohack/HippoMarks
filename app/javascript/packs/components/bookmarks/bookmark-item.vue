@@ -1,5 +1,5 @@
 <template>
-  <div @mouseenter="edit_show = !edit_show" @mouseleave="edit_show = !edit_show">
+  <div @mouseenter="edit_show = !edit_show" @mouseleave="edit_show = !edit_show" @contextmenu="show_contextmenu">
     <a
       class="bookmarks__link"
       href="javascript:void(0)"
@@ -21,6 +21,13 @@
 
     <a v-if="item.url && !folder_editing && edit_show" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="bookmark" @click="editBookmark(item.id)">edit</a>
     <a v-if="!item.url && !folder_editing && edit_show" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="folder" @click="editFolder(item.id)">edit</a>
+
+    <context-menu
+      v-if="context_menu"
+      :_pageX="pageX"
+      :_pageY="pageY"
+      @apply="receive"
+    ></context-menu>
   </div>
 </template>
 
@@ -34,7 +41,10 @@
         is_active: false,
         clicked_folder_id: "",
         folder_editing: false,
-        edit_show: false
+        edit_show: false,
+        context_menu: false,
+        pageX: "",
+        pageY: ""
       };
     },
     props: {
@@ -67,6 +77,15 @@
           })
 
         this.folder_editing = !this.folder_editing
+      },
+      show_contextmenu(e) {
+        this.pageX = e.pageX
+        this.pageY = e.pageY
+        this.context_menu = true
+        e.preventDefault();
+      },
+      receive(values) {
+        this.context_menu = values.flag
       }
     }
   }

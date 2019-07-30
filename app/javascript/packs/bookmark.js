@@ -9,6 +9,7 @@ import BookmarkItem from './components/bookmarks/bookmark-item.vue'
 import BookmarkItemNest from './components/bookmarks/bookmark-item--nest.vue'
 import Folders from './components/folders/folders.vue'
 import Folder from './components/folders/folder.vue'
+import ContextMenu from './components/shared/context-menu.vue'
 
 Vue.use(TurbolinksAdapter)
 
@@ -18,6 +19,7 @@ Vue.component('bookmark-item', BookmarkItem)
 Vue.component('bookmark-item-nest', BookmarkItemNest)
 Vue.component('folders', Folders)
 Vue.component('folder', Folder)
+Vue.component('context-menu', ContextMenu)
 
 document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
