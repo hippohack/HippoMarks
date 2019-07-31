@@ -2,7 +2,7 @@
   <div class="content-menu">
     <div class="content-menu__screen" @click="$emit('apply', { flag: false })">
     </div>
-    <div class="content-menu__body" @click="no_action" :style="styles">
+    <div class="content-menu__body bg-dark" @click="no_action" :style="styles">
       <ul>
         <li><a href="">hoge</a></li>
         <li><a href="">hoge</a></li>
@@ -57,9 +57,9 @@ export default {
       padding: 10px;
       width: 300px;
       height: auto;
-      background-color: #222;
       z-index: 101;
-      border-radius: 5px
+      border-radius: 5px;
+      box-shadow: 2px 4px 8px -4px #333;
     }
   }
 </style>
