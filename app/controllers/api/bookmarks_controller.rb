@@ -30,4 +30,9 @@ class Api::BookmarksController < ApplicationController
     @folder_items
   end
 
+  def destroy
+    @bookmark = Bookmark.find(params[:id])
+    @bookmark.destroy
+  end
+
 end

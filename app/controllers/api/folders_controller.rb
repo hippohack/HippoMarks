@@ -26,6 +26,15 @@ class Api::FoldersController < ApplicationController
     @folder.update!(folder_params)
   end
 
+  def destroy
+    @folder = current_account.folders.find(params[:id])
+
+    @folder.children.each do |child|
+      current_account.folders.find(child.id).destroy
+    end
+    @folder.destroy
+  end
+
   private
     def folder_params
       params.fetch(:folder, {}).permit(

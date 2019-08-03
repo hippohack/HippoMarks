@@ -26,6 +26,7 @@
       v-if="context_menu"
       :_pageX="pageX"
       :_pageY="pageY"
+      :_item="item"
       @apply="receive"
     ></context-menu>
   </div>
