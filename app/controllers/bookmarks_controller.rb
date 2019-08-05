@@ -24,6 +24,10 @@ class BookmarksController < ApplicationController
 
   def create
     @bookmark = current_account.bookmarks.new(bookmark_params)
+    unless @bookmark.folder_id
+      @bookmark.folder_id = current_account.bookmarkbar_folder_id
+    end
+
     raise if @bookmark.save == false
 
     if params[:popup]
