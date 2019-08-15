@@ -73,6 +73,10 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'letter_opener_web'
+
+  # add: 2019-08-15
+  gem 'debase'
+  gem 'ruby-debug-ide'
 end
 
 group :test do
