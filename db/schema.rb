@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_233113) do
   create_table "bookmarks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "account_id", null: false
     t.integer "folder_id"
-    t.string "name", null: false
+    t.string "name"
     t.string "url", null: false
     t.longtext "icon"
     t.datetime "created_at", null: false

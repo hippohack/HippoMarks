@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   get '/bookmarks/export', to: 'bookmarks#export', as: 'export_bookmarks'
   resources :bookmarks
 
+  get '/import', to: 'import#index'
+  post '/import', to: 'import#index'
+
   get '/folders/manage', to: 'folders#manage', as: 'manage_folders'
   resources :folders
 
