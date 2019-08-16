@@ -53,7 +53,8 @@ module Import
     end
   end
 
-  def hoge
+  # </DT>差し込み
+  def adjust_html
     raise
   end
 
