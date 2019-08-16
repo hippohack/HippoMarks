@@ -46,7 +46,8 @@ module Import
         folder = save_folder(params, account, folder_id)
         folder_id = folder.id
 
-        obj.next_sibling.xpath('./dt').each do |child|
+        # raise
+        obj.next_element.xpath('./dt').each do |child|
           save_import_data(child, level + 1, account, folder_id)
         end
       end

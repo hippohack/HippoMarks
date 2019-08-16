@@ -13,7 +13,6 @@ class Bookmark < ApplicationRecord
   def self.import(file, account)
     raise unless file.content_type == "text/html"
 
-    # doc = Nokogiri::HTML.fragment(file.read)
     # TODO: どうせなら抽象化して全部整形する
     result = file.read.gsub(/<DT>(<A|<H3).+(<\/A>|<\/H3>)/) do |match|
       match += '</DT>'
