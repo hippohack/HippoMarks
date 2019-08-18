@@ -17,7 +17,11 @@
       target="_blank"
       :href="item.url"
       v-if="item.url"
-    ><i class="fa fa-link mr-2"></i>{{ item.name }}</a>
+    >
+      <img v-if="item.icon" :src="item.icon" class="mr-2" alt="">
+      <i v-if="!item.icon" class="fa fa-link mr-2"></i>
+      {{ item.name }}
+    </a>
 
     <a v-if="item.url && !folder_editing && edit_show" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="bookmark" @click="editBookmark(item.id)">edit</a>
     <a v-if="!item.url && !folder_editing && edit_show" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="folder" @click="editFolder(item.id)">edit</a>

@@ -53,8 +53,8 @@
     border-right: solid 1px #ccc;
     // ヘッダー分引いてる;
     height: calc(100vh - 155px);
-    min-width: 206px;
-    max-width: 206px;
+    min-width: 276px;
+    max-width: 276px;
     overflow: auto;
   }
   &__col--first {
@@ -70,6 +70,11 @@
   &__link {
     display: inline-block;
     padding: 5px 0;
+    vertical-align: middle;
+    max-width: 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &__capture {
     padding: 15px 0;
