@@ -9,7 +9,7 @@
 
     <span v-if="folder_editing">
       <i class="fa fa-folder-o mr-2"></i>
-      <input type="text" name="folder[name]" v-model="folder_name" @blur="update" class="edit-form">
+      <input type="text" name="folder[name]" v-model="folder_name" @blur="update" @keyup.enter="update" class="edit-form">
     </span>
 
     <a
@@ -23,15 +23,13 @@
       {{ item.name }}
     </a>
 
-    <a v-if="item.url && !folder_editing && edit_show" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="bookmark" @click="editBookmark(item.id)">edit</a>
-    <a v-if="!item.url && !folder_editing && edit_show" :id="`edit-${item.id}`" href="javascript:void(0)" :data-item-id="item.id" data-item-type="folder" @click="editFolder(item.id)">edit</a>
-
     <context-menu
       v-if="context_menu"
       :_pageX="pageX"
       :_pageY="pageY"
       :_item="item"
       @apply="receive"
+      @folder_edit="editFolder"
     ></context-menu>
   </div>
 </template>
@@ -64,13 +62,10 @@
         console.log({folder_id})
         this.$emit('apply', { clicked_folder_id: folder_id, is_active: true })
       },
-      editBookmark(id) {
-        (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`http://localhost:3000/bookmarks/${id}/edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
+      editFolder(values) {
+        this.folder_editing = values.folder_editing
       },
-      editFolder() {
-        this.folder_editing = !this.folder_editing
-      },
-      update() {
+      update(event) {
         this.item.name = this.folder_name
 
         axios.patch(`/api/folders/${this.item.id}`, this.item)
@@ -81,7 +76,7 @@
             console.log(error)
           })
 
-        this.folder_editing = !this.folder_editing
+        this.folder_editing = false
       },
       show_contextmenu(e) {
         this.pageX = e.pageX

@@ -4,12 +4,16 @@
     </div>
     <div class="content-menu__body" @click="no_action" :style="styles">
       <div v-if="_item.url" class="list-group">
-        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="">編集</a>
+        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="javascript:void(0)" @click="edit_bookmark">編集</a>
         <a class="content-menu__link list-group-item bg-dark text-light d-block" href="javascript:void(0)" @click="delete_bookmark">ブックマークを削除</a>
       </div>
 
       <div v-if="!_item.url" class="list-group">
-        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="">編集</a>
+        <a
+          class="content-menu__link list-group-item bg-dark text-light d-block"
+          href="javascript:void(0)"
+          @click="$emit('folder_edit', { folder_editing: true })"
+        >編集</a>
         <a class="content-menu__link list-group-item bg-dark text-light d-block" href="javascript:void(0)" @click="delete_folder">フォルダを削除</a>
       </div>
     </div>
@@ -41,6 +45,15 @@ export default {
         .catch(function(error) {
           console.log(error)
         })
+    },
+    edit_bookmark() {
+      // TODO: url調整
+      let a = window
+      let b = document
+      let c = encodeURIComponent
+      let d = a.open(`http://localhost:3000/bookmarks/${this._item.id}/edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1")
+
+      a.setTimeout(function () { d.focus() }, 300)
     }
   },
   props: {
