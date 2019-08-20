@@ -6,6 +6,7 @@ class CreateBookmarks < ActiveRecord::Migration[5.2]
       t.string :name
       t.longtext :url, null: false
       t.longtext :icon
+      t.longtext :keyword
 
       t.timestamps
     end

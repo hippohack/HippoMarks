@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_233113) do
     t.string "name"
     t.longtext "url", null: false
     t.longtext "icon"
+    t.longtext "keyword"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
