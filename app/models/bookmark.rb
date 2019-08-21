@@ -15,12 +15,17 @@ class Bookmark < ApplicationRecord
 
     # タグの不完全な部分を調整
     # TODO: どうせなら抽象化して全部整形する
-    result = file.read.gsub(/<DT>(<A|<H3).+(<\/A>|<\/H3>)/) do |match|
+    result = file.read.gsub(/<DT><A[.\s\S]*?">[.\s\S]*?<\/A>/) do |match|
       match += '</DT>'
     end
+    result = result.gsub(/<\/DL>[\s]*<p>/) do |match|
+      match = "</DL></DT>"
+    end
+    # raise
     doc = Nokogiri::HTML.parse(result)
 
-    doc.xpath('/html/body/dl/dl').each do |dl|
+    doc.xpath('/html/body/dl').each do |dl|
+    # doc.xpath('/html/body/dl/dl').each do |dl|
       dl.xpath('./dt').each do |item|
         Bookmark.save_import_data(item, 1, account)
       end
