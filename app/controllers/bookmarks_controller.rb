@@ -60,6 +60,7 @@ class BookmarksController < ApplicationController
         :folder_id,
         :name,
         :url,
+        :keyword
       )
     end
 

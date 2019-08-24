@@ -12,6 +12,11 @@
         .form-text.text-muted ex: https://www.hippohack.me/
 
       .form-group
+        = f.label :keyword
+        = f.text_field :keyword, class: 'form-control'
+        .form-text.text-muted ex: Tool, Color, Design
+
+      .form-group
         = f.label :folder_id
         .folder-list.p-3
           folders :_hierarchy_data="#{ @folders.to_json }" :_all_folders="#{ @all_folders.to_json }" :_level="1" :_id="#{@top_folder_id}" :_is_new_folder="is_new_folder" :_new_folder_parent_id="new_folder_parent_id"
