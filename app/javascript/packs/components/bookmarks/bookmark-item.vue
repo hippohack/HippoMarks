@@ -15,8 +15,9 @@
     <a
       class="bookmarks__link"
       target="_blank"
-      :href="item.url"
       v-if="item.url"
+      :href="item.url"
+      :title="item.keyword"
     >
       <img v-if="item.icon" :src="item.icon" class="mr-2" alt="">
       <i v-if="!item.icon" class="fa fa-link mr-2"></i>

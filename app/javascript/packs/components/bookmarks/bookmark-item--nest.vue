@@ -1,5 +1,7 @@
 <template>
-  <div @mouseenter="edit_show = !edit_show" @mouseleave="edit_show = !edit_show" @contextmenu="show_contextmenu">
+  <div
+    @contextmenu="show_contextmenu"
+  >
     <a
       class="bookmarks__link"
       href="javascript:void(0)"
@@ -15,8 +17,9 @@
     <a
       class="bookmarks__link"
       target="_blank"
-      :href="item.url"
       v-if="item.url"
+      :href="item.url"
+      :title="item.keyword"
     >
       <img v-if="item.icon" :src="item.icon" class="mr-2" alt="">
       <i v-if="!item.icon" class="fa fa-link mr-2"></i>
@@ -47,7 +50,7 @@
         folder_name: "",
         context_menu: false,
         pageX: "",
-        pageY: ""
+        pageY: "",
       };
     },
     props: {
