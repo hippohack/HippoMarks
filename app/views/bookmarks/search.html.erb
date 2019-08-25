@@ -22,7 +22,7 @@
               <tr>
                 <th scope="row" class="text-center"><%= bookmark.id %></th>
                 <td><strong><a href="<%= bookmark.url %>" target="_blank"><%= bookmark.name %></a></strong></td>
-                <td><%= @domain %></td>
+                <td><%= url_to_domain(bookmark.url) %></td>
                 <td><%= bookmark.keyword %></td>
                 <td class="text-center">999</td>
               </tr>
