@@ -9,8 +9,9 @@
         <bookmark-item-nest
           :_item="item"
           :_level="_level"
-          @apply="receive"
+          :_folder_id="seleted_folder_id"
           :key="item.id"
+          @apply="receive"
         ></bookmark-item-nest>
       </div>
     </div>
@@ -24,7 +25,8 @@
     data() {
       return {
         fetch_items: [],
-        last_request_id: null
+        last_request_id: null,
+        seleted_folder_id: null
       }
     },
     props: {
@@ -60,7 +62,7 @@
       },
       receive(values) {
         console.log({values})
-        // this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
+        this.seleted_folder_id = values.folder_id
         this.$emit('apply', { folder_id: values.folder_id, level: values.level })
         // this.$forceUpdate()
       }

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind:class="{ active: is_active && item.id == clicked_folder_id }"
+    v-bind:class="{ active: is_active && item.id == _folder_id }"
     @contextmenu="show_contextmenu"
   >
     <a
@@ -45,7 +45,6 @@
     data: function() {
       return {
         is_active: false,
-        clicked_folder_id: "",
         folder_editing: false,
         edit_show: false,
         folder_name: "",
@@ -70,7 +69,6 @@
     methods: {
       openFolder: function(folder_id) {
         this.is_active = true
-        this.clicked_folder_id = folder_id
         this.$emit('apply', { folder_id: folder_id, level: this._level+1 })
       },
       editFolder(values) {
