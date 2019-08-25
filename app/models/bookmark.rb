@@ -33,4 +33,9 @@ class Bookmark < ApplicationRecord
 
     true
   end
+
+  def self.search(search)
+    return nil if search.blank?
+    where('name LIKE ?', "%#{search}%").or(where('keyword LIKE ?', "%#{search}%")).distinct
+  end
 end

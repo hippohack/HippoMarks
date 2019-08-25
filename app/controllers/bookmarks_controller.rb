@@ -53,6 +53,12 @@ class BookmarksController < ApplicationController
     render :show
   end
 
+  def search
+    @bookmarks = current_account.bookmarks.search(params[:s])
+    # TODO: domain整形
+    @domain = 'hoge.com'
+  end
+
   private
     def bookmark_params
       params.fetch(:bookmark, {}).permit(

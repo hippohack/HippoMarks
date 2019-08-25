@@ -2,13 +2,12 @@ nav.navbar.navbar-light.bg-dark
   = link_to(root_path, class: 'navbar-brand text-white') do
     img.d-inline-block.align-top.mr-2 src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" alt=""
     | Bookmarks
-  a.px-2.mr-2.text-white href="#home"
+  = link_to(root_path, class: 'px-2 mr-2 text-white') do
     i.fa.fa-home.fa-lg aria-hidden="true"
 
-  / if ['home#index'].include? @loaded_action
-  - if false
-    form.flex-grow-1.mr-2
-      input type="search" class="form-control" id="search-input" placeholder="Search..."
+  - if ['home#index', 'bookmarks#search'].include? @loaded_action
+    = form_tag(search_bookmarks_path, :method => 'get', class: "flex-grow-1 mr-2")
+      = search_field_tag :s, params[:s], { class: "form-control", id: "search-input", placeholder: "Search..." }
 
   ul.flex-row.navbar-nav.ml-auto
     li.nav-item.dropdown.ml-auto.px-2
