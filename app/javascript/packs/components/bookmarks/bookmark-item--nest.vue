@@ -1,12 +1,13 @@
 <template>
   <div
+    v-bind:class="{ active: is_active && item.id == clicked_folder_id }"
     @contextmenu="show_contextmenu"
   >
     <a
       class="bookmarks__link"
       href="javascript:void(0)"
       v-if="!item.url && !folder_editing"
-      @click="$emit('apply', { folder_id: item.id, level: _level+1 })"
+      @click="openFolder(item.id)"
     ><i class="fa fa-folder-o mr-2"></i>{{ item.name }}</a>
 
     <span v-if="folder_editing">
@@ -55,20 +56,22 @@
     },
     props: {
       _item: "",
-      _level: ""
+      _level: "",
+      _folder_id: ""
     },
     computed: {
       item() {
         return this._item
-      }
+      },
     },
     mounted() {
       this.folder_name = this._item.name
     },
     methods: {
       openFolder: function(folder_id) {
-        console.log({folder_id})
-        this.$emit('apply', { clicked_folder_id: folder_id, is_active: true })
+        this.is_active = true
+        this.clicked_folder_id = folder_id
+        this.$emit('apply', { folder_id: folder_id, level: this._level+1 })
       },
       editFolder(values) {
         this.folder_editing = values.folder_editing
@@ -94,8 +97,8 @@
       },
       receive(values) {
         this.context_menu = values.flag
-      }
-    }
+      },
+    },
   }
 </script>
 

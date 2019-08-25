@@ -10,6 +10,7 @@
           :_item="item"
           :_level="_level"
           @apply="receive"
+          :key="item.id"
         ></bookmark-item-nest>
       </div>
     </div>

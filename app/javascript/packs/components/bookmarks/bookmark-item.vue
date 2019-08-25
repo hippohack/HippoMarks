@@ -1,5 +1,8 @@
 <template>
-  <div @mouseenter="edit_show = !edit_show" @mouseleave="edit_show = !edit_show" @contextmenu="show_contextmenu">
+  <div
+    v-bind:class="{ active: is_active && item.id == _folder_id }"
+    @contextmenu="show_contextmenu"
+  >
     <a
       class="bookmarks__link"
       href="javascript:void(0)"
@@ -52,7 +55,8 @@
       };
     },
     props: {
-      _item: ""
+      _item: "",
+      _folder_id: ""
     },
     mounted() {
       this.item = this._item
@@ -61,6 +65,7 @@
     methods: {
       openFolder: function(folder_id) {
         console.log({folder_id})
+        this.is_active = true
         this.$emit('apply', { clicked_folder_id: folder_id, is_active: true })
       },
       editFolder(values) {

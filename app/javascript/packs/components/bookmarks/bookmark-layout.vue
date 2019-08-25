@@ -9,6 +9,7 @@
         >
           <bookmark-item
             :_item="item"
+            :_folder_id="clicked_folder_id"
             @apply="receive"
           ></bookmark-item>
         </div>
