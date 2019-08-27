@@ -39,7 +39,11 @@
     },
     methods: {
       receive(values) {
-        console.log({values})
+        if (this.columns.length > values.level) {
+          for (var i = values.level; i < this.columns.length+1; i++) {
+            this.columns.splice(i)
+          }
+        }
         this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
         this.$emit('apply2', { folder_name: values.folder_name, level: values.level })
         this.$forceUpdate()
