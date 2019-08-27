@@ -6,6 +6,7 @@
       :_folder_id="column.folder_id"
       :_level="column.level"
       @apply="receive"
+      @apply_bookmark="relay_bookmark"
     ></bookmark-column>
   </div>
 </template>
@@ -47,6 +48,9 @@
         this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
         this.$emit('apply2', { folder_name: values.folder_name, level: values.level })
         this.$forceUpdate()
+      },
+      relay_bookmark(values) {
+        this.$emit('apply_bookmark', { bookmark: values.bookmark })
       }
     }
   }

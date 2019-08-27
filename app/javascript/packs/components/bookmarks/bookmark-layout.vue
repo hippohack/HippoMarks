@@ -23,11 +23,20 @@
             v-if="is_active"
             :_clicked_folder_id="clicked_folder_id"
             @apply2="push_folder_hierachy"
+            @apply_bookmark="catch_bookmark"
           ></bookmark-columns>
         </div>
         <div class="col-4 bookmark__col bookmark__col--last">
           <div class="bookmarks__capture">
-            <img src="https://dummyimage.com/600x400/000/fff" alt="">
+            <!-- FIXME: 動いてない？ -->
+            <transition name="fade">
+              <img
+                v-if="current_bookmark && current_bookmark.og_image_url"
+                :src="current_bookmark.og_image_url"
+                alt=""
+              >
+              <img v-else src="https://dummyimage.com/600x400/000/fff" alt="">
+            </transition>
           </div>
           <div class="bookmarks__description">
             <div> hoge</div>
@@ -64,7 +73,8 @@
         clicked_folder_id: "",
         items: [],
         folder_editing: false,
-        folder_hierarchy_data: []
+        folder_hierarchy_data: [],
+        current_bookmark: null
       };
     },
     props: {
@@ -116,11 +126,19 @@
         }
         this.folder_hierarchy_data[values.level] = values.folder_name
         this.$forceUpdate()
+      },
+      catch_bookmark(values) {
+        this.current_bookmark = values.bookmark
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 </style>

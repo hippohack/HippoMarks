@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class Bookmark < ApplicationRecord
   belongs_to :account
   belongs_to :folder
@@ -37,5 +39,19 @@ class Bookmark < ApplicationRecord
   def self.search(search)
     return nil if search.blank?
     where('name LIKE ?', "%#{search}%").or(where('keyword LIKE ?', "%#{search}%")).distinct
+  end
+
+  def self.get_site_capture(url)
+    doc = Nokogiri::HTML(open(url))
+    # <meta property=”og:image” content=”http://www.yourdomain.com/image-name.jpg” />
+    og_image_url = doc.xpath('/html/head/meta[@property="og:image"]/@content').to_s
+    og_image_url = doc.xpath('/html/head/meta[@property="og:image:url"]/@content').to_s if og_image_url.blank?
+
+    if og_image_url.blank?
+      # TODO: capture site image
+      # raise
+    end
+
+    og_image_url
   end
 end

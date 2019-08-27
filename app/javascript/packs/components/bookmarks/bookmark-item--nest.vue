@@ -21,6 +21,8 @@
       v-if="item.url"
       :href="item.url"
       :title="item.keyword"
+      @mouseenter="$emit('apply_bookmark', { bookmark: item })"
+      @mouseleave="$emit('apply_bookmark', { bookmark: null })"
     >
       <img v-if="item.icon" :src="item.icon" class="mr-2" alt="">
       <i v-if="!item.icon" class="fa fa-link mr-2"></i>

@@ -28,6 +28,8 @@ class BookmarksController < ApplicationController
       @bookmark.folder_id = current_account.bookmarkbar_folder_id
     end
 
+    @bookmark.og_image_url = Bookmark.get_site_capture(@bookmark.url)
+
     raise if @bookmark.save == false
 
     if params[:popup]
@@ -66,7 +68,8 @@ class BookmarksController < ApplicationController
         :folder_id,
         :name,
         :url,
-        :keyword
+        :keyword,
+        :og_image_url
       )
     end
 

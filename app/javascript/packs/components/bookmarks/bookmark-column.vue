@@ -12,6 +12,7 @@
           :_folder_id="seleted_folder_id"
           :key="item.id"
           @apply="receive"
+          @apply_bookmark="relay_bookmark"
         ></bookmark-item-nest>
       </div>
     </div>
@@ -68,6 +69,9 @@
         console.log({found})
         this.$emit('apply', { folder_id: values.folder_id, level: values.level, folder_name: found.name })
         // this.$forceUpdate()
+      },
+      relay_bookmark(values) {
+        this.$emit('apply_bookmark', { bookmark: values.bookmark })
       }
     }
   }

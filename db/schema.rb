@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_233113) do
     t.text "url", limit: 4294967295, null: false
     t.text "icon", limit: 4294967295
     t.text "keyword", limit: 4294967295
+    t.text "og_image_url", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
