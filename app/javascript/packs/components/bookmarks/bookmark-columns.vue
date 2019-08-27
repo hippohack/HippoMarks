@@ -41,6 +41,7 @@
       receive(values) {
         console.log({values})
         this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
+        this.$emit('apply2', { folder_name: values.folder_name, level: values.level })
         this.$forceUpdate()
       }
     }

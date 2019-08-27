@@ -107,9 +107,11 @@
   padding: 5px 15px;
   &__item {
     font-size: 0.7rem;
-    &:after {
-      content: ">";
-      padding: 0 10px;
+    &:not(:first-child) {
+      &:before {
+        content: ">";
+        padding: 0 10px;
+      }
     }
   }
 }

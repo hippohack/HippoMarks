@@ -22,6 +22,7 @@
           <bookmark-columns
             v-if="is_active"
             :_clicked_folder_id="clicked_folder_id"
+            @apply2="push_folder_hierachy"
           ></bookmark-columns>
         </div>
         <div class="col-4 bookmark__col bookmark__col--last">
@@ -38,9 +39,14 @@
       <div class="row pos-bottom">
         <div class="col-12 bookmarks__crumb">
           <div class="crumb d-flex justify-content-start">
-            <div class="crumb__item"><i class="fa fa-folder-o mr-1"></i> FOLDER_NAME</div>
-            <div class="crumb__item"><i class="fa fa-folder-o mr-1"></i> FOLDER_NAME</div>
-            <div class="crumb__item"><i class="fa fa-folder-o mr-1"></i> FOLDER_NAME</div>
+            <div class="crumb__item"> <i class="fa fa-folder-o mr-1"></i>Bookmarks</div>
+            <div
+              v-for="(folder, index) in folder_hierarchy"
+              v-bind:key="index"
+              class="crumb__item"
+            >
+              <i class="fa fa-folder-o mr-1"></i>{{ folder }}
+            </div>
           </div>
         </div>
       </div>
@@ -57,7 +63,8 @@
         is_active: false,
         clicked_folder_id: "",
         items: [],
-        folder_editing: false
+        folder_editing: false,
+        folder_hierarchy_data: []
       };
     },
     props: {
@@ -67,6 +74,22 @@
     },
     mounted: function() {
       this.items = this._folders.concat(this._bookmarks)
+    },
+    computed: {
+      folder_hierarchy() {
+        if (!this.clicked_folder_id) {
+          return
+        }
+        let id = this.clicked_folder_id
+        let found = this._folders.find(function(element) {
+          return element.id == id && !element.url
+        })
+        if (this.folder_hierarchy_data[0] != found.name) {
+          this.folder_hierarchy_data = []
+          this.folder_hierarchy_data[0] = found.name
+        }
+        return this.folder_hierarchy_data
+      }
     },
     methods: {
       openFolder: function(folder_id) {
@@ -80,13 +103,19 @@
       editFolder() {
         this.folder_editing = !this.folder_editing
       },
-      update() {
-
-      },
       receive(values) {
         console.log({values})
         this.clicked_folder_id = values.clicked_folder_id
         this.is_active = values.is_active
+      },
+      push_folder_hierachy(values) {
+        if (this.folder_hierarchy_data.length > values.level) {
+          for (var i = values.level; i < this.folder_hierarchy_data.length+1; i++) {
+            this.folder_hierarchy_data.splice(i)
+          }
+        }
+        this.folder_hierarchy_data[values.level] = values.folder_name
+        this.$forceUpdate()
       }
     }
   }
