@@ -42,7 +42,10 @@ class Bookmark < ApplicationRecord
   end
 
   def self.get_site_capture(url)
-    doc = Nokogiri::HTML(open(url))
+    doc = Nokogiri::HTML(self.safe_open(url))
+
+    return nil if doc.blank?
+
     # <meta property=”og:image” content=”http://www.yourdomain.com/image-name.jpg” />
     og_image_url = doc.xpath('/html/head/meta[@property="og:image"]/@content').to_s
     og_image_url = doc.xpath('/html/head/meta[@property="og:image:url"]/@content').to_s if og_image_url.blank?
@@ -53,5 +56,15 @@ class Bookmark < ApplicationRecord
     end
 
     og_image_url
+  end
+
+  def self.safe_open(url)
+    begin
+      OpenURI.open_uri(url, redirect: false) { |io|
+        return io.read
+      }
+    rescue => e
+      puts e # 例外メッセージ表示
+    end
   end
 end

@@ -18,6 +18,7 @@ module Import
     # インスタンスメソッド
     def save_bookmark(params, account, folder_id)
       params.merge!({ account_id: account.id, folder_id: folder_id })
+      params[:og_image_url] = Bookmark.get_site_capture(params[:url])
       Bookmark.create!(params)
     end
 
