@@ -7,6 +7,7 @@ class Bookmark < ApplicationRecord
   validates :url, presence: true
 
   include Import
+  include Capture
 
   def self.get_child_bookmarks(bookmark_id)
     self.where(parent_id: bookmark_id)
@@ -52,7 +53,7 @@ class Bookmark < ApplicationRecord
 
     if og_image_url.blank?
       # TODO: capture site image
-      # raise
+      og_image_url = Bookmark.get_screenshot(url)
     end
 
     og_image_url
