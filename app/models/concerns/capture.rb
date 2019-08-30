@@ -12,6 +12,7 @@ module Capture
       options.add_argument('--headless')
       options.add_argument('--no-sandbox')
       options.add_argument('--disable-gpu')
+
       driver = Selenium::WebDriver.for :chrome, options: options
 
       driver.navigate.to url
@@ -22,6 +23,7 @@ module Capture
       driver.manage.window.resize_to(372, 248)
       src = 'data:image/png;base64,' + driver.screenshot_as(:base64)
       # driver.save_screenshot "screenshot.png"
+      driver.quit
       src
     end
   end
