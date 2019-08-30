@@ -4,7 +4,7 @@ class BookmarksController < ApplicationController
   include FolderData
 
   def index
-
+    redirect_to root_path
   end
 
   def new
