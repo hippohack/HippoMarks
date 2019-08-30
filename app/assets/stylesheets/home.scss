@@ -135,4 +135,6 @@
 .folder-list {
   border: solid 1px #ccc;
   background-color: #e6e6e6;
+  overflow: auto;
+  height: 250px;
 }
