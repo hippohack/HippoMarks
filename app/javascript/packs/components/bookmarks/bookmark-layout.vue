@@ -40,10 +40,10 @@
           </div>
           <div class="bookmarks__description">
             <div>Name: {{ current_bookmark.name }}</div>
-            <div>URL: {{ current_bookmark.url }}</div>
+            <div>URL: {{ current_bookmark.url | excerpt }}</div>
             <div>Keywords: {{ current_bookmark.keyword }}</div>
             <div>Impressions: 999 times</div>
-            <div>Created_at: {{ current_bookmark.created_at }}</div>
+            <div>Created_at: {{ current_bookmark.created_at | moment }}</div>
           </div>
         </div>
       </div>
@@ -67,6 +67,7 @@
 
 <script>
   import axios from 'axios';
+  import moment from 'moment';
 
   export default {
     data: function() {
@@ -131,6 +132,17 @@
       },
       catch_bookmark(values) {
         this.current_bookmark = values.bookmark
+      }
+    },
+    filters: {
+      moment(date) {
+        return moment(date).format('YYYY/MM/DD');
+      },
+      excerpt(text) {
+        if (text.length > 42) {
+          return text.slice(0, 40) + '...'
+        }
+        return text
       }
     }
   }
