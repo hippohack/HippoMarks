@@ -26,22 +26,24 @@
             @apply_bookmark="catch_bookmark"
           ></bookmark-columns>
         </div>
-        <div class="col-4 bookmark__col bookmark__col--last">
+        <div v-if="current_bookmark" class="col-4 bookmark__col bookmark__col--last border-left">
           <div class="bookmarks__capture">
             <!-- FIXME: 動いてない？ -->
             <transition name="fade">
               <img
-                v-if="current_bookmark && current_bookmark.og_image_url"
+                v-if="current_bookmark.og_image_url"
                 :src="current_bookmark.og_image_url"
-                alt=""
+                :alt="current_bookmark.name"
               >
               <img v-else src="https://dummyimage.com/600x400/000/fff" alt="">
             </transition>
           </div>
           <div class="bookmarks__description">
-            <div> hoge</div>
-            <div> fuga</div>
-            <div> piyo</div>
+            <div>Name: {{ current_bookmark.name }}</div>
+            <div>URL: {{ current_bookmark.url }}</div>
+            <div>Keywords: {{ current_bookmark.keyword }}</div>
+            <div>Impressions: 999 times</div>
+            <div>Created_at: {{ current_bookmark.created_at }}</div>
           </div>
         </div>
       </div>

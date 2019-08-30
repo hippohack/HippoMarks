@@ -96,7 +96,9 @@
     }
   }
   &__description {
-    text-align: center;
+    // text-align: center;
+    width: 372px;
+    margin: 0 auto;
   }
   &__crumb {
     border-top: solid 1px #ccc;
