@@ -15,9 +15,15 @@ module Capture
       options.add_argument('--disable-gpu')
       options.add_argument('--hide-scrollbars')
 
+      # TODO: タイムアウトみじかくしてもいいかも
       driver = Selenium::WebDriver.for :chrome, options: options
 
-      driver.navigate.to url
+      begin
+        driver.navigate.to url
+      rescue => exception
+        puts exception
+        return nil
+      end
 
       # resize the window and take a screenshot
       driver.manage.window.resize_to(1280, 800)
