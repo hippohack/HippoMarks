@@ -51,6 +51,7 @@ gem 'bootstrap', '~> 4.3.1'
 gem "font-awesome-rails"
 
 # add: 2019-08-29
+gem 'rmagick', '~> 4.0'
 gem 'selenium-webdriver'
 gem 'webdrivers'
 

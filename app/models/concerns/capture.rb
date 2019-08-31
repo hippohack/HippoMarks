@@ -1,5 +1,6 @@
 require 'active_support/concern'
-require "selenium-webdriver"
+require 'selenium-webdriver'
+require 'rmagick'
 
 # site capture with 'watir'
 module Capture
@@ -12,19 +13,23 @@ module Capture
       options.add_argument('--headless')
       options.add_argument('--no-sandbox')
       options.add_argument('--disable-gpu')
+      options.add_argument('--hide-scrollbars')
 
       driver = Selenium::WebDriver.for :chrome, options: options
 
       driver.navigate.to url
 
       # resize the window and take a screenshot
-      # TODO: ウィンドウサイズではなく画像サイズを小さくする
-      # TODO: スクロールバーなくす
-      driver.manage.window.resize_to(372, 248)
-      src = 'data:image/png;base64,' + driver.screenshot_as(:base64)
-      # driver.save_screenshot "screenshot.png"
+      driver.manage.window.resize_to(1280, 800)
+      src = driver.screenshot_as(:base64)
       driver.quit
-      src
+
+      image = Magick::Image.from_blob(Base64.decode64(src)).first
+      new_src = image.change_geometry!('372x248') do |cols, rows, img|
+        img.resize(cols, rows)
+      end
+
+      'data:image/png;base64,' + Base64.encode64(new_src.to_blob)
     end
   end
 end
