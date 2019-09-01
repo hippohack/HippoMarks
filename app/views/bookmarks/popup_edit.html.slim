@@ -1,7 +1,7 @@
 #app
   = render "shared/navbar"
   main.p-3
-    = form_for @bookmark do |f|
+    = form_for @bookmark, :remote => true do |f|
       .form-group
         = f.label :name
         = f.text_field :name, class: 'form-control'
@@ -19,11 +19,13 @@
         .folder-list.p-3
           folders :_hierarchy_data="#{ @folders.to_json }" :_all_folders="#{ @all_folders.to_json }" :_level="1" :_id="#{@top_folder_id}" :_is_new_folder="is_new_folder" :_new_folder_parent_id="new_folder_parent_id"
 
+      = hidden_field_tag :popup, 'true'
+
       .d-flex.mt-3
         div.mr-auto
           = link_to '新しいフォルダ', 'javascript:void(0)', class: 'btn btn-outline-primary', id: 'new-folder', 'v-on:click': "show_new_folder"
         div.mr-2
-          = link_to 'キャンセル', 'javascript:history.back()', class: 'btn btn-outline-primary'
+          = link_to 'キャンセル', 'javascript:window.close()', class: 'btn btn-outline-primary'
         div
           = f.submit "保存する", class: 'btn btn-primary'
 

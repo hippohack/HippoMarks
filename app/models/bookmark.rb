@@ -39,7 +39,10 @@ class Bookmark < ApplicationRecord
 
   def self.search(search)
     return nil if search.blank?
-    where('name LIKE ?', "%#{search}%").or(where('keyword LIKE ?', "%#{search}%")).distinct
+
+    where('name LIKE ?', "%#{search}%")
+    .or(where('keyword LIKE ?', "%#{search}%"))
+    .or(where('url LIKE ?', "%#{search}%")).distinct
   end
 
   def self.get_site_capture(url)

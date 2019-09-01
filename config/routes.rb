@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # get 'home/index'
 
   get '/bookmarks/add', to: 'bookmarks#add', as: 'add_bookmark'
+  get '/bookmarks/:id/popup_edit', to: 'bookmarks#popup_edit', as: 'popup_edit_bookmark'
   get '/bookmarks/manage', to: 'bookmarks#manage', as: 'manage_bookmarks'
   get '/bookmarks/import', to: 'bookmarks#import', as: 'import_bookmarks'
   get '/bookmarks/export', to: 'bookmarks#export', as: 'export_bookmarks'

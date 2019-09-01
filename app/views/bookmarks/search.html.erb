@@ -15,16 +15,23 @@
               <th scope="col">Domain</th>
               <th scope="col">Keyword</th>
               <th scope="col" class="text-center">Viewed times</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>
             <% @bookmarks&.each do |bookmark| %>
               <tr>
-                <th scope="row" class="text-center"><%= bookmark.id %></th>
-                <td><strong><a href="<%= bookmark.url %>" target="_blank"><%= bookmark.name %></a></strong></td>
-                <td><%= url_to_domain(bookmark.url) %></td>
-                <td><%= bookmark.keyword %></td>
-                <td class="text-center">999</td>
+                <td class="text-center align-middle"><img src="<%= bookmark.og_image_url %>" alt="<%= bookmark.name %>" width="160"></td>
+                <td class="align-middle"><strong><a href="<%= bookmark.url %>" target="_blank"><%= bookmark.name %></a></strong></td>
+                <td class="align-middle"><%= url_to_domain(bookmark.url) %></td>
+                <td class="align-middle"><%= bookmark.keyword %></td>
+                <td class="text-center align-middle">999</td>
+                <td class="align-middle">
+                  <div class="btn-group">
+                    <%= link_to 'Edit', edit_bookmark_path(bookmark), class: "btn btn-primary" %>
+                    <%= link_to 'Delete', bookmark_path(bookmark), method: 'delete', class: "btn btn-danger" %>
+                  </div>
+                </td>
               </tr>
             <% end %>
           </tbody>

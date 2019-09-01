@@ -20,14 +20,14 @@ module Capture
 
       begin
         driver.navigate.to url
+        driver.manage.window.resize_to(1280, 800)
+        src = driver.screenshot_as(:base64)
       rescue => exception
         puts exception
         return nil
       end
 
       # resize the window and take a screenshot
-      driver.manage.window.resize_to(1280, 800)
-      src = driver.screenshot_as(:base64)
       driver.quit
 
       image = Magick::Image.from_blob(Base64.decode64(src)).first

@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+main {
+  // margin-bottom: 20px;
+}
+
 .navbar-nav .dropdown-menu {
   position: absolute;
   left: -235px;
@@ -139,4 +143,9 @@
   background-color: #e6e6e6;
   overflow: auto;
   height: 250px;
+}
+
+.edit_bookmark {
+  max-width: 640px;
+  margin: 0 auto;
 }
