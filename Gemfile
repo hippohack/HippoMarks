@@ -58,12 +58,15 @@ gem 'webdrivers'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  
+
   # add: 2019-05-30
   gem 'rspec-rails'
   # gem 'factory_girl_rails'
   gem "factory_bot"
   gem 'guard-rspec', require: false
+
+  # add: 2019-09-03
+  gem 'dotenv-rails'
 end
 
 group :development do
