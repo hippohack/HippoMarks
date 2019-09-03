@@ -5,6 +5,7 @@
       v-bind:key="index"
       :_folder_id="column.folder_id"
       :_level="column.level"
+      :_home_url="_home_url"
       @apply="receive"
       @apply_bookmark="relay_bookmark"
     ></bookmark-column>
@@ -21,7 +22,8 @@
       }
     },
     props: {
-      _clicked_folder_id: { type: Number }
+      _clicked_folder_id: { type: Number },
+      _home_url: ""
     },
     mounted() {
       this.clicked_folder_id = this._clicked_folder_id

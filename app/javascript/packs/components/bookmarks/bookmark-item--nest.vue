@@ -34,6 +34,7 @@
       :_pageX="pageX"
       :_pageY="pageY"
       :_item="item"
+      :_home_url="_home_url"
       @apply="receive"
       @folder_edit="editFolder"
     ></context-menu>
@@ -58,7 +59,8 @@
     props: {
       _item: "",
       _level: "",
-      _folder_id: ""
+      _folder_id: "",
+      _home_url: ""
     },
     computed: {
       item() {

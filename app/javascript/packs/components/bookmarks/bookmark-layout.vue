@@ -10,6 +10,7 @@
           <bookmark-item
             :_item="item"
             :_folder_id="clicked_folder_id"
+            :_home_url="_home_url"
             @apply="receive"
           ></bookmark-item>
         </div>
@@ -22,6 +23,7 @@
           <bookmark-columns
             v-if="is_active"
             :_clicked_folder_id="clicked_folder_id"
+            :_home_url="_home_url"
             @apply2="push_folder_hierachy"
             @apply_bookmark="catch_bookmark"
           ></bookmark-columns>
@@ -83,7 +85,8 @@
     props: {
       _top_folder: { type: Object },
       _folders: { type: Array },
-      _bookmarks: { type: Array }
+      _bookmarks: { type: Array },
+      _home_url: ""
     },
     mounted: function() {
       this.items = this._folders.concat(this._bookmarks)
@@ -111,7 +114,7 @@
         this.is_active = true
       },
       editBookmark(id) {
-        (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`http://localhost:3000/bookmarks/${id}/popup_edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
+        (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`${this._home_url}/bookmarks/${id}/popup_edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
       },
       editFolder() {
         this.folder_editing = !this.folder_editing
