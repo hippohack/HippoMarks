@@ -17,7 +17,7 @@
       .form-group
         = f.label :folder_id
         .folder-list.p-3
-          folders :_hierarchy_data="#{ @folders.to_json }" :_all_folders="#{ @all_folders.to_json }" :_level="1" :_id="#{@top_folder_id}" :_is_new_folder="is_new_folder" :_new_folder_parent_id="new_folder_parent_id"
+          folders :_hierarchy_data="#{ @folders.to_json }" :_all_folders="#{ @all_folders.to_json }" :_level="1" :_id="#{@top_folder_id}" :_is_new_folder="is_new_folder" :_new_folder_parent_id="new_folder_parent_id" :_belong_folder="#{ @bookmark.folder_id }"
 
       .d-flex.mt-3
         div.mr-auto
@@ -25,6 +25,6 @@
         div.mr-2
           = link_to 'キャンセル', 'javascript:history.back()', class: 'btn btn-outline-primary'
         div
-          = f.submit "保存する", class: 'btn btn-primary'
+          = f.button "保存する", { type: 'button',  class: 'btn btn-primary', 'v-on:click': "submit" }
 
 = javascript_pack_tag 'bookmark'

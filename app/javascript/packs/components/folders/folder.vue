@@ -1,10 +1,16 @@
 <template>
-  <div v-bind:class="level === 1 ? null : 'pl-3'">
-    <label :for="`item_${_folder.id}`">
-      <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" @change="is_active = !is_active"> {{ find_folder(_folder.id).name }}
-    </label>
+  <div v-bind:class="level === 1 ? null : 'pl-24px'">
+    <span v-if="find_child(_folder.id)" @click="is_active = !is_active">
+      <span v-if="!is_active" class="folder__state">▶</span>
+      <span v-else class="folder__state">▼</span>
+    </span>
+    <span v-else style="visibility: hidden;" class="folder__state">▶</span>
+    <i class="fa fa-folder-o ml-1"></i>
+    <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" class="d-none">
+    <label class="folder__label" :for="`item_${_folder.id}`"> {{ find_folder(_folder.id).name }}</label>
     <folders
       v-if="is_active"
+      :key="_folder.id"
       :_hierarchy_data="hierarchy_data"
       :_all_folders="all_folders"
       :_level="level+1"
@@ -23,6 +29,7 @@ export default {
       all_folders: "",
       level: "",
       is_active: false,
+      has_child: false
     }
   },
   props: {
@@ -32,6 +39,7 @@ export default {
     _hierarchy_data: "",
     _is_new_folder: "",
     _new_folder_parent_id: "",
+    _belong_folder: ""
   },
   beforeMount() {
     this.hierarchy_data = this._hierarchy_data
@@ -51,7 +59,43 @@ export default {
       return this._all_folders.find(function(element) {
         return element['id'] === id;
       })
+    },
+    find_child(id) {
+      return this._all_folders.find(function(element) {
+        return element['folder_id'] === id
+      })
+    }
+  },
+  // TODO: これで監視してみる？？ → いまんとこいらない
+  watch: {
+    _is_new_folder(val, oldVal) {
+      if(val) {
+        this.is_active = true
+      }
+      console.log('new: %s, old: %s', val, oldVal)
     }
   }
 }
 </script>
+
+<style lang="scss">
+  .folder {
+    &__label {
+      padding: 3px 5px;
+      border-radius: 2px;
+      margin-bottom: 0;
+
+      input:checked + & {
+        background-color: #ccc;
+      }
+    }
+    &__state {
+      font-size: 80%;
+      position: relative;
+      bottom: 2px;
+    }
+  }
+  .pl-24px {
+    padding-left: 24px;
+  }
+</style>

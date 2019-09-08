@@ -1,9 +1,9 @@
 <template>
   <div>
-    <span v-if="!is_created && _is_new_folder && _id == _new_folder_parent_id" class='pl-3'>
-      <i class="fa fa-folder-o"></i>
-      <input type="text" name="folder[name]" v-model="name" @blur="create">
-    </span>
+    <div v-if="!is_created && _is_new_folder && _id == _new_folder_parent_id" class='pl-5 mb-2'>
+      <i class="fa fa-folder-o ml-2"></i>
+      <input type="text" name="folder[name]" v-model="name" @blur="create" @keyup.enter="create" placeholder="folder name..." class="py-1 px-2">
+    </div>
 
     <div v-if="hierarchy_data[level]">
       <folder
@@ -15,6 +15,7 @@
         :_level="level"
         :_is_new_folder="is_new_folder"
         :_new_folder_parent_id="new_folder_parent_id"
+        :_belong_folder="_belong_folder"
       ></folder>
     </div>
   </div>
@@ -30,7 +31,7 @@ axios.defaults.headers.common = {
 export default {
   data() {
     return {
-      name: "folder name...",
+      name: "",
       is_created: false,
       created_folder: "",
       hierarchy_data: "",
@@ -44,7 +45,8 @@ export default {
     _level: "",
     _id: "",
     _is_new_folder: "",
-    _new_folder_parent_id: ""
+    _new_folder_parent_id: "",
+    _belong_folder: ""
   },
   beforeMount() {
     this.hierarchy_data = this._hierarchy_data
@@ -72,6 +74,7 @@ export default {
           this.created_folder = response.data.folder
           this.hierarchy_data = response.data.folders
           this.all_folders = response.data.all_folders
+          this.$root.is_new_folder = false
           this.show()
         })
         .catch(error => {
@@ -81,12 +84,15 @@ export default {
     show() {
       this.is_created = true
       this.$forceUpdate()
+      // reset
+      this.name = null
+      this.is_created = false
     },
     find_folder(id) {
       return this._all_folders.find(function(elm) {
         return elm.id == id
       })
-    }
+    },
   }
 }
 </script>

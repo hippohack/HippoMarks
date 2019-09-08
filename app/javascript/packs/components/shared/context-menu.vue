@@ -14,6 +14,7 @@
           href="javascript:void(0)"
           @click="$emit('folder_edit', { folder_editing: true })"
         >編集</a>
+        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="#">フォルダを作成</a>
         <a class="content-menu__link list-group-item bg-dark text-light d-block" href="javascript:void(0)" @click="delete_folder">フォルダを削除</a>
       </div>
     </div>
