@@ -7,8 +7,8 @@
 
     <div v-if="hierarchy_data[level]">
       <folder
-        v-for="(folder, index) in hierarchy_data[level][_id]"
-        v-bind:key="index"
+        v-for="folder in hierarchy_data[level][_id]"
+        v-bind:key="folder.id"
         :_folder="folder"
         :_all_folders="all_folders"
         :_hierarchy_data="hierarchy_data"
@@ -16,6 +16,7 @@
         :_is_new_folder="is_new_folder"
         :_new_folder_parent_id="new_folder_parent_id"
         :_belong_folder="_belong_folder"
+        :_bookmark="_bookmark"
       ></folder>
     </div>
   </div>
@@ -46,7 +47,8 @@ export default {
     _id: "",
     _is_new_folder: "",
     _new_folder_parent_id: "",
-    _belong_folder: ""
+    _belong_folder: "",
+    _bookmark: ""
   },
   beforeMount() {
     this.hierarchy_data = this._hierarchy_data

@@ -6,7 +6,7 @@
     </span>
     <span v-else style="visibility: hidden;" class="folder__state">▶</span>
     <i class="fa fa-folder-o ml-1"></i>
-    <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" class="d-none">
+    <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" class="d-none" v-model="_bookmark.folder_id">
     <label class="folder__label" :for="`item_${_folder.id}`"> {{ find_folder(_folder.id).name }}</label>
     <folders
       v-if="is_active"
@@ -17,6 +17,7 @@
       :_id="_folder.id"
       :_is_new_folder="is_new_folder"
       :_new_folder_parent_id="new_folder_parent_id"
+      :_bookmark="_bookmark"
     ></folders>
   </div>
 </template>
@@ -39,7 +40,8 @@ export default {
     _hierarchy_data: "",
     _is_new_folder: "",
     _new_folder_parent_id: "",
-    _belong_folder: ""
+    _belong_folder: "",
+    _bookmark: ""
   },
   beforeMount() {
     this.hierarchy_data = this._hierarchy_data
@@ -64,7 +66,7 @@ export default {
       return this._all_folders.find(function(element) {
         return element['folder_id'] === id
       })
-    }
+    },
   },
   // TODO: これで監視してみる？？ → いまんとこいらない
   watch: {
