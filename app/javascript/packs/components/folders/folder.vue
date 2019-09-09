@@ -48,6 +48,12 @@ export default {
     this.all_folders = this._all_folders
     this.level = this._level
   },
+  mounted() {
+    if (this.open_belong_folder(this._bookmark.folder_id)) {
+      console.log('mounted')
+      this.is_active = true;
+    }
+  },
   computed: {
     is_new_folder() {
       return this._is_new_folder
@@ -67,6 +73,24 @@ export default {
         return element['folder_id'] === id
       })
     },
+    open_belong_folder(folder_id) {
+      let res
+      let folder = this.find_folder(folder_id)
+
+      if (this.level > folder.parent_count) return false
+
+      // TODO: 同階層の全部を開いてしまうので調整必要
+      for (var key in this._hierarchy_data[folder.parent_count]) {
+        console.log(key)
+        res = this._hierarchy_data[folder.parent_count][key].find( (element) => {
+          console.log('doing')
+          return element['id'] === folder_id
+        })
+        if (res) break
+      }
+
+      return res
+    }
   },
   // TODO: これで監視してみる？？ → いまんとこいらない
   watch: {
