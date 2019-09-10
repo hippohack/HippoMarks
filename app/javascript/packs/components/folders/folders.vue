@@ -47,8 +47,12 @@ export default {
     _id: "",
     _is_new_folder: "",
     _new_folder_parent_id: "",
-    _belong_folder: "",
-    _bookmark: ""
+    _belong_folder: {
+      required: false
+    },
+    _bookmark: {
+      required: false
+    }
   },
   beforeMount() {
     this.hierarchy_data = this._hierarchy_data

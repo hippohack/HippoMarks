@@ -41,7 +41,14 @@ export default {
     _is_new_folder: "",
     _new_folder_parent_id: "",
     _belong_folder: "",
-    _bookmark: ""
+    _bookmark: {
+      type: Object,
+      default: () => {
+        return {
+          folder_id: null
+        }
+      }
+    }
   },
   beforeMount() {
     this.hierarchy_data = this._hierarchy_data
@@ -74,6 +81,8 @@ export default {
       })
     },
     open_belong_folder(folder_id) {
+      if (!folder_id) return false
+
       let res
       let folder = this.find_folder(folder_id)
 
