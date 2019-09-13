@@ -30,6 +30,7 @@ class BookmarksController < ApplicationController
     end
 
     @bookmark.og_image_url = Bookmark.get_site_capture(@bookmark.url)
+    @bookmark.icon = Bookmark.get_icon(@bookmark.url)
 
     raise if @bookmark.save == false
 

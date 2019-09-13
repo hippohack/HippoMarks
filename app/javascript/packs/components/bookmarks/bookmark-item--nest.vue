@@ -8,10 +8,10 @@
       href="javascript:void(0)"
       v-if="!item.url && !folder_editing"
       @click="openFolder(item.id)"
-    ><i class="fa fa-folder-o mr-2"></i>{{ item.name }}</a>
+    ><i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>{{ item.name }}</a>
 
     <span v-if="folder_editing">
-      <i class="fa fa-folder-o mr-2"></i>
+      <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>
       <input type="text" name="folder[name]" v-model="folder_name" @blur="update" @keyup.enter="update" class="edit-form">
     </span>
 
@@ -24,8 +24,8 @@
       @mouseenter="$emit('apply_bookmark', { bookmark: item })"
       @mouseleave="$emit('apply_bookmark', { bookmark: null })"
     >
-      <img v-if="item.icon" :src="item.icon" class="mr-2" alt="">
-      <i v-if="!item.icon" class="fa fa-link mr-2"></i>
+      <img v-if="item.icon" :src="item.icon" class="mr-2" alt="" style="width: 18px;">
+      <i v-if="!item.icon" class="fa fa-link mr-2" style="font-size: 18px;"></i>
       {{ item.name }}
     </a>
 

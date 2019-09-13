@@ -11,10 +11,6 @@ module Import
 
   # インクルード先にメソッド（クラスメソッド）追加
   class_methods do
-    def foo
-      raise
-    end
-
     # インスタンスメソッド
     def save_bookmark(params, account, folder_id)
       params.merge!({ account_id: account.id, folder_id: folder_id })
@@ -53,11 +49,6 @@ module Import
         end
       end
     end
-  end
-
-  # </DT>差し込み
-  def adjust_html
-    raise
   end
 
 end

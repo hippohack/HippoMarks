@@ -71,4 +71,13 @@ class Bookmark < ApplicationRecord
       puts e # 例外メッセージ表示
     end
   end
+
+  def self.get_icon(url)
+    doc = Nokogiri::HTML(safe_open(url))
+
+    return nil if doc.blank?
+
+    icon_url = doc.xpath('/html/head/link[@rel="shortcut icon"]/@href').to_s
+    'data:image/png;base64,' + Base64.encode64(safe_open(icon_url))
+  end
 end
