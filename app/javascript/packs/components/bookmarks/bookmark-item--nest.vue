@@ -24,9 +24,12 @@
       @mouseenter="$emit('apply_bookmark', { bookmark: item })"
       @mouseleave="$emit('apply_bookmark', { bookmark: null })"
     >
-      <img v-if="item.icon" :src="item.icon" class="mr-2" alt="" style="width: 18px;">
-      <i v-if="!item.icon" class="fa fa-link mr-2" style="font-size: 18px;"></i>
-      {{ item.name }}
+      <span v-if="item.icon">
+        <img :src="item.icon" class="mr-2" alt="" style="width: 18px;">{{ item.name }}
+      </span>
+      <span v-else>
+        <i class="fa fa-link mr-2" style="font-size: 18px;"></i>{{ item.name }}
+      </span>
     </a>
 
     <context-menu
