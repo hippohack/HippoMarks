@@ -1,6 +1,14 @@
 class CaptureJob < ApplicationJob
   queue_as :capture
 
+  after_enqueue do |job|
+    logger.info('after_enqueue' + job.inspect)
+  end
+
+  after_perform do |job|
+    logger.info('after_perform' + job.inspect)
+  end
+
   def perform(bookmark_id)
     # Do something later
     @bookmark = Bookmark.find(bookmark_id)
