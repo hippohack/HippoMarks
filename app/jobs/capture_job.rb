@@ -1,5 +1,5 @@
 class CaptureJob < ApplicationJob
-  queue_as :default
+  queue_as :capture
 
   def perform(bookmark_id)
     # Do something later
