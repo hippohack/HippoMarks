@@ -29,10 +29,10 @@ class BookmarksController < ApplicationController
       @bookmark.folder_id = current_account.bookmarkbar_folder_id
     end
 
-    @bookmark.og_image_url = Bookmark.get_site_capture(@bookmark.url)
-    @bookmark.icon = Bookmark.get_icon(@bookmark.url)
-
     raise if @bookmark.save == false
+
+    # get og and favicon images with job.
+    CaptureJob.perform_later(@bookmark.id)
 
     if params[:popup]
       render :show

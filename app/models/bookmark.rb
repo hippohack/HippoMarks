@@ -74,10 +74,11 @@ class Bookmark < ApplicationRecord
 
   def self.get_icon(url)
     doc = Nokogiri::HTML(safe_open(url))
-
     return nil if doc.blank?
 
     icon_url = doc.xpath('/html/head/link[@rel="shortcut icon"]/@href').to_s
+    return nil if icon_url.blank?
+
     'data:image/png;base64,' + Base64.encode64(safe_open(icon_url))
   end
 end
