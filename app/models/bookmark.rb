@@ -28,7 +28,6 @@ class Bookmark < ApplicationRecord
     doc = Nokogiri::HTML.parse(result)
 
     doc.xpath('/html/body/dl').each do |dl|
-    # doc.xpath('/html/body/dl/dl').each do |dl|
       dl.xpath('./dt').each do |item|
         Bookmark.save_import_data(item, 1, account)
       end
@@ -41,8 +40,8 @@ class Bookmark < ApplicationRecord
     return nil if search.blank?
 
     where('name LIKE ?', "%#{search}%")
-    .or(where('keyword LIKE ?', "%#{search}%"))
-    .or(where('url LIKE ?', "%#{search}%")).distinct
+      .or(where('keyword LIKE ?', "%#{search}%"))
+      .or(where('url LIKE ?', "%#{search}%")).distinct
   end
 
   def self.get_site_capture(url)
@@ -50,12 +49,10 @@ class Bookmark < ApplicationRecord
 
     return nil if doc.blank?
 
-    # <meta property=”og:image” content=”http://www.yourdomain.com/image-name.jpg” />
     og_image_url = doc.xpath('/html/head/meta[@property="og:image"]/@content').to_s
     og_image_url = doc.xpath('/html/head/meta[@property="og:image:url"]/@content').to_s if og_image_url.blank?
 
     if og_image_url.blank?
-      # TODO: capture site image
       og_image_url = Bookmark.get_screenshot(url)
     end
 
