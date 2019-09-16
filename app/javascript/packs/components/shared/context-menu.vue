@@ -40,8 +40,9 @@ export default {
     },
     delete_folder() {
       axios.delete(`/api/folders/${this._item.id}`)
-        .then(function(response) {
+        .then((response) => {
           console.log(response)
+          this.$emit('delete_folder', { delete_folder: this._item.id })
         })
         .catch(function(error) {
           console.log(error)

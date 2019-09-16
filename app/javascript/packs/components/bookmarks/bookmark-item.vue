@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!deleted_folder"
     v-bind:class="{ active: is_active && item.id == _folder_id }"
     @contextmenu="show_contextmenu"
   >
@@ -38,6 +39,7 @@
       :_home_url="_home_url"
       @apply="receive"
       @folder_edit="editFolder"
+      @delete_folder="delete_folder"
     ></context-menu>
   </div>
 </template>
@@ -55,7 +57,8 @@
         edit_show: false,
         context_menu: false,
         pageX: "",
-        pageY: ""
+        pageY: "",
+        deleted_folder: false
       };
     },
     props: {
@@ -97,6 +100,9 @@
       },
       receive(values) {
         this.context_menu = values.flag
+      },
+      delete_folder(values) {
+        this.deleted_folder = values.delete_folder
       }
     }
   }
