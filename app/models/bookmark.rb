@@ -73,6 +73,9 @@ class Bookmark < ApplicationRecord
   end
 
   def self.get_icon(url)
+    favicon = safe_open(Addressable::URI.parse(url).scheme + '://' + Addressable::URI.parse(url).host + '/favicon.ico')
+    return 'data:image/png;base64,' + Base64.encode64(favicon) unless favicon.blank?
+
     doc = Nokogiri::HTML(safe_open(url))
     return nil if doc.blank?
 
