@@ -36,8 +36,10 @@ document.addEventListener('turbolinks:load', () => {
     },
     methods: {
       show_new_folder() {
-        console.log($("input[name='bookmark[folder_id]']:checked").val())
         this.new_folder_parent_id = $("input[name='bookmark[folder_id]']:checked").val()
+        if (!this.new_folder_parent_id) {
+          this.new_folder_parent_id = $("input[name='top_folder']").val()
+        }
         this.is_new_folder = true
       },
       submit() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!is_created && _is_new_folder && _id == _new_folder_parent_id" class='pl-5 mb-2'>
+    <div v-if="!is_created && _is_new_folder && _id == _new_folder_parent_id" class='mb-2' v-bind:class="[_new_folder_parent_id == _top_folder_id ? 'pl-2' : 'pl-5']">
       <i class="fa fa-folder-o ml-2"></i>
       <input type="text" name="folder[name]" v-model="name" @blur="create" @keyup.enter="create" placeholder="folder name..." class="py-1 px-2">
     </div>
@@ -52,7 +52,8 @@ export default {
     },
     _bookmark: {
       required: false
-    }
+    },
+    _top_folder_id: ""
   },
   beforeMount() {
     this.hierarchy_data = this._hierarchy_data

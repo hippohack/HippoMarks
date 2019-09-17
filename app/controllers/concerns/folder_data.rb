@@ -20,9 +20,11 @@ module FolderData
 
     # TODO: リファクタリング
     tmp_top_folder_id = tmp_folders[0]['top_folder'][0].id
-    # topはいらないので消す
-    tmp_folders.delete(0)
+    
+    # # topはいらないので消す
+    # tmp_folders.delete(0)
     # raise
+    
     return {
       folders: tmp_folders,
       all_folders: folders,
