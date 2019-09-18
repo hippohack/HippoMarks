@@ -44,7 +44,7 @@ document.addEventListener('turbolinks:load', () => {
       },
       submit() {
         $('form').submit();
-      }
+      },
     }
   })
 })
