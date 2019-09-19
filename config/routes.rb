@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :accounts
+  devise_for :accounts, controllers: {
+    registrations: 'accounts/registrations',
+    sessions: 'accounts/sessions'
+  }
   root to: 'home#index'
   # get 'home/index'
 
