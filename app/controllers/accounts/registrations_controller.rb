@@ -11,8 +11,6 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    params[:account][:bookmarkbar_folder_id] = 0
-
     super
 
     @account.folders.build(
@@ -50,7 +48,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
