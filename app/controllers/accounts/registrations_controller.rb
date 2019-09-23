@@ -13,6 +13,12 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   def create
     super
 
+    @account.build_profile(
+      name: @account.email,
+      twitter_account: nil,
+      avatar: nil
+    )
+
     @account.folders.build(
       name: 'MAIN_FOLDER',
       folder_id: nil,
