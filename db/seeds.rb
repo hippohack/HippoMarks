@@ -19,7 +19,8 @@ account = Account.new(
   email: 'admin@example.com',
   password: 'hirakegoma',
   encrypted_password: '$2a$11$W5qWWly1reTS93AxlYYqmeQpBSu9BcMzXDBV4/Kyfk35A6BDYQarq',
-  bookmarkbar_folder_id: 0
+  bookmarkbar_folder_id: 0,
+  confirmed_at: Time.now
 )
 account.folders.build(
   name: 'user_bookmarkber',
