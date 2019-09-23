@@ -41,9 +41,9 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
       name: 'Bookmarks',
       url: ENV.fetch('HOMEURL'),
       folder_id: @account.folders[1].id,
-      icon: 'TODO:',
-      keyword: 'TODO:',
-      og_image_url: 'TODO:'
+      icon: ActionController::Base.helpers.asset_path('favicon.png'),
+      keyword: 'bookmarks, main, start',
+      og_image_url: ActionController::Base.helpers.asset_path('og.png')
     )
     @account.save!
   end
