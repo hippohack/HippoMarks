@@ -22,6 +22,11 @@ account = Account.new(
   bookmarkbar_folder_id: 0,
   confirmed_at: Time.now
 )
+account.build_profile(
+  name: account.email,
+  twitter_account: nil,
+  avatar: nil
+)
 account.folders.build(
   name: 'user_bookmarkber',
   folder_id: nil,
