@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   get '/folders/manage', to: 'folders#manage', as: 'manage_folders'
   resources :folders
+  resources :profiles
 
   get '/about',   to: 'home#index'
   get '/contact', to: 'home#index'
