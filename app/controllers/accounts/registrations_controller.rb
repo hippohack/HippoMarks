@@ -22,6 +22,24 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
     @account.bookmarkbar_folder_id = @account.folders[0].id
     @account.folders[0][:account_id] = @account.id
     @account.save!
+
+    # make default setting
+    @account.folders.build(
+      name: 'Favorite',
+      folder_id: @account.bookmarkbar_folder_id,
+      parent_count: 1
+    )
+    @account.save!
+
+    @account.bookmarks.build(
+      name: 'Bookmarks',
+      url: ENV.fetch('HOMEURL'),
+      folder_id: @account.folders[1].id,
+      icon: 'TODO:',
+      keyword: 'TODO:',
+      og_image_url: 'TODO:'
+    )
+    @account.save!
   end
 
   # GET /resource/edit
@@ -70,4 +88,5 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
 end
