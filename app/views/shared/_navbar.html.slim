@@ -1,6 +1,6 @@
 nav.navbar.navbar-light.bg-dark
   = link_to(root_path, class: 'navbar-brand text-white') do
-    img.d-inline-block.align-top.mr-2 src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" alt=""
+    img.d-inline-block.align-top.mr-2 src="#{image_url('bookmarks.svg')}" width="30" height="30" alt=""
     | Bookmarks
 
   - if account_signed_in?
