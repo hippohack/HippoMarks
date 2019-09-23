@@ -17,6 +17,12 @@ nav.navbar.navbar-light.bg-dark
         a.nav-link.dropdown-toggle.text-white href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
           | Menu 
         .dropdown-menu aria-labelledby="navbarDropdownMenuLink"
+          = link_to '#', class: 'dropdown-item' do
+            .d-flex.align-items-center
+              img.d-inline-block.align-top.mr-2 src="#{image_url('bookmarks.svg')}" width="30" height="30" alt=""
+              span
+                = current_account.profile.name
+          hr.my-1
           = link_to 'Add Bookmark', add_bookmark_path, class: 'dropdown-item'
           = link_to 'Manage Bookmarks', '#TODO:', class: 'dropdown-item'
           = link_to 'Import Bookmarks', import_path, class: 'dropdown-item'
