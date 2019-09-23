@@ -52,7 +52,10 @@ class Bookmark < ApplicationRecord
     og_image_url = doc.xpath('/html/head/meta[@property="og:image"]/@content').to_s
     og_image_url = doc.xpath('/html/head/meta[@property="og:image:url"]/@content').to_s if og_image_url.blank?
 
-    if og_image_url.blank?
+    # httpだったらcaptureとる
+    uri = URI.parse(og_image_url) if og_image_url
+
+    if og_image_url.blank? || uri.scheme.blank? || uri.scheme != 'https'
       og_image_url = Bookmark.get_screenshot(url)
     end
 
