@@ -37,7 +37,7 @@
                 :src="current_bookmark.og_image_url"
                 :alt="current_bookmark.name"
               >
-              <img v-else src="https://dummyimage.com/600x400/000/fff" alt="">
+              <img v-else src="https://dummyimage.com/600x400/e6e6e6/cccccc.png&text=+NO+IMAGE" alt="">
             </transition>
           </div>
           <div class="bookmarks__description">
