@@ -14,14 +14,18 @@ module Import
     # インスタンスメソッド
     def save_bookmark(params, account, folder_id)
       params.merge!({ account_id: account.id, folder_id: folder_id })
-      # params[:og_image_url] = Bookmark.get_site_capture(params[:url])
-      bookmark = Bookmark.create!(params)
+      bookmark = account.bookmarks.build(params)
+      bookmark.save!
       CaptureJob.perform_later(bookmark.id)
+      bookmark
     end
 
     def save_folder(params, account, folder_id)
       params.merge!({ account_id: account.id, folder_id: folder_id })
-      Folder.create!(params)
+      folder = account.folders.build(params)
+      folder.account_id = account.id
+      folder.save!
+      folder
     end
 
     def save_import_data(obj, level, account, folder_id = nil)
