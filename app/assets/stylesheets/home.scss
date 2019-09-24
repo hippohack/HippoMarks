@@ -149,3 +149,56 @@ main {
   max-width: 640px;
   margin: 0 auto;
 }
+
+.profile-form {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.avator {
+  margin-right: 50px;
+
+  &__label {
+    text-align: center;
+    margin-bottom: 7px;
+  }
+
+  &__img {
+    position: relative;
+
+    span {
+      border-radius: 100%;
+      height: 100px;
+      width: 100px;
+      line-height: 100px;
+      display: inline-block;
+      background-size: cover;
+    }
+  }
+
+  &__btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    opacity: 0;
+    padding: 0;
+    &.active {
+      opacity: 0.8;
+    }
+  }
+}
+
+.form-items {
+  width: 100%;
+}
+
+.avator-form {
+  &__file-up-btn {
+    border: none;
+    width: 100%;
+    text-align: center;
+  }
+}

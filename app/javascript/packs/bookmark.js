@@ -31,7 +31,8 @@ document.addEventListener('turbolinks:load', () => {
     data() {
       return {
         is_new_folder: false,
-        new_folder_parent_id: ""
+        new_folder_parent_id: "",
+        isActiveAvatorEdit: false
       }
     },
     methods: {
