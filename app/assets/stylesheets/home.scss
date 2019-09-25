@@ -172,7 +172,8 @@ main {
       width: 100px;
       line-height: 100px;
       display: inline-block;
-      background-size: cover;
+      background-size: 100%;
+      background-position: center 50%;
     }
   }
 
@@ -200,5 +201,6 @@ main {
     border: none;
     width: 100%;
     text-align: center;
+    padding: 20px;
   }
 }

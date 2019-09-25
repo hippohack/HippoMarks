@@ -11,6 +11,8 @@ import Folders from './components/folders/folders.vue'
 import Folder from './components/folders/folder.vue'
 import ContextMenu from './components/shared/context-menu.vue'
 
+import axios from 'axios';
+
 Vue.use(TurbolinksAdapter)
 
 Vue.component('bookmark-columns', BookmarkColumns)
@@ -32,7 +34,8 @@ document.addEventListener('turbolinks:load', () => {
       return {
         is_new_folder: false,
         new_folder_parent_id: "",
-        isActiveAvatorEdit: false
+        isActiveAvatorEdit: false,
+        file: ''
       }
     },
     methods: {
@@ -46,6 +49,13 @@ document.addEventListener('turbolinks:load', () => {
       submit() {
         $('form').submit();
       },
+      submitAvatar() {
+        $('#avator-form').submit();
+        $('button.close').click();
+      },
+      fileSelect() {
+        $('#profile_avatar').click();
+      }
     }
   })
 })
