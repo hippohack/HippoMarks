@@ -204,3 +204,9 @@ main {
     padding: 20px;
   }
 }
+
+.nav-item {
+  &__avatar {
+    border-radius: 100%;
+  }
+}
