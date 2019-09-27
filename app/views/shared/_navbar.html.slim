@@ -19,7 +19,10 @@ nav.navbar.navbar-light.bg-dark
         .dropdown-menu aria-labelledby="navbarDropdownMenuLink"
           = link_to profile_path(current_account.profile), class: 'dropdown-item' do
             .d-flex.align-items-center
-              img.nav-item__avatar.d-inline-block.align-top.mr-2 src="#{url_for(current_account.profile.avatar)}" width="30" height="30" alt=""
+              - if current_account.profile.avatar.attached?
+                img.nav-item__avatar.d-inline-block.align-top.mr-2 src="#{url_for(current_account.profile.avatar)}" width="30" height="30" alt=""
+              - else
+                img.nav-item__avatar.d-inline-block.align-top.mr-2 src="#{image_url('bookmarks.svg')}" width="30" height="30" alt=""
               span
                 = current_account.profile.name
           hr.my-1

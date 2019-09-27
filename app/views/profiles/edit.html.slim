@@ -9,7 +9,7 @@
             - if @profile.avatar.attached?
               span style="background-image:url(#{url_for(@profile.avatar)});"
             - else
-              span style="background-image:url(https://placehold.jp/150x150.png);"
+              span style="background-image:url(#{image_url('bookmarks.svg')});"
             button.avator__btn type="button" v-bind:class="{ active : isActiveAvatorEdit }" @mouseenter="isActiveAvatorEdit = true"  @mouseleave="isActiveAvatorEdit = false" data-toggle="modal" data-target="#editAvator"
               | <i class="fa fa-pencil" aria-hidden="true"></i> edit
         .form-items
