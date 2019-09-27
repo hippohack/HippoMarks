@@ -1,18 +1,20 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.6.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# Use mysql as the database for Active Record
+gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
+# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
+gem 'webpacker'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
@@ -36,9 +38,41 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# add: 2019-04-26
+gem 'devise'
+gem 'slim-rails'
+gem 'ransack'
+
+# add: 2019-04-29
+gem 'jquery-rails'
+
+# add: 2019-05-03
+gem 'bootstrap', '~> 4.3.1'
+gem "font-awesome-rails"
+
+# add: 2019-08-29
+gem 'rmagick', '~> 4.0'
+gem 'selenium-webdriver'
+gem 'webdrivers'
+
+# add: 2019-09-15
+gem 'daemons'
+gem 'delayed_job_active_record'
+
+gem 'aws-sdk-s3', require: false
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  # add: 2019-05-30
+  gem 'rspec-rails'
+  # gem 'factory_girl_rails'
+  gem "factory_bot"
+  gem 'guard-rspec', require: false
+
+  # add: 2019-09-03
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -48,6 +82,15 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  # add: 2019-04-26
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'letter_opener_web'
+
+  # add: 2019-08-15
+  gem 'debase'
+  gem 'ruby-debug-ide'
 end
 
 group :test do
@@ -55,7 +98,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  # gem 'chromedriver-helper'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

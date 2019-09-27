@@ -1,0 +1,21 @@
+#app
+  = render "shared/navbar"
+  .bookmarklet.bg-light
+    .text-center.py-2
+      p.m-0
+        | Bookmark pages more easily. Drag this bookmarklet to the Bookmarks bar of your browser:
+        a.btn.btn-sm.btn-primary.ml-2 href='javascript: (function () { var a = window, b = document, c = encodeURIComponent, d = a.open("#{ENV.fetch("HOMEURL")}/bookmarks/new?op=edit&output=popup&bkmk=" + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();' Bookmark
+  .container-fluid
+    main.main.bookmarks
+      = form_tag('/import', multipart: true, method: 'post')
+        .form-group.mt-3
+          label for="import_file" Import file input
+          = file_field_tag 'import_file', class: 'form-control-file', id: 'import_file'
+
+        = submit_tag '送信する', class: 'btn btn-primary'
+
+.footer.bg-dark.pos-bottom
+  .text-right.text-white.p-1.px-3
+    a.copyright.text-white href="https://www.hippohack.me/" target="_blank" © HippoHack
+
+= javascript_pack_tag 'bookmark'

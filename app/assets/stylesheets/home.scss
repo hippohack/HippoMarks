@@ -1,0 +1,219 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+main {
+  // margin-bottom: 20px;
+}
+
+.navbar-nav .dropdown-menu {
+  position: absolute;
+  left: -235px;
+  width: 300px;
+}
+
+.navbar {
+  &__version {
+    font-size: 10px;
+    font-weight: normal;
+  }
+}
+
+#search-input {
+  border-radius: 1.5rem;
+}
+
+.card-deck {
+  margin-top: 60px;
+}
+.card-deck .card {
+  width: 22.2%;
+  flex: none;
+  margin-bottom: 30px;
+}
+.card-body {
+  padding: 1rem;
+}
+.card-footer {
+  padding: 0.25rem 1.25rem;
+}
+
+.sidebar {
+  border-top: solid 1px #ccc;
+  padding: 15px;
+  min-width: 210px;
+  position: absolute;
+  bottom: 0;
+  &__link {
+    display: block;
+    padding: 10px 0;
+  }
+}
+
+.main {
+  width: 100%;
+}
+
+.alert {
+  border: 0;
+  border-radius: 0;
+}
+
+.bookmarklet {
+  border-bottom: solid 1px #ccc;
+}
+
+.bookmarks {
+  font-size: 0.9rem;
+  &__col {
+    border-right: solid 1px #ccc;
+    // ヘッダー分引いてる;
+    height: calc(100vh - 155px);
+    min-width: 276px;
+    max-width: 276px;
+    overflow: auto;
+  }
+  &__col--first {
+    height: calc(100vh - 128px);
+  }
+  &__col--last {
+    border-right: 0;
+  }
+  &__items {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  &__item {
+    .active {
+      background-color: #e6e6e6;
+    }
+  }
+  &__link {
+    display: inline-block;
+    padding: 5px 0;
+    vertical-align: middle;
+    max-width: 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__capture {
+    padding: 15px 0;
+    img {
+      width: 100%;
+      max-width: 372px;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  &__description {
+    // text-align: center;
+    width: 372px;
+    margin: 0 auto;
+  }
+  &__crumb {
+    border-top: solid 1px #ccc;
+  }
+}
+
+.crumb {
+  padding: 5px 15px;
+  &__item {
+    font-size: 0.7rem;
+    &:not(:first-child) {
+      &:before {
+        content: ">";
+        padding: 0 10px;
+      }
+    }
+  }
+}
+
+.footer {
+  font-size: 0.7rem;
+}
+
+.copyright {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.pos-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.folder-list {
+  border: solid 1px #ccc;
+  background-color: #e6e6e6;
+  overflow: auto;
+  height: 250px;
+}
+
+.edit_bookmark {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.profile-form {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.avator {
+  margin-right: 50px;
+
+  &__label {
+    text-align: center;
+    margin-bottom: 7px;
+  }
+
+  &__img {
+    position: relative;
+
+    span {
+      border-radius: 100%;
+      height: 100px;
+      width: 100px;
+      line-height: 100px;
+      display: inline-block;
+      background-size: 100%;
+      background-position: center 50%;
+    }
+  }
+
+  &__btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    opacity: 0;
+    padding: 0;
+    &.active {
+      opacity: 0.8;
+    }
+  }
+}
+
+.form-items {
+  width: 100%;
+}
+
+.avator-form {
+  &__file-up-btn {
+    border: none;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+  }
+}
+
+.nav-item {
+  &__avatar {
+    border-radius: 100%;
+  }
+}

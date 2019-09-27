@@ -1,0 +1,50 @@
+<div id="app">
+  <%= render "shared/navbar" %>
+  <main class="p-3">
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <% if @bookmarks.blank? %>
+          <div class="alert alert-warning" role="alert">No search results containing <strong><%= params[:s] %></strong> were found in your bookmarks.</div>
+        <% end %>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Domain</th>
+              <th scope="col">Keyword</th>
+              <th scope="col" class="text-center">Viewed times</th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @bookmarks&.each do |bookmark| %>
+              <tr>
+                <td class="text-center align-middle"><img src="<%= bookmark.og_image_url %>" alt="<%= bookmark.name %>" width="160"></td>
+                <td class="align-middle"><strong><a href="<%= bookmark.url %>" target="_blank"><%= bookmark.name %></a></strong></td>
+                <td class="align-middle"><%= url_to_domain(bookmark.url) %></td>
+                <td class="align-middle"><%= bookmark.keyword %></td>
+                <td class="text-center align-middle">999</td>
+                <td class="align-middle">
+                  <div class="btn-group">
+                    <%= link_to 'Edit', edit_bookmark_path(bookmark), class: "btn btn-primary" %>
+                    <%= link_to 'Delete', bookmark_path(bookmark), method: 'delete', class: "btn btn-danger" %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="footer bg-dark">
+  <div class="text-right text-white p-1 px-3">
+    <a class="copyright text-white" href="https://www.hippohack.me/" target="_blank">© HippoHack</a>
+  </div>
+</div>
+
+<%= javascript_pack_tag 'bookmark' %>

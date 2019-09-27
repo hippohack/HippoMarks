@@ -1,0 +1,40 @@
+#app
+  = render "shared/navbar"
+  main.p-3
+    = form_for @profile, html: { class: "profile-form" } do |f|
+      .d-flex
+        .avator
+          .avator__label Avator
+          .avator__img
+            - if @profile.avatar.attached?
+              span style="background-image:url(#{url_for(@profile.avatar)});"
+            - else
+              span style="background-image:url(#{image_url('bookmarks.svg')});"
+            button.avator__btn type="button" v-bind:class="{ active : isActiveAvatorEdit }" @mouseenter="isActiveAvatorEdit = true"  @mouseleave="isActiveAvatorEdit = false" data-toggle="modal" data-target="#editAvator"
+              | <i class="fa fa-pencil" aria-hidden="true"></i> edit
+        .form-items
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: 'form-control'
+          .form-group
+            = f.label :twitter_account
+            = f.text_field :twitter_account, class: 'form-control'
+
+          = f.submit "保存する", { class: 'btn btn-primary' }
+
+    .modal id="editAvator" tabindex="-1" role="dialog"
+      .modal-dialog role="document"
+        .modal-content
+          = form_with model: @profile, class: "avator-form", id: "avator-form" do |f|
+            .modal-header
+              h5 class="modal-title" アバターを変更
+              button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                span aria-hidden="true" &times;
+            .modal-body
+              = f.file_field :avatar, class: 'd-none', '@change': "submitAvatar()"
+              button.avator-form__file-up-btn type="button" @click="fileSelect" <i class="fa fa-picture-o" aria-hidden="true"></i> 写真をアップロード
+
+    pre.p-5
+      = debug @profile
+
+= javascript_pack_tag 'bookmark'

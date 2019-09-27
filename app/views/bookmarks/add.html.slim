@@ -1,0 +1,44 @@
+#app
+  = render "shared/navbar"
+  .container-fluid
+    .row.flex-xl-nowrap.justify-content-center
+      main.main.col-6.mt-3
+        h1 Add a bookmark
+        = form_for @bookmark do |f|
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: 'form-control'
+            .form-text.text-muted ex: HippoHack
+
+          .form-group
+            = f.label :url
+            = f.text_field :url, class: 'form-control'
+            .form-text.text-muted ex: https://www.hippohack.me/
+
+          .form-group
+            = f.label :folder_id
+            .folder-list.p-3
+              .folder-list__head
+                span.folder__state ▼
+                i class="fa fa-folder-o ml-2"
+                = f.radio_button :folder_id, @top_folder_id, class: "d-none"
+                = f.label :folder_id, "MAIN_FOLDER", style: "margin-left: 4px;", class: "folder__label", for: "bookmark_folder_id_#{@top_folder_id}"
+
+              .pl-4
+                folders :_hierarchy_data="#{ @folders.to_json }" :_all_folders="#{ @all_folders.to_json }" :_level="1" :_id="#{@top_folder_id}" :_is_new_folder="is_new_folder" :_new_folder_parent_id="new_folder_parent_id" :_top_folder_id="#{@top_folder_id}"
+
+          = hidden_field_tag :top_folder, @top_folder_id
+
+          .d-flex.mt-3
+            div.mr-auto
+              = link_to '新しいフォルダ', 'javascript:void(0)', class: 'btn btn-outline-primary', id: 'new-folder', 'v-on:click': "show_new_folder"
+            div.mr-2
+              = link_to 'キャンセル', '#', class: 'btn btn-outline-primary'
+            div
+              = f.submit "Add Bookmark", class: 'btn btn-primary'
+
+.footer.bg-dark.pos-bottom
+  .text-right.text-white.p-1.px-3
+    a.copyright.text-white href="https://www.hippohack.me/" target="_blank" © HippoHack
+
+= javascript_pack_tag 'bookmark'
