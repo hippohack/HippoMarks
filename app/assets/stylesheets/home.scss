@@ -12,6 +12,13 @@ main {
   width: 300px;
 }
 
+.navbar {
+  &__version {
+    font-size: 10px;
+    font-weight: normal;
+  }
+}
+
 #search-input {
   border-radius: 1.5rem;
 }
