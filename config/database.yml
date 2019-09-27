@@ -52,6 +52,7 @@ test:
 #
 production:
   <<: *default
+  adapter: pg
   database: bookmarks_production
   username: bookmarks
   password: <%= ENV['BOOKMARKS_DATABASE_PASSWORD'] %>
