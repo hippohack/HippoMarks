@@ -71,9 +71,9 @@ Rails.application.configure do
 
   # SendGrid
   # Setup the mailer config
-  # config.action_mailer.default_url_options = {
-  #   host: 'https://infinite-anchorage-11918.herokuapp.com'
-  # }
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch('HOMEURL')
+  }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
