@@ -46,13 +46,12 @@ test:
 #   DATABASE_URL="mysql2://myuser:mypass@localhost/somedatabase"
 #
 # You can use this database configuration with:
-#
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
+
 production:
-  <<: *default
-  adapter: pg
-  database: bookmarks_production
-  username: bookmarks
-  password: <%= ENV['BOOKMARKS_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+
+# production:
+#   <<: *default
+#   database: bookmarks_production
+#   username: bookmarks
+#   password: <%= ENV['BOOKMARKS_DATABASE_PASSWORD'] %>
