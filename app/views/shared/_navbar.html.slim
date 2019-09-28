@@ -1,7 +1,7 @@
 nav.navbar.navbar-light.bg-dark
   = link_to(root_path, class: 'navbar-brand text-white') do
     img.d-inline-block.align-top.mr-2 src="#{image_url('bookmarks.svg')}" width="30" height="30" alt=""
-    | Bookmarks <span class="navbar__version">#{ENV.fetch('VERSION')}</span>
+    | Bookmarks <span class="navbar__version">#{ENV.fetch('APP_VERSION')}</span>
 
   - if account_signed_in?
     = link_to(root_path, class: 'px-2 mr-2 text-white') do
