@@ -351,6 +351,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable (~> 2.7)
   aws-sdk-s3
   better_errors
   binding_of_caller
