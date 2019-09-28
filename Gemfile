@@ -102,6 +102,7 @@ group :test do
 end
 
 group :production do
+  gem 'addressable', '~> 2.7'
   gem 'pg', '0.20.0'
   gem 'rails_12factor'
 end
