@@ -12,7 +12,7 @@ Rails.application.config.content_security_policy do |policy|
   if Rails.env.development?
     policy.script_src :self, :https, :unsafe_eval, :unsafe_inline
   else
-    policy.script_src :self, :https, :unsafe_inline
+    policy.script_src :self, :https, :unsafe_eval, :unsafe_inline
   end
   # policy.script_src  :self, :https
   policy.style_src :self, :https, :blob, :unsafe_inline
