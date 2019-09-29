@@ -9,12 +9,12 @@ Rails.application.config.content_security_policy do |policy|
   policy.font_src    :self, :https, :data
   policy.img_src     :self, :https, :data
   policy.object_src  :none
-  if Rails.env.development?
-    policy.script_src :self, :https, :unsafe_eval, :unsafe_inline
-  else
-    policy.script_src :self, :https, :unsafe_eval, :unsafe_inline
-  end
-  # policy.script_src  :self, :https
+  # if Rails.env.development?
+  #   policy.script_src :self, :https, :unsafe_eval, :unsafe_inline
+  # else
+  #   policy.script_src :self, :https
+  # end
+  policy.script_src  :self, :https, :unsafe_eval, :unsafe_inline
   policy.style_src :self, :https, :blob, :unsafe_inline
 
   # Specify URI for violation reports
