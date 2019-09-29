@@ -4,10 +4,10 @@ class CreateBookmarks < ActiveRecord::Migration[5.2]
       t.integer :account_id, null: false
       t.integer :folder_id
       t.string :name
-      t.text :url, null: false
-      t.text :icon
-      t.text :keyword
-      t.text :og_image_url
+      t.text :url, null: false, limit: 4294967295
+      t.text :icon, limit: 4294967295
+      t.text :keyword, limit: 4294967295
+      t.text :og_image_url, limit: 4294967295
 
       t.timestamps
     end
