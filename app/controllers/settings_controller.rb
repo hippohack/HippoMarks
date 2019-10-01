@@ -3,6 +3,7 @@ class SettingsController < ApplicationController
 
   def index
     render :edit
+    save_default_values if @settings.blank?
   end
 
   def edit
@@ -39,5 +40,15 @@ class SettingsController < ApplicationController
       :value,
       :lock_version
     )
+  end
+
+  def save_default_values
+    current_account.settings.build(
+      [
+        [key: 'lang', value: 'japanese'],
+        [key: 'home_url', value: '/']
+      ]
+    )
+    current_account.save
   end
 end
