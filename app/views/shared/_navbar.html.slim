@@ -4,7 +4,7 @@ nav.navbar.navbar-light.bg-dark
     | HippoMarks <span class="navbar__version">#{ENV.fetch('APP_VERSION')}</span>
 
   - if account_signed_in?
-    = link_to(setting_home_url, class: 'px-2 mr-2 text-white') do
+    = link_to(setting_home_url, class: 'px-2 mr-2 text-white', target: '_blank') do
       i.fa.fa-home.fa-lg aria-hidden="true"
 
   - if ['home#index', 'bookmarks#search'].include? @loaded_action
