@@ -4,7 +4,7 @@ nav.navbar.navbar-light.bg-dark
     | HippoMarks <span class="navbar__version">#{ENV.fetch('APP_VERSION')}</span>
 
   - if account_signed_in?
-    = link_to(root_path, class: 'px-2 mr-2 text-white') do
+    = link_to(setting_home_url, class: 'px-2 mr-2 text-white') do
       i.fa.fa-home.fa-lg aria-hidden="true"
 
   - if ['home#index', 'bookmarks#search'].include? @loaded_action
@@ -32,6 +32,6 @@ nav.navbar.navbar-light.bg-dark
           = link_to 'Export Bookmarks', '#TODO:', class: 'dropdown-item'
           hr.my-1
           a.dropdown-item href="#TODO:" アカウント設定
-          a.dropdown-item href="#TODO:" システム設定
+          a.dropdown-item href="#{ settings_path }" システム設定
           hr.my-1
           = link_to 'Logout', destroy_account_session_path, class: 'dropdown-item', method: :delete

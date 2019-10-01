@@ -45,6 +45,12 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
       keyword: 'bookmarks, main, start',
       og_image_url: ActionController::Base.helpers.asset_path('og.png')
     )
+    @account.settings.build(
+      [
+        [key: 'lang', value: 'japanese'],
+        [key: 'home_url', value: '/']
+      ]
+    )
     @account.save!
   end
 
