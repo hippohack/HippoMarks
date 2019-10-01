@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   resources :folders
   resources :profiles
 
+  put '/settings', to: 'settings#update', as: 'settings_update'
+  resources :settings
+
   get '/about',   to: 'home#index'
   get '/contact', to: 'home#index'
 
