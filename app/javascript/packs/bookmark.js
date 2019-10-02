@@ -55,6 +55,12 @@ document.addEventListener('turbolinks:load', () => {
       },
       fileSelect() {
         $('#profile_avatar').click();
+      },
+      siteImageSelect() {
+        $('#site-image-select').click();
+      },
+      submitSiteImageEdit() {
+        $('.site-image-form__submit').click();
       }
     }
   })

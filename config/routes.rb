@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   get '/bookmarks/add', to: 'bookmarks#add', as: 'add_bookmark'
   get '/bookmarks/:id/popup_edit', to: 'bookmarks#popup_edit', as: 'popup_edit_bookmark'
+  get '/bookmarks/replace_img', to: 'bookmarks#replace_img', as: 'replace_img'
   get '/bookmarks/manage', to: 'bookmarks#manage', as: 'manage_bookmarks'
   get '/bookmarks/import', to: 'bookmarks#import', as: 'import_bookmarks'
   get '/bookmarks/export', to: 'bookmarks#export', as: 'export_bookmarks'

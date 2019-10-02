@@ -43,5 +43,13 @@ module Capture
       end
       new_src
     end
+
+    def img_to_base64(file_path)
+      image = Magick::Image.from_blob(File.open(file_path).read).first
+      new_src = image.change_geometry!('372x248') do |cols, rows, img|
+        img.resize(cols, rows)
+      end
+      'data:image/png;base64,' + Base64.encode64(new_src.to_blob)
+    end
   end
 end
