@@ -11,7 +11,17 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    render :edit if @profile.update!(profile_params)
+    if @profile.update!(profile_params)
+      if params[:edit_avatar_image]
+        render :replace_img
+      else
+        render :edit
+      end
+    end
+  end
+
+  def replace_img
+    
   end
 
   private

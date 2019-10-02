@@ -50,7 +50,7 @@ document.addEventListener('turbolinks:load', () => {
         $('form').submit();
       },
       submitAvatar() {
-        $('#avator-form').submit();
+        $('.avator-form__submit').click();
         $('button.close').click();
       },
       fileSelect() {

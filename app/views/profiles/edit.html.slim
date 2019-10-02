@@ -22,6 +22,7 @@
 
           = f.submit "保存する", { class: 'btn btn-primary' }
 
+    / TODO: このモーダルいる？？
     .modal id="editAvator" tabindex="-1" role="dialog"
       .modal-dialog role="document"
         .modal-content
@@ -31,8 +32,10 @@
               button type="button" class="close" data-dismiss="modal" aria-label="Close"
                 span aria-hidden="true" &times;
             .modal-body
-              = f.file_field :avatar, class: 'd-none', '@change': "submitAvatar()"
+              = f.file_field :avatar, id: 'profile_avatar', class: 'd-none', '@change': "submitAvatar()"
               button.avator-form__file-up-btn type="button" @click="fileSelect" <i class="fa fa-picture-o" aria-hidden="true"></i> 写真をアップロード
+              = hidden_field_tag 'edit_avatar_image', true
+              = f.submit "submit", class: 'd-none avator-form__submit'
 
 = javascript_pack_tag 'bookmark'
 = stylesheet_pack_tag 'bookmark'
