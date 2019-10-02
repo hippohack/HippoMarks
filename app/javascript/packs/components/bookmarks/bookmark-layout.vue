@@ -12,6 +12,7 @@
             :_folder_id="clicked_folder_id"
             :_home_url="_home_url"
             @apply="receive"
+            @apply_bookmark="catch_bookmark"
           ></bookmark-item>
         </div>
       </div>

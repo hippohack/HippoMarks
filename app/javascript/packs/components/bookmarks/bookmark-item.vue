@@ -22,6 +22,8 @@
       v-if="item.url"
       :href="item.url"
       :title="item.keyword"
+      @mouseenter="$emit('apply_bookmark', { bookmark: item })"
+      @mouseleave="$emit('apply_bookmark', { bookmark: null })"
     >
       <span v-if="item.icon">
         <img :src="item.icon" class="mr-2" alt="" style="width: 18px;">{{ item.name }}
