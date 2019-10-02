@@ -61,7 +61,15 @@ class BookmarksController < ApplicationController
     @bookmark = current_account.bookmarks.find(params[:id])
     @bookmark.update!(bookmark_params)
 
-    if params[:popup]
+    if params[:site_image_edit]
+      img = Bookmark.img_to_base64(params[:bookmark][:og_image_url].tempfile)
+      @bookmark.og_image_url = img
+      @bookmark.save!
+    end
+
+    if params[:popup] && params[:site_image_edit]
+      render :replace_img
+    elsif params[:popup]
       render :show
     else
       redirect_to search_bookmarks_path + "?utf8=✓&s=#{session[:search_query]}"
@@ -77,6 +85,10 @@ class BookmarksController < ApplicationController
 
   def search
     @bookmarks = current_account.bookmarks.search(params[:s])
+  end
+
+  def replace_img
+    @bookmark = current_account.bookmarks.find(params[:id])
   end
 
   private
