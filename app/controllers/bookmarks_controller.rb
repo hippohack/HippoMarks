@@ -18,9 +18,19 @@ class BookmarksController < ApplicationController
 
   def add
     @bookmark = current_account.bookmarks.new
+    if params[:bookmark].present?
+      @bookmark.name = params[:bookmark][:name]
+      @bookmark.url = params[:bookmark][:url]
+      @bookmark.folder_id = params[:bookmark][:folder_id]
+      @bookmark.keyword = params[:bookmark][:keyword]
+    end
+
+    # FIXME: 強制的にエラー追加
+    if params[:messages] && params[:messages][:url]
+      @bookmark.errors.messages[:url] = params[:messages][:url]
+    end
 
     set_folder_data
-    # raise
   end
 
   def create
@@ -29,15 +39,19 @@ class BookmarksController < ApplicationController
       @bookmark.folder_id = current_account.bookmarkbar_folder_id
     end
 
-    raise if @bookmark.save == false
-
-    # get og and favicon images with job.
-    CaptureJob.perform_later(@bookmark.id)
-
-    if params[:popup]
-      render :show
+    if @bookmark.save
+      if params[:popup]
+        render :show
+      else
+        redirect_to root_path
+      end
     else
-      redirect_to root_path
+      # raise
+      flash[:error] = "保存に失敗しました"
+      # MEMO: renderではset_folder_dataが呼ばれないのでvueで値不足になる
+      # render :add
+      # MEMO: redirect_toでは@bookmark.errorsが残らない
+      after_update_redirect('add')
     end
   end
 
@@ -54,25 +68,42 @@ class BookmarksController < ApplicationController
   def popup_edit
     @bookmark = current_account.bookmarks.find(params[:id])
 
+    if params[:bookmark].present?
+      @bookmark.name = params[:bookmark][:name]
+      @bookmark.url = params[:bookmark][:url]
+      @bookmark.folder_id = params[:bookmark][:folder_id]
+      @bookmark.keyword = params[:bookmark][:keyword]
+    end
+
+    # FIXME: 強制的にエラー追加
+    if params[:messages] && params[:messages][:url]
+      @bookmark.errors.messages[:url] = params[:messages][:url]
+    end
+
     set_folder_data
   end
 
   def update
     @bookmark = current_account.bookmarks.find(params[:id])
-    @bookmark.update!(bookmark_params)
 
+    # 画像の更新のみ
     if params[:site_image_edit]
       img = Bookmark.img_to_base64(params[:bookmark][:og_image_url].tempfile)
       @bookmark.og_image_url = img
-      @bookmark.save!
+      if @bookmark.save!
+        render :replace_img
+        return
+      end
     end
 
-    if params[:popup] && params[:site_image_edit]
-      render :replace_img
-    elsif params[:popup]
-      render :show
+    if @bookmark.update(bookmark_params)
+      if params[:popup]
+        render :show
+      else
+        redirect_to search_bookmarks_path + "?utf8=✓&s=#{session[:search_query]}"
+      end
     else
-      redirect_to search_bookmarks_path + "?utf8=✓&s=#{session[:search_query]}"
+      after_update_redirect('popup_edit')
     end
   end
 
@@ -115,5 +146,14 @@ class BookmarksController < ApplicationController
     return if params[:s].blank?
 
     session[:search_query] = params[:s]
+  end
+
+  def after_update_redirect(action)
+    redirect_to controller: 'bookmarks', action: action,
+                  'bookmark[name]': params[:bookmark][:name],
+                  'bookmark[url]': params[:bookmark][:url],
+                  'bookmark[folder_id]': params[:bookmark][:folder_id],
+                  'bookmark[keyword]': params[:bookmark][:keyword],
+                  messages: @bookmark.errors.messages
   end
 end

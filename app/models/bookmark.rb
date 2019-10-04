@@ -5,6 +5,12 @@ class Bookmark < ApplicationRecord
   belongs_to :folder
 
   validates :url, presence: true
+  validates :url, format: {
+    with: /\A[a-zA-Z]+:/,
+    message: 'Missing URI scheme'
+  }
+
+  after_commit :enque_job, on: [ :create, :update ]
 
   include Import
   include Capture
@@ -83,5 +89,12 @@ class Bookmark < ApplicationRecord
     return nil if icon_url.blank?
 
     'data:image/png;base64,' + Base64.encode64(safe_open(icon_url))
+  end
+
+  private
+
+  def enque_job
+    # get og and favicon images with job.
+    CaptureJob.perform_later(self.id)
   end
 end

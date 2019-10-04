@@ -1,5 +1,7 @@
 #app
   = render "shared/navbar"
+  = render "shared/flash"
+  / = render "shared/validation_error"
   .container-fluid
     .row.flex-xl-nowrap.justify-content-center
       main.main.col-6.mt-3
@@ -14,6 +16,9 @@
             = f.label :url
             = f.text_field :url, class: 'form-control'
             .form-text.text-muted ex: https://www.hippohack.me/
+            - if @bookmark.errors.messages[:url].first
+              .form-error
+                = @bookmark.errors.messages[:url].first
 
           .form-group
             = f.label :folder_id
