@@ -111,7 +111,6 @@
         this.deleted_folder = values.delete_folder
       },
       incrementImpression(id) {
-        // TODO: touch impression
         let res = axios.patch(`/api/bookmarks/${id}/increment_impression`, { 'increment': true } )
           .then((response) => {
             console.log({response})
@@ -119,7 +118,6 @@
           .catch((error) => {
             console.log({error})
           })
-        console.log({res})
       }
     },
   }
