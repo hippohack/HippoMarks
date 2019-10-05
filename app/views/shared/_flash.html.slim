@@ -3,3 +3,8 @@
     = flash[:notice]
     button type="button" class="close" data-dismiss="alert" aria-label="Close"
       span aria-hidden="true" &times;
+- if flash[:error]
+  .alert.alert-danger.alert-dismissible.fade.show.mb-0 role="alert"
+    = "ERROR: #{flash[:error]}"
+    button type="button" class="close" data-dismiss="alert" aria-label="Close"
+      span aria-hidden="true" &times;

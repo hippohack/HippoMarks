@@ -1,0 +1,4 @@
+- if @bookmark.errors.full_messages.any?
+  - @bookmark.errors.full_messages.each do |error_message|
+    div
+      = error_message if @bookmark.errors.full_messages.first == error_message

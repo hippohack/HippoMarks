@@ -50,11 +50,17 @@ document.addEventListener('turbolinks:load', () => {
         $('form').submit();
       },
       submitAvatar() {
-        $('#avator-form').submit();
+        $('.avator-form__submit').click();
         $('button.close').click();
       },
       fileSelect() {
         $('#profile_avatar').click();
+      },
+      siteImageSelect() {
+        $('#site-image-select').click();
+      },
+      submitSiteImageEdit() {
+        $('.site-image-form__submit').click();
       }
     }
   })
