@@ -1,5 +1,4 @@
 class Api::BookmarksController < ApplicationController
-
   def index
     # bookmarkbar_items = BookmarkbarItem.bar_items(current_account.id)
     @bookmarkbar_items = BookmarkbarItem.get_bookmarkbar_item(current_account.id)
@@ -35,4 +34,11 @@ class Api::BookmarksController < ApplicationController
     @bookmark.destroy
   end
 
+  def increment_impression
+    return nil if params[:increment] != true
+
+    @bookmark = current_account.bookmarks.find(params[:bookmark_id])
+    @bookmark.impressions += 1
+    @bookmark.save!
+  end
 end
