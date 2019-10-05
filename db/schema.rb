@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_25_123715) do
+ActiveRecord::Schema.define(version: 2019_10_05_030206) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2019_09_25_123715) do
     t.text "icon", limit: 4294967295
     t.text "keyword", limit: 4294967295
     t.text "og_image_url", limit: 4294967295
+    t.integer "impressions", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -25,7 +25,7 @@
                 <td class="align-middle"><strong><a href="<%= bookmark.url %>" target="_blank"><%= bookmark.name %></a></strong></td>
                 <td class="align-middle"><%= url_to_domain(bookmark.url) %></td>
                 <td class="align-middle"><%= bookmark.keyword %></td>
-                <td class="text-center align-middle">999</td>
+                <td class="text-center align-middle"><%= bookmark.impressions %></td>
                 <td class="align-middle">
                   <div class="btn-group">
                     <%= link_to 'Edit', edit_bookmark_path(bookmark), class: "btn btn-primary" %>

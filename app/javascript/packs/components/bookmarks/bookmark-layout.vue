@@ -45,7 +45,7 @@
             <div>Name: {{ current_bookmark.name }}</div>
             <div>URL: {{ current_bookmark.url | excerpt }}</div>
             <div>Keywords: {{ current_bookmark.keyword }}</div>
-            <div>Impressions: 999 times</div>
+            <div>Impressions: {{ current_bookmark.impressions }} times</div>
             <div>Created_at: {{ current_bookmark.created_at | moment }}</div>
           </div>
         </div>
