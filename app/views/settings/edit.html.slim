@@ -1,23 +1,25 @@
 #app
   = render "shared/navbar"
-  main.p-3
-    = form_tag settings_update_path, { class: "settings-form", method: 'put' }
-      .d-flex
-        .form-items
-          - @settings.each do |setting|
-            - if setting.key == 'lang'
-              .form-group
-                = label_tag setting.key, nil
-                = hidden_field_tag "setting[][key]", setting.key
-                / TODO: Make collection record
-                = select_tag "setting[][value]", options_for_select([['Japanese', 'Japanese'], ['English', 'English']], setting.value), class: 'form-control'
-            - else
-              .form-group
-                = label_tag setting.key, nil
-                = hidden_field_tag "setting[][key]", setting.key
-                = text_field_tag "setting[][value]", setting.value, class: 'form-control'
+  .row.justify-content-center
+    main.main.mt-4 style="max-width: 500px;"
+      h2 Setting edit
+      = form_tag settings_update_path, { class: "settings-form", method: 'put' }
+        .d-flex
+          .form-items
+            - @settings.each do |setting|
+              - if setting.key == 'lang'
+                .form-group
+                  = label_tag setting.key, nil
+                  = hidden_field_tag "setting[][key]", setting.key
+                  / TODO: Make collection record
+                  = select_tag "setting[][value]", options_for_select([['Japanese', 'Japanese'], ['English', 'English']], setting.value), class: 'form-control'
+              - else
+                .form-group
+                  = label_tag setting.key, nil
+                  = hidden_field_tag "setting[][key]", setting.key
+                  = text_field_tag "setting[][value]", setting.value, class: 'form-control'
 
-          = submit_tag "Save changes", { class: 'btn btn-primary' }
+            = submit_tag "Save changes", { class: 'btn btn-primary' }
 
 = javascript_pack_tag 'bookmark'
 = stylesheet_pack_tag 'bookmark'
