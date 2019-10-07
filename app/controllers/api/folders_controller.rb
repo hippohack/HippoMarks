@@ -35,6 +35,12 @@ class Api::FoldersController < ApplicationController
     @folder.destroy
   end
 
+  def many_visits
+    @folders = []
+    @bookmarks = current_account.bookmarks.order(impressions: :desc)
+    render :show
+  end
+
   private
     def folder_params
       params.fetch(:folder, {}).permit(

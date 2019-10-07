@@ -1,7 +1,8 @@
 #app
   = render "shared/navbar"
-  main.p-3
+  main.p-3.
     = form_for @profile, html: { class: "profile-form" } do |f|
+      h2 Profile Edit
       .d-flex
         .avator
           .avator__label Avator

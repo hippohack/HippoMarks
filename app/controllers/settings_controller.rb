@@ -11,7 +11,7 @@ class SettingsController < ApplicationController
   end
 
   def update
-    params.fetch(:setting, {}).each do |param|
+    params.fetch(:setting, {}).each do |key, param|
       setting = @settings.find_by(key: param[:key])
       setting.update!(setting_attributes(param))
     end
@@ -46,7 +46,9 @@ class SettingsController < ApplicationController
     current_account.settings.build(
       [
         [key: 'lang', value: 'japanese'],
-        [key: 'home_url', value: '/']
+        [key: 'home_url', value: '/'],
+        [key: 'show_many_visits', value: 'true'],
+        [key: 'show_history', value: 'true'],
       ]
     )
     current_account.save

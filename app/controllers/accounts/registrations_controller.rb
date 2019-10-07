@@ -48,7 +48,9 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
     @account.settings.build(
       [
         [key: 'lang', value: 'japanese'],
-        [key: 'home_url', value: '/']
+        [key: 'home_url', value: '/'],
+        [key: 'show_many_visits', value: 'true']
+        # [key: 'show_history', value: true]
       ]
     )
     @account.save!

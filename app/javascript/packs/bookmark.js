@@ -23,7 +23,9 @@ Vue.component('folders', Folders)
 Vue.component('folder', Folder)
 Vue.component('context-menu', ContextMenu)
 
-document.addEventListener('turbolinks:load', () => {
+// FIXME: DOM表示しない問題があるためDOMContentLoadedに変更してる
+document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
     // router: Router,
     el: '#app',

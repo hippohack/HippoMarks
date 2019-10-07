@@ -22,8 +22,8 @@
       }
     },
     props: {
-      _clicked_folder_id: { type: Number },
-      _home_url: ""
+      _clicked_folder_id: "",
+      _home_url: "",
     },
     mounted() {
       this.clicked_folder_id = this._clicked_folder_id
