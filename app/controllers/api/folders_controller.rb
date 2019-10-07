@@ -37,7 +37,8 @@ class Api::FoldersController < ApplicationController
 
   def many_visits
     @folders = []
-    @bookmarks = current_account.bookmarks.order(impressions: :desc)
+    # TODO: takeの数任意設定でもいいかも
+    @bookmarks = current_account.bookmarks.order(impressions: :desc).take(10)
     render :show
   end
 
