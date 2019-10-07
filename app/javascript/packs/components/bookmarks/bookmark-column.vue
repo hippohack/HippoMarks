@@ -33,7 +33,7 @@
     },
     props: {
       _level: { type: Number },
-      _folder_id: { type: Number },
+      _folder_id: "",
       _home_url: ""
     },
     computed: {
