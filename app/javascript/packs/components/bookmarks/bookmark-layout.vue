@@ -14,7 +14,7 @@
             @apply="receive"
             @apply_bookmark="catch_bookmark"
           ></bookmark-item>
-          <div>
+          <div v-if="show_many_visits == 'true'">
             <a
               class="bookmarks__link"
               href="javascript:void(0)"
@@ -22,13 +22,13 @@
             ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>Many visits</a>
           </div>
           <!-- TODO: history -->
-          <!-- <div>
+          <div v-if="show_history == 'true'">
             <a
               class="bookmarks__link"
               href="javascript:void(0)"
               @click="openManyVisitsFolder()"
             ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>History</a>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -96,16 +96,21 @@
         folder_editing: false,
         folder_hierarchy_data: [],
         current_bookmark: null,
+        show_many_visits: null,
+        show_history: null,
       };
     },
     props: {
       _top_folder: { type: Object },
       _folders: { type: Array },
       _bookmarks: { type: Array },
-      _home_url: ""
+      _home_url: "",
+      _settings: { type: Array }
     },
     mounted: function() {
       this.items = this._folders.concat(this._bookmarks)
+      this.show_many_visits = this.settingFind('show_many_visits').value
+      this.show_history = this.settingFind('show_history').value
     },
     computed: {
       folder_hierarchy() {
@@ -160,6 +165,11 @@
       openManyVisitsFolder() {
         this.is_active = true
         this.clicked_folder_id = 'many_visits'
+      },
+      settingFind(target) {
+        return this._settings.find((elm) => {
+          return elm.key == target
+        })
       }
     },
     filters: {
