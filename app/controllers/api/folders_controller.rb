@@ -42,6 +42,13 @@ class Api::FoldersController < ApplicationController
     render :show
   end
 
+  def history
+    @folders = []
+    # TODO: takeの数任意設定でもいいかも
+    @bookmarks = current_account.bookmarks.order(last_access_time: :desc).take(10)
+    render :show
+  end
+
   private
     def folder_params
       params.fetch(:folder, {}).permit(
