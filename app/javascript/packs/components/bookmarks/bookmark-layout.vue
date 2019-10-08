@@ -14,21 +14,20 @@
             @apply="receive"
             @apply_bookmark="catch_bookmark"
           ></bookmark-item>
-          <div v-if="show_many_visits == 'true'">
-            <a
-              class="bookmarks__link"
-              href="javascript:void(0)"
-              @click="openManyVisitsFolder()"
-            ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>Many visits</a>
-          </div>
-          <!-- TODO: history -->
-          <div v-if="show_history == 'true'">
-            <a
-              class="bookmarks__link"
-              href="javascript:void(0)"
-              @click="openManyVisitsFolder()"
-            ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>History</a>
-          </div>
+        </div>
+        <div v-if="show_many_visits == 'true'">
+          <a
+            class="bookmarks__link"
+            href="javascript:void(0)"
+            @click="openManyVisitsFolder()"
+          ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>Many visits</a>
+        </div>
+        <div v-if="show_history == 'true'">
+          <a
+            class="bookmarks__link"
+            href="javascript:void(0)"
+            @click="openHistoryFolder()"
+          ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>History</a>
         </div>
       </div>
     </div>
@@ -121,6 +120,11 @@
           return this.folder_hierarchy_data
         }
 
+        if (this.clicked_folder_id == 'history') {
+          this.folder_hierarchy_data[0] = 'History'
+          return this.folder_hierarchy_data
+        }
+
         let id = this.clicked_folder_id
         let found = this._folders.find(function(element) {
           return element.id == id && !element.url
@@ -165,6 +169,10 @@
       openManyVisitsFolder() {
         this.is_active = true
         this.clicked_folder_id = 'many_visits'
+      },
+      openHistoryFolder() {
+        this.is_active = true
+        this.clicked_folder_id = 'history'
       },
       settingFind(target) {
         return this._settings.find((elm) => {

@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     patch '/bookmarks/:bookmark_id/increment_impression', to: 'bookmarks#increment_impression'
     resources :bookmarks
     get '/folders/many_visits', to: 'folders#many_visits', as: 'many_visits'
+    get '/folders/history', to: 'folders#history', as: 'history'
     resources :folders
     resources :tasks, only: [:index, :create, :update]
   end

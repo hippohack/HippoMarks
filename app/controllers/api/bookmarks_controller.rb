@@ -34,11 +34,15 @@ class Api::BookmarksController < ApplicationController
     @bookmark.destroy
   end
 
+  # MEMO: history用のtouch処理をここに追加した
   def increment_impression
     return nil if params[:increment] != true
 
     @bookmark = current_account.bookmarks.find(params[:bookmark_id])
     @bookmark.impressions += 1
     @bookmark.save!
+
+    # FIXME: 2回クエリーが飛ぶので微妙
+    @bookmark.touch(:last_access_time)
   end
 end

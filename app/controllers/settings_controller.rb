@@ -2,8 +2,29 @@ class SettingsController < ApplicationController
   before_action :set_setting
 
   def index
-    render :edit
     save_default_values if @settings.blank?
+
+    # 設定されてないものがあるかチェックしてなければ追加する
+    # FIXME: 設定が増えるたびに編集するのか？
+    diff = default_setting_keys
+    @settings.each do |s|
+      diff.delete(s.key) if default_setting_keys.include?(s.key)
+    end
+    if diff.present?
+      updates = []
+      diff.each do |d|
+        if ['show_many_visits', 'show_history'].include? d
+          updates.push [key: d, value: 'true']
+        else
+          updates.push [key: d, value: nil]
+        end
+      end
+      current_account.settings.build(updates)
+      current_account.save
+      @settings = current_account.settings
+    end
+
+    render :edit
   end
 
   def edit
@@ -43,14 +64,25 @@ class SettingsController < ApplicationController
   end
 
   def save_default_values
-    current_account.settings.build(
-      [
-        [key: 'lang', value: 'japanese'],
-        [key: 'home_url', value: '/'],
-        [key: 'show_many_visits', value: 'true'],
-        [key: 'show_history', value: 'true'],
-      ]
-    )
+    current_account.settings.build(default_settings)
     current_account.save
+  end
+
+  # TODO: 項目が増えるごとに更新が必要
+  def default_settings
+    [
+      [key: 'lang', value: 'japanese'],
+      [key: 'home_url', value: '/'],
+      [key: 'show_many_visits', value: 'true'],
+      [key: 'show_history', value: 'true'],
+    ]
+  end
+
+  def default_setting_keys
+    res = []
+    default_settings.each do |s|
+      res.push s.first[:key]
+    end
+    res
   end
 end
