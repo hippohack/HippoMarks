@@ -1,0 +1,26 @@
+$mainColor: #01c68b;
+
+.eyecatch {
+  height: 768px;
+  background-image: image-url("og.png");
+  background-position: center -200px;
+  background-repeat: no-repeat;
+  background-color: $mainColor;
+
+  &__lead {
+    width: 900px;
+    color: #fff;
+    margin-top: 350px;
+  }
+
+  &__btn-group {
+    width: 360px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+    }
+  }
+}

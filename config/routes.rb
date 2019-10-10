@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     sessions: 'accounts/sessions'
   }
   root to: 'home#index'
-  # get 'home/index'
+  get '/welcome', to: 'home#welcome', as: 'welcome'
 
   get '/bookmarks/add', to: 'bookmarks#add', as: 'add_bookmark'
   get '/bookmarks/:id/popup_edit', to: 'bookmarks#popup_edit', as: 'popup_edit_bookmark'

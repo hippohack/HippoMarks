@@ -7,4 +7,8 @@ class HomeController < ApplicationController
     @bookmarks = @top_folder.bookmarks
     # raise
   end
+
+  def welcome
+    
+  end
 end
