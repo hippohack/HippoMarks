@@ -10,9 +10,7 @@
     main.main.bookmarks
       bookmark-layout :_top_folder="#{ @top_folder.to_json }" :_folders="#{ @folders.to_json }" :_bookmarks="#{ @bookmarks.to_json }" :_home_url="#{ ENV.fetch('HOMEURL').to_json }" :_settings="#{ current_account.settings.to_json }"
 
-.footer.bg-dark
-  .text-right.text-white.p-1.px-3
-    a.copyright.text-white href="https://www.hippohack.me/" target="_blank" © HippoHack
+= render "shared/footer"
 
 = javascript_pack_tag 'bookmark'
 = stylesheet_pack_tag 'bookmark'

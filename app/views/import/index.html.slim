@@ -11,9 +11,8 @@
 
           = submit_tag '送信する', class: 'btn btn-primary'
 
-.footer.bg-dark.pos-bottom
-  .text-right.text-white.p-1.px-3
-    a.copyright.text-white href="https://www.hippohack.me/" target="_blank" © HippoHack
+.pos-bottom
+  = render "shared/footer"
 
 = javascript_pack_tag 'bookmark'
 = stylesheet_pack_tag 'bookmark'
