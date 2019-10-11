@@ -1,0 +1,29 @@
+nav.navbar.navbar-light.bg-dark
+  = link_to(root_path, class: 'navbar-brand text-white', 'data-turbolinks': false) do
+    img.d-inline-block.align-top.mr-2 src="#{image_url('bookmarks.svg')}" width="30" height="30" alt=""
+    | HippoMarks <span class="navbar__version">#{ENV.fetch('APP_VERSION')}</span>
+  ul.flex-row.navbar-nav.ml-auto
+    li.nav-item.ml-auto.px-2
+      a.btn.btn-sm.text-white href="#{new_account_session_path}"
+        | Login
+    li.nav-item.ml-auto.px-2
+      a.btn.btn-outline-info.btn-sm.text-white href="#{new_account_registration_path}"
+        | Sign up
+
+.eyecatch
+  h1.text-hide HippoMarks
+  .row.justify-content-center.mx-0
+    .eyecatch__lead
+      p.text-center A bookmark bar that you can access from anywhere to change your browser.
+      p.text-center There is no need to repeat export and import anymore.
+      / p.text-center ころころブラウザを変更するあなたに、どこからでもアクセスできるブックマークバーを。
+      / p.text-center もうエクスポート、インポートを繰り返す必要はありません。
+  .row.justify-content-center.mx-0
+    .eyecatch__btn-group
+      a.btn.btn-outline-light href="#{new_account_registration_path}" Sign up
+      div.mt-2.text-white
+        | Do you already have an account?
+        a.ml-3.text-white href="#{new_account_session_path}" Login >
+
+.pos-bottom
+  = render "shared/footer"
