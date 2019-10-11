@@ -1,14 +1,13 @@
 $mainColor: #01c68b;
 
 .eyecatch {
-  height: 768px;
+  height: calc(100vh - 56px);
   background-image: image-url("og.png");
   background-position: center -200px;
   background-repeat: no-repeat;
   background-color: $mainColor;
 
   &__lead {
-    width: 900px;
     color: #fff;
     margin-top: 350px;
   }
