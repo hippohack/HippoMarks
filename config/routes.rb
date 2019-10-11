@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     sessions: 'accounts/sessions'
   }
   root to: 'home#index'
-  # get 'home/index'
+  get '/welcome', to: 'home#welcome', as: 'welcome'
 
   get '/bookmarks/add', to: 'bookmarks#add', as: 'add_bookmark'
   get '/bookmarks/:id/popup_edit', to: 'bookmarks#popup_edit', as: 'popup_edit_bookmark'
@@ -31,7 +31,10 @@ Rails.application.routes.draw do
   namespace :api, format: 'json' do
     get '/bookmarks', to: 'bookmarks#index', as: 'bookmarks'
     get '/bookmarks/:bookmark_id/folder', to: 'bookmarks#folder', as: 'folder'
+    patch '/bookmarks/:bookmark_id/increment_impression', to: 'bookmarks#increment_impression'
     resources :bookmarks
+    get '/folders/many_visits', to: 'folders#many_visits', as: 'many_visits'
+    get '/folders/history', to: 'folders#history', as: 'history'
     resources :folders
     resources :tasks, only: [:index, :create, :update]
   end

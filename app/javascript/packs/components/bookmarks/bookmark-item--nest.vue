@@ -22,6 +22,7 @@
       v-if="item.url"
       :href="item.url"
       :title="item.keyword"
+      @click="incrementImpression(item.id)"
       @mouseenter="$emit('apply_bookmark', { bookmark: item })"
       @mouseleave="$emit('apply_bookmark', { bookmark: null })"
     >
@@ -108,6 +109,15 @@
       },
       delete_folder(values) {
         this.deleted_folder = values.delete_folder
+      },
+      incrementImpression(id) {
+        let res = axios.patch(`/api/bookmarks/${id}/increment_impression`, { 'increment': true } )
+          .then((response) => {
+            console.log({response})
+          })
+          .catch((error) => {
+            console.log({error})
+          })
       }
     },
   }

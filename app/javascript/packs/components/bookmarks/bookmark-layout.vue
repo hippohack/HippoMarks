@@ -15,6 +15,20 @@
             @apply_bookmark="catch_bookmark"
           ></bookmark-item>
         </div>
+        <div v-if="show_many_visits == 'true'">
+          <a
+            class="bookmarks__link"
+            href="javascript:void(0)"
+            @click="openManyVisitsFolder()"
+          ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>Many visits</a>
+        </div>
+        <div v-if="show_history == 'true'">
+          <a
+            class="bookmarks__link"
+            href="javascript:void(0)"
+            @click="openHistoryFolder()"
+          ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>History</a>
+        </div>
       </div>
     </div>
 
@@ -45,7 +59,7 @@
             <div>Name: {{ current_bookmark.name }}</div>
             <div>URL: {{ current_bookmark.url | excerpt }}</div>
             <div>Keywords: {{ current_bookmark.keyword }}</div>
-            <div>Impressions: 999 times</div>
+            <div>Impressions: {{ current_bookmark.impressions }} times</div>
             <div>Created_at: {{ current_bookmark.created_at | moment }}</div>
           </div>
         </div>
@@ -80,27 +94,42 @@
         items: [],
         folder_editing: false,
         folder_hierarchy_data: [],
-        current_bookmark: null
+        current_bookmark: null,
+        show_many_visits: null,
+        show_history: null,
       };
     },
     props: {
       _top_folder: { type: Object },
       _folders: { type: Array },
       _bookmarks: { type: Array },
-      _home_url: ""
+      _home_url: "",
+      _settings: { type: Array }
     },
     mounted: function() {
       this.items = this._folders.concat(this._bookmarks)
+      this.show_many_visits = this.settingFind('show_many_visits').value
+      this.show_history = this.settingFind('show_history').value
     },
     computed: {
       folder_hierarchy() {
-        if (!this.clicked_folder_id) {
-          return
+        if (!this.clicked_folder_id) { return }
+
+        if (this.clicked_folder_id == 'many_visits') {
+          this.folder_hierarchy_data[0] = 'Many visits'
+          return this.folder_hierarchy_data
         }
+
+        if (this.clicked_folder_id == 'history') {
+          this.folder_hierarchy_data[0] = 'History'
+          return this.folder_hierarchy_data
+        }
+
         let id = this.clicked_folder_id
         let found = this._folders.find(function(element) {
           return element.id == id && !element.url
         })
+
         if (this.folder_hierarchy_data[0] != found.name) {
           this.folder_hierarchy_data = []
           this.folder_hierarchy_data[0] = found.name
@@ -136,6 +165,19 @@
       },
       catch_bookmark(values) {
         this.current_bookmark = values.bookmark
+      },
+      openManyVisitsFolder() {
+        this.is_active = true
+        this.clicked_folder_id = 'many_visits'
+      },
+      openHistoryFolder() {
+        this.is_active = true
+        this.clicked_folder_id = 'history'
+      },
+      settingFind(target) {
+        return this._settings.find((elm) => {
+          return elm.key == target
+        })
       }
     },
     filters: {

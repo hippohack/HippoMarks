@@ -1,7 +1,8 @@
 #app
   = render "shared/navbar"
-  main.p-3
+  main.p-3.
     = form_for @profile, html: { class: "profile-form" } do |f|
+      h2 Profile Edit
       .d-flex
         .avator
           .avator__label Avator
@@ -36,6 +37,9 @@
               button.avator-form__file-up-btn type="button" @click="fileSelect" <i class="fa fa-picture-o" aria-hidden="true"></i> 写真をアップロード
               = hidden_field_tag 'edit_avatar_image', true
               = f.submit "submit", class: 'd-none avator-form__submit'
+
+.pos-bottom
+  = render "shared/footer"
 
 = javascript_pack_tag 'bookmark'
 = stylesheet_pack_tag 'bookmark'
