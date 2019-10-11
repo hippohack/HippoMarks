@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :authenticate_account!
+  before_action :authenticate_account!, except: [:welcome]
 
   def index
     @top_folder = current_account.folders.top_folder(current_account.bookmarkbar_folder_id)
@@ -9,6 +9,6 @@ class HomeController < ApplicationController
   end
 
   def welcome
-    
+    redirect_to root_path if account_signed_in?
   end
 end
