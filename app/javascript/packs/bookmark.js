@@ -84,14 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
           });
       },
       showItemMenu(target_item_id) {
-        // console.log({event, target_item_id});
         this.show_item_menu = true
         this.show_item_menu_id = target_item_id
         this.pageX = event.pageX
         this.pageY = event.pageY
       },
       hideItemMenu() {
-        console.log('leave');
         this.show_item_menu = false
         this.pageX = null
         this.pageY = null

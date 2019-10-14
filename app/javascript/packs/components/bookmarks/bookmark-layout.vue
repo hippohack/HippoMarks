@@ -2,7 +2,7 @@
   <div class="row flex-xl-nowrap">
     <div class="col-2 bookmarks__col bookmarks__col--first">
       <div class="menu-ui d-flex justify-content-end">
-        <a class="menu-ui__add_folder mr-0" @click="$root.add_folder" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Add folder</a>
+        <a class="menu-ui__add_folder mr-0" @click="is_add_folder = true" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Add folder</a>
       </div>
       <div class="bookmarks__items">
         <div

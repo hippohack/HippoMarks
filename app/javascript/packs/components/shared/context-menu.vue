@@ -4,8 +4,8 @@
     </div>
     <div class="content-menu__body" @click="no_action" :style="styles">
       <div v-if="_item.url" class="list-group">
-        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="javascript:void(0)" @click="edit_bookmark">編集</a>
-        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="javascript:void(0)" @click="delete_bookmark">ブックマークを削除</a>
+        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="javascript:void(0)" @click="edit_bookmark">Edit bookmark</a>
+        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="javascript:void(0)" @click="delete_bookmark">Delete bookmark</a>
       </div>
 
       <div v-if="!_item.url" class="list-group">
@@ -13,9 +13,8 @@
           class="content-menu__link list-group-item bg-dark text-light d-block"
           href="javascript:void(0)"
           @click="$emit('folder_edit', { folder_editing: true })"
-        >編集</a>
-        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="#">フォルダを作成</a>
-        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="javascript:void(0)" @click="delete_folder">フォルダを削除</a>
+        >Edit folder name</a>
+        <a class="content-menu__link list-group-item bg-dark text-light d-block" href="javascript:void(0)" @click="delete_folder">Delete folder</a>
       </div>
     </div>
   </div>

@@ -1,15 +1,20 @@
 <template>
   <div class="col bookmarks__col">
     <div class="menu-ui d-flex justify-content-end">
-      <a class="menu-ui__add_folder mr-0" @click="is_add_folder = true, is_saved = false" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Add folder</a>
+      <a class="menu-ui__add_folder mr-0" @click="is_add_folder = true" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Add folder</a>
     </div>
     <div class="bookmarks__items" v-if="items">
       <div v-if="is_add_folder" class="bookmarks__item">
-        <div @mouseenter="$root.showItemMenu(null)" @mouseleave="$root.hideItemMenu">
+        <div>
           <a href="javascript:void(0)" class="bookmarks__link">
             <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>
-            <span v-if="is_saved">{{ new_folder_name }}</span>
-            <input v-else type="text" name="folder[name]" v-model="new_folder_name" @blur="create_folder" @keyup.enter="create_folder" placeholder="folder name..." class="py-1 px-2">
+            <input type="text"
+                   name="folder[name]"
+                   v-model="new_folder_name"
+                   @blur="create_folder"
+                   @keyup.enter="create_folder"
+                   placeholder="folder name..."
+                   class="py-1 px-2">
           </a>
         </div>
       </div>
@@ -67,10 +72,8 @@
         if (this.last_request_id == folder_id) {
           return false
         }
-        console.log('[:Request_url]', `/api/folders/${folder_id}`);
         axios.get(`/api/folders/${folder_id}/`).then(
           response => {
-            console.log(response.data)
             this.fetch_items = response.data.items[0].concat(response.data.items[1])
           },
           error => { console.log(error); }
@@ -83,12 +86,8 @@
       receive(values) {
         this.seleted_folder_id = values.folder_id
         let found = this.fetch_items.find((elm) => {
-          console.log({elm})
-          console.log({values})
-
           return elm.id == values.folder_id && !elm.url
         })
-        console.log({found})
         this.$emit('apply', { folder_id: values.folder_id, level: values.level, folder_name: found.name })
         // this.$forceUpdate()
       },
@@ -97,7 +96,15 @@
       },
       create_folder() {
         this.$root.add_folder(this._folder_id, this._level, this.new_folder_name);
-        this.is_saved = true;
+        this.is_add_folder = false;
+
+        // folder内データの再フェッチ
+        axios.get(`/api/folders/${this._folder_id}/`).then(
+          response => {
+            this.fetch_items = response.data.items[0].concat(response.data.items[1])
+          },
+          error => { console.log(error); }
+        );
       },
     }
   }
