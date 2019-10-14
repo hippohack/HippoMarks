@@ -1,16 +1,22 @@
 <template>
   <div class="row flex-xl-nowrap">
     <div class="col-2 bookmarks__col bookmarks__col--first">
+      <div class="menu-ui d-flex justify-content-end">
+        <a class="menu-ui__add_folder mr-0" @click="$root.add_folder" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Add folder</a>
+      </div>
       <div class="bookmarks__items">
         <div
           class="bookmarks__item"
           v-for="(item, index) in items"
           v-bind:key="index"
+          style="position: relative;"
         >
           <bookmark-item
             :_item="item"
             :_folder_id="clicked_folder_id"
             :_home_url="_home_url"
+            :_show_item_menu="_show_item_menu"
+            :_show_item_menu_id="_show_item_menu_id"
             @apply="receive"
             @apply_bookmark="catch_bookmark"
           ></bookmark-item>
@@ -39,6 +45,8 @@
             v-if="is_active"
             :_clicked_folder_id="clicked_folder_id"
             :_home_url="_home_url"
+            :_show_item_menu="_show_item_menu"
+            :_show_item_menu_id="_show_item_menu_id"
             @apply2="push_folder_hierachy"
             @apply_bookmark="catch_bookmark"
           ></bookmark-columns>
@@ -105,7 +113,9 @@
       _folders: { type: Array },
       _bookmarks: { type: Array },
       _home_url: "",
-      _settings: { type: Array }
+      _settings: { type: Array },
+      _show_item_menu: { type: Boolean },
+      _show_item_menu_id: { type: Number }
     },
     mounted: function() {
       this.items = this._folders.concat(this._bookmarks)

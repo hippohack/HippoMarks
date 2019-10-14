@@ -2,7 +2,7 @@
   <div
     v-if="!deleted_folder"
     v-bind:class="{ active: is_active && item.id == _folder_id }"
-    @contextmenu="show_contextmenu"
+    @mouseenter="$root.showItemMenu(item.id)" @mouseleave="$root.hideItemMenu"
   >
     <a
       class="bookmarks__link"
@@ -33,6 +33,11 @@
         <i class="fa fa-link mr-2" style="font-size: 18px;"></i>{{ item.name }}
       </span>
     </a>
+
+    <item-menu
+      v-if="_show_item_menu && _show_item_menu_id == item.id"
+      @context_menu="receive_contextmenu"
+    ></item-menu>
 
     <context-menu
       v-if="context_menu"
@@ -67,7 +72,9 @@
     props: {
       _item: "",
       _folder_id: "",
-      _home_url: ""
+      _home_url: "",
+      _show_item_menu: { type: Boolean },
+      _show_item_menu_id: { type: Number }
     },
     mounted() {
       this.item = this._item
@@ -115,6 +122,9 @@
           .catch((error) => {
             console.log({error})
           })
+      },
+      receive_contextmenu(values) {
+        this.show_contextmenu(values.event)
       }
     }
   }

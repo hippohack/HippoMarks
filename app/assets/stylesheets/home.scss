@@ -286,3 +286,16 @@ main {
   bottom: 11px;
   font-size: 0.7rem;
 }
+
+.menu-ui {
+  border-bottom: solid 1px #ccc;
+  padding: 5px 15px;
+  width: calc(100% + 30px);
+  margin-left: -15px;
+
+  &__add_bookmark,
+  &__add_folder {
+    padding: 0 3px;
+    margin: 0 10px;
+  }
+}

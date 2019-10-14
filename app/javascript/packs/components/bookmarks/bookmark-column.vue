@@ -1,10 +1,23 @@
 <template>
   <div class="col bookmarks__col">
+    <div class="menu-ui d-flex justify-content-end">
+      <a class="menu-ui__add_folder mr-0" @click="is_add_folder = true, is_saved = false" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Add folder</a>
+    </div>
     <div class="bookmarks__items" v-if="items">
+      <div v-if="is_add_folder" class="bookmarks__item">
+        <div @mouseenter="$root.showItemMenu(null)" @mouseleave="$root.hideItemMenu">
+          <a href="javascript:void(0)" class="bookmarks__link">
+            <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>
+            <span v-if="is_saved">{{ new_folder_name }}</span>
+            <input v-else type="text" name="folder[name]" v-model="new_folder_name" @blur="create_folder" @keyup.enter="create_folder" placeholder="folder name..." class="py-1 px-2">
+          </a>
+        </div>
+      </div>
       <div
         class="bookmarks__item"
         v-for="(item, index) in items"
         v-bind:key="index"
+        style="position: relative;"
       >
         <bookmark-item-nest
           :_item="item"
@@ -12,6 +25,8 @@
           :_folder_id="seleted_folder_id"
           :key="item.id"
           :_home_url="_home_url"
+          :_show_item_menu="_show_item_menu"
+          :_show_item_menu_id="_show_item_menu_id"
           @apply="receive"
           @apply_bookmark="relay_bookmark"
         ></bookmark-item-nest>
@@ -28,13 +43,18 @@
       return {
         fetch_items: [],
         last_request_id: null,
-        seleted_folder_id: null
+        seleted_folder_id: null,
+        is_add_folder: false,
+        new_folder_name: null,
+        is_saved: false,
       }
     },
     props: {
       _level: { type: Number },
       _folder_id: "",
-      _home_url: ""
+      _home_url: "",
+      _show_item_menu: { type: Boolean },
+      _show_item_menu_id: { type: Number }
     },
     computed: {
       items() {
@@ -74,7 +94,11 @@
       },
       relay_bookmark(values) {
         this.$emit('apply_bookmark', { bookmark: values.bookmark })
-      }
+      },
+      create_folder() {
+        this.$root.add_folder(this._folder_id, this._level, this.new_folder_name);
+        this.is_saved = true;
+      },
     }
   }
 </script>
