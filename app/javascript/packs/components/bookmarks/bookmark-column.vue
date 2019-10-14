@@ -4,6 +4,7 @@
       <a class="menu-ui__add_folder mr-0" @click="is_add_folder = true" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Add folder</a>
     </div>
     <div class="bookmarks__items" v-if="items">
+      <!-- add folder // -->
       <div v-if="is_add_folder" class="bookmarks__item">
         <div>
           <a href="javascript:void(0)" class="bookmarks__link">
@@ -18,6 +19,7 @@
           </a>
         </div>
       </div>
+      <!-- // add folder -->
       <div
         class="bookmarks__item"
         v-for="(item, index) in items"
@@ -97,6 +99,7 @@
       create_folder() {
         this.$root.add_folder(this._folder_id, this._level, this.new_folder_name);
         this.is_add_folder = false;
+        this.new_folder_name = null;
 
         // folder内データの再フェッチ
         axios.get(`/api/folders/${this._folder_id}/`).then(
