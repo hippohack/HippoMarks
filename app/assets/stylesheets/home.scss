@@ -89,6 +89,22 @@ main {
   &__item {
     .active {
       background-color: #e6e6e6;
+      position: relative;
+      &:before,
+      &:after {
+        content: "";
+        background-color: #e6e6e6;
+        height: 100%;
+        width: 15px;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -15px;
+      }
+      &:after {
+        left: auto;
+        right: -15px;
+      }
     }
   }
   &__link {

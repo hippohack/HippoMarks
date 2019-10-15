@@ -48,6 +48,8 @@ export default {
         })
     },
     edit_bookmark() {
+      this.$emit('open_bookmark_edit')
+
       // TODO: url調整
       let a = window
       let b = document

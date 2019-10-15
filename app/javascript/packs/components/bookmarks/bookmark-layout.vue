@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div class="col">
+    <div class="col" style="overflow: auto;">
       <div class="row">
         <div class="col" style="overflow:auto;">
           <bookmark-columns

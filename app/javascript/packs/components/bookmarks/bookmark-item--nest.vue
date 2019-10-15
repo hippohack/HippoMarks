@@ -13,7 +13,13 @@
 
     <span v-if="folder_editing">
       <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>
-      <input type="text" name="folder[name]" v-model="folder_name" @blur="update" @keyup.enter="update" class="edit-form">
+      <input type="text"
+             name="folder[name]"
+             v-model="folder_name"
+             @blur="update"
+             @keyup.enter="update"
+             ref="editFolderName"
+             class="edit-form">
     </span>
 
     <a
@@ -48,6 +54,7 @@
       @apply="receive"
       @folder_edit="editFolder"
       @delete_folder="delete_folder"
+      @open_bookmark_edit="context_menu = false"
     ></context-menu>
   </div>
 </template>
@@ -91,6 +98,10 @@
       },
       editFolder(values) {
         this.folder_editing = values.folder_editing
+        this.context_menu = false
+        this.$nextTick(function () {
+          this.$refs.editFolderName.focus()
+        })
       },
       update() {
         this.item.name = this.folder_name
@@ -128,7 +139,7 @@
       },
       receive_contextmenu(values) {
         this.show_contextmenu(values.event)
-      }
+      },
     },
   }
 </script>
