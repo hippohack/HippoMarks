@@ -1,7 +1,13 @@
 <template>
   <div class="col bookmarks__col">
     <div class="menu-ui d-flex justify-content-end">
-      <a class="menu-ui__add_folder mr-0" @click="is_add_folder = true" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Add folder</a>
+      <a v-if="typeof _folder_id == 'number'"
+         class="menu-ui__add_folder mr-0"
+         @click="is_add_folder = true"
+         href="javascript:void(0)">
+        <i class="fa fa-plus" aria-hidden="true"></i> Add folder
+      </a>
+      <div v-else style="visibility: hidden;">else</div>
     </div>
     <div class="bookmarks__items" v-if="items">
       <!-- add folder // -->
