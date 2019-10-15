@@ -21,19 +21,23 @@
             @apply_bookmark="catch_bookmark"
           ></bookmark-item>
         </div>
-        <div v-if="show_many_visits == 'true'">
-          <a
-            class="bookmarks__link"
-            href="javascript:void(0)"
-            @click="openManyVisitsFolder()"
-          ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>Many visits</a>
+        <div class="bookmarks__item" v-if="show_many_visits == 'true'">
+          <div :class="manyVisitsActive">
+            <a
+              class="bookmarks__link"
+              href="javascript:void(0)"
+              @click="openManyVisitsFolder()"
+            ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>Many visits</a>
+          </div>
         </div>
-        <div v-if="show_history == 'true'">
-          <a
-            class="bookmarks__link"
-            href="javascript:void(0)"
-            @click="openHistoryFolder()"
-          ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>History</a>
+        <div class="bookmarks__item" v-if="show_history == 'true'">
+          <div :class="historyActive">
+            <a
+              class="bookmarks__link"
+              href="javascript:void(0)"
+              @click="openHistoryFolder()"
+            ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>History</a>
+          </div>
         </div>
       </div>
     </div>
@@ -106,6 +110,8 @@
         current_bookmark: null,
         show_many_visits: null,
         show_history: null,
+        manyVisitsActive: null,
+        historyActive: null
       };
     },
     props: {
@@ -149,11 +155,6 @@
       }
     },
     methods: {
-      openFolder: function(folder_id) {
-        console.log({folder_id})
-        this.clicked_folder_id = folder_id
-        this.is_active = true
-      },
       editBookmark(id) {
         (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`${this._home_url}/bookmarks/${id}/popup_edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=510px,width=550px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
       },
@@ -164,6 +165,8 @@
         console.log({values})
         this.clicked_folder_id = values.clicked_folder_id
         this.is_active = values.is_active
+        this.manyVisitsActive = null
+        this.historyActive = null
       },
       push_folder_hierachy(values) {
         if (this.folder_hierarchy_data.length > values.level) {
@@ -179,10 +182,14 @@
       },
       openManyVisitsFolder() {
         this.is_active = true
+        this.manyVisitsActive = 'active'
+        this.historyActive = null
         this.clicked_folder_id = 'many_visits'
       },
       openHistoryFolder() {
         this.is_active = true
+        this.historyActive = 'active'
+        this.manyVisitsActive = null
         this.clicked_folder_id = 'history'
       },
       settingFind(target) {
