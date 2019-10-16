@@ -7,7 +7,7 @@ nav.navbar.navbar-light.bg-dark
     = link_to(setting_home_url, class: 'px-2 mr-2 text-white', target: '_blank') do
       i.fa.fa-home.fa-lg aria-hidden="true"
 
-  - if account_signed_in?
+  - if ['home#index'].include? @loaded_action
     = link_to('javascript:void(0);',
               class: 'px-2 mr-3 text-white dropdown-toggle sort-setting-btn',
               id: 'dropdownMenuButton',
@@ -17,11 +17,11 @@ nav.navbar.navbar-light.bg-dark
       i.fa.fa-sort-amount-asc.fa-lg aria-hidden="true"
 
     .dropdown-menu.sort-setting-btn-menu aria-labelledby="dropdownMenuButton"
-      / TODO: ここから
-      a.dropdown-item href="#" Optional
-      a.dropdown-item href="#" Name
-      a.dropdown-item href="#" Created
-      a.dropdown-item href="#" Updated
+      / TODO: get collection records. and loop.
+      a.dropdown-item href="#" class="#{@sort_setting == 'optional' ? 'is_active' : ''}" Optional
+      a.dropdown-item href="#" class="#{@sort_setting == 'name' ? 'is_active' : ''}" Name
+      a.dropdown-item href="#" class="#{@sort_setting == 'created' ? 'is_active' : ''}" Created
+      a.dropdown-item href="#" class="#{@sort_setting == 'updated' ? 'is_active' : ''}" Updated
 
   - if ['home#index', 'bookmarks#search'].include? @loaded_action
     = form_tag(search_bookmarks_path, :method => 'get', class: "flex-grow-1 mr-2")

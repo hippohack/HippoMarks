@@ -329,4 +329,19 @@ main {
     top: 48px;
     left: 255px;
   }
+
+  .dropdown-item {
+    position: relative;
+
+    &.is_active {
+      &:before {
+        content: '\f00c';
+        font-family: 'FontAwesome';
+        position: absolute;
+        left: 7px;
+        top: 8px;
+        font-size: 0.8rem;
+      }
+    }
+  }
 }
