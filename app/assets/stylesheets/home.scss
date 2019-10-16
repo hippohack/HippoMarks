@@ -315,3 +315,18 @@ main {
     margin: 0 10px;
   }
 }
+
+.sort-setting-btn {
+  &.dropdown-toggle {
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.sort-setting-btn-menu {
+  &.dropdown-menu {
+    top: 48px;
+    left: 255px;
+  }
+}

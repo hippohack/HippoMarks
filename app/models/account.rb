@@ -55,7 +55,8 @@ class Account < ApplicationRecord
         [key: 'lang', value: 'japanese'],
         [key: 'home_url', value: '/'],
         [key: 'show_many_visits', value: 'true'],
-        [key: 'show_history', value: true]
+        [key: 'show_history', value: true],
+        [key: 'item_sort', value: 'optional']
       ]
     )
     self.save!

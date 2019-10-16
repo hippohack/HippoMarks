@@ -15,6 +15,8 @@ class SettingsController < ApplicationController
       diff.each do |d|
         if ['show_many_visits', 'show_history'].include? d
           updates.push [key: d, value: 'true']
+        elsif ['item_sort'].include? d
+          updates.push [key: d, value: 'optional']
         else
           updates.push [key: d, value: nil]
         end
@@ -75,6 +77,7 @@ class SettingsController < ApplicationController
       [key: 'home_url', value: '/'],
       [key: 'show_many_visits', value: 'true'],
       [key: 'show_history', value: 'true'],
+      [key: 'item_sort', value: 'optional']
     ]
   end
 
