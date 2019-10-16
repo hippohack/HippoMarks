@@ -37,8 +37,9 @@ class SettingsController < ApplicationController
     params.fetch(:setting, {}).each do |key, param|
       setting = @settings.find_by(key: param[:key])
       setting.update!(setting_attributes(param))
+      flash[:notice] = 'Updated system settings.'
     end
-    render :edit
+    redirect_to settings_path
   end
 
   private
