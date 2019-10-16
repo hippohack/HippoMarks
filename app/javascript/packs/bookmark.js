@@ -10,6 +10,7 @@ import BookmarkItemNest from './components/bookmarks/bookmark-item--nest.vue'
 import Folders from './components/folders/folders.vue'
 import Folder from './components/folders/folder.vue'
 import ContextMenu from './components/shared/context-menu.vue'
+import ItemMenu from './components/shared/item-menu.vue'
 
 import axios from 'axios';
 
@@ -22,6 +23,7 @@ Vue.component('bookmark-item-nest', BookmarkItemNest)
 Vue.component('folders', Folders)
 Vue.component('folder', Folder)
 Vue.component('context-menu', ContextMenu)
+Vue.component('item-menu', ItemMenu)
 
 // FIXME: DOM表示しない問題があるためDOMContentLoadedに変更してる
 document.addEventListener('DOMContentLoaded', () => {
@@ -37,7 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
         is_new_folder: false,
         new_folder_parent_id: "",
         isActiveAvatorEdit: false,
-        file: ''
+        file: '',
+        show_item_menu: false,
+        show_item_menu_id: null,
+        pageX: null,
+        pageY: null,
       }
     },
     methods: {
@@ -63,6 +69,30 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       submitSiteImageEdit() {
         $('.site-image-form__submit').click();
+      },
+      add_folder(folder_id, parent_count, name) {
+        axios.post(`/api/folders/`, {
+            folder_id: folder_id,
+            parent_count: parent_count,
+            name: name
+          })
+          .then(response => {
+            console.log({response})
+          })
+          .catch(error => {
+            console.log({error})
+          });
+      },
+      showItemMenu(target_item_id) {
+        this.show_item_menu = true
+        this.show_item_menu_id = target_item_id
+        this.pageX = event.pageX
+        this.pageY = event.pageY
+      },
+      hideItemMenu() {
+        this.show_item_menu = false
+        this.pageX = null
+        this.pageY = null
       }
     }
   })

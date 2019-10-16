@@ -89,6 +89,22 @@ main {
   &__item {
     .active {
       background-color: #e6e6e6;
+      position: relative;
+      &:before,
+      &:after {
+        content: "";
+        background-color: #e6e6e6;
+        height: 100%;
+        width: 15px;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -15px;
+      }
+      &:after {
+        left: auto;
+        right: -15px;
+      }
     }
   }
   &__link {
@@ -285,4 +301,17 @@ main {
   position: absolute;
   bottom: 11px;
   font-size: 0.7rem;
+}
+
+.menu-ui {
+  border-bottom: solid 1px #ccc;
+  padding: 5px 15px;
+  width: calc(100% + 30px);
+  margin-left: -15px;
+
+  &__add_bookmark,
+  &__add_folder {
+    padding: 0 3px;
+    margin: 0 10px;
+  }
 }

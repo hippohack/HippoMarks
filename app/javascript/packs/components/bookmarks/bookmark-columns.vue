@@ -6,6 +6,8 @@
       :_folder_id="column.folder_id"
       :_level="column.level"
       :_home_url="_home_url"
+      :_show_item_menu="_show_item_menu"
+      :_show_item_menu_id="_show_item_menu_id"
       @apply="receive"
       @apply_bookmark="relay_bookmark"
     ></bookmark-column>
@@ -24,6 +26,8 @@
     props: {
       _clicked_folder_id: "",
       _home_url: "",
+      _show_item_menu: { type: Boolean },
+      _show_item_menu_id: { type: Number }
     },
     mounted() {
       this.clicked_folder_id = this._clicked_folder_id

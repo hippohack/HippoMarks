@@ -2,7 +2,7 @@
   <div
     v-if="!deleted_folder"
     v-bind:class="{ active: is_active && item.id == _folder_id }"
-    @contextmenu="show_contextmenu"
+    @mouseenter="$root.showItemMenu(item.id)" @mouseleave="$root.hideItemMenu"
   >
     <a
       class="bookmarks__link"
@@ -13,7 +13,13 @@
 
     <span v-if="folder_editing">
       <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>
-      <input type="text" name="folder[name]" v-model="folder_name" @blur="update" @keyup.enter="update" class="edit-form">
+      <input type="text"
+             name="folder[name]"
+             v-model="folder_name"
+             @blur="update"
+             @keyup.enter="update"
+             ref="editFolderName"
+             class="edit-form">
     </span>
 
     <a
@@ -34,6 +40,11 @@
       </span>
     </a>
 
+    <item-menu
+      v-if="_show_item_menu && _show_item_menu_id == item.id"
+      @context_menu="receive_contextmenu"
+    ></item-menu>
+
     <context-menu
       v-if="context_menu"
       :_pageX="pageX"
@@ -43,6 +54,7 @@
       @apply="receive"
       @folder_edit="editFolder"
       @delete_folder="delete_folder"
+      @open_bookmark_edit="context_menu = false"
     ></context-menu>
   </div>
 </template>
@@ -67,7 +79,9 @@
     props: {
       _item: "",
       _folder_id: "",
-      _home_url: ""
+      _home_url: "",
+      _show_item_menu: { type: Boolean },
+      _show_item_menu_id: { type: Number }
     },
     mounted() {
       this.item = this._item
@@ -81,6 +95,10 @@
       },
       editFolder(values) {
         this.folder_editing = values.folder_editing
+        this.context_menu = false
+        this.$nextTick(function () {
+          this.$refs.editFolderName.focus()
+        })
       },
       update(event) {
         this.item.name = this.folder_name
@@ -115,7 +133,10 @@
           .catch((error) => {
             console.log({error})
           })
-      }
+      },
+      receive_contextmenu(values) {
+        this.show_contextmenu(values.event)
+      },
     }
   }
 </script>
