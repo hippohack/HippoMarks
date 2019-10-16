@@ -5,6 +5,22 @@
         <a class="menu-ui__add_folder mr-0" @click="is_add_folder = true" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Add folder</a>
       </div>
       <div class="bookmarks__items">
+        <!-- add folder // -->
+        <div v-if="is_add_folder" class="bookmarks__item">
+          <div>
+            <a href="javascript:void(0)" class="bookmarks__link">
+              <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>
+              <input type="text"
+                    name="folder[name]"
+                    v-model="new_folder_name"
+                    @blur="create_folder"
+                    @keyup.enter="create_folder"
+                    placeholder="folder name..."
+                    class="py-1 px-2">
+            </a>
+          </div>
+        </div>
+        <!-- // add folder -->
         <div
           class="bookmarks__item"
           v-for="(item, index) in items"
@@ -111,7 +127,9 @@
         show_many_visits: null,
         show_history: null,
         manyVisitsActive: null,
-        historyActive: null
+        historyActive: null,
+        is_add_folder: false,
+        new_folder_name: null,
       };
     },
     props: {
@@ -152,7 +170,7 @@
           this.folder_hierarchy_data[0] = found.name
         }
         return this.folder_hierarchy_data
-      }
+      },
     },
     methods: {
       editBookmark(id) {
@@ -196,7 +214,24 @@
         return this._settings.find((elm) => {
           return elm.key == target
         })
-      }
+      },
+      create_folder() {
+        this.$root.add_folder(this._top_folder.id, 0, this.new_folder_name);
+        this.is_add_folder = false;
+        this.new_folder_name = null;
+
+        // folder内データの再フェッチ
+        axios.get(`/api/folders/${this._top_folder.id}/`).then(
+          response => {
+            // FIXME: なんかいったん空にしないとうまく反映しない。
+            this.items = null;
+            this.$nextTick(function () {
+              this.items = response.data.items[0].concat(response.data.items[1])
+            });
+          },
+          error => { console.log(error); }
+        );
+      },
     },
     filters: {
       moment(date) {
