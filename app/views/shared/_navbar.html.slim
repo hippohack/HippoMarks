@@ -18,10 +18,22 @@ nav.navbar.navbar-light.bg-dark
 
     .dropdown-menu.sort-setting-btn-menu aria-labelledby="dropdownMenuButton"
       / TODO: get collection records. and loop.
-      a.dropdown-item href="#" class="#{@sort_setting == 'optional' ? 'is_active' : ''}" Optional
-      a.dropdown-item href="#" class="#{@sort_setting == 'name' ? 'is_active' : ''}" Name
-      a.dropdown-item href="#" class="#{@sort_setting == 'created' ? 'is_active' : ''}" Created
-      a.dropdown-item href="#" class="#{@sort_setting == 'updated' ? 'is_active' : ''}" Updated
+      = link_to('Optional',
+                item_sort_path(value: 'optional'),
+                class: 'dropdown-item ' + (@sort_setting == 'optional' ? 'is_active' : ''),
+                method: 'patch')
+      = link_to('Name',
+                item_sort_path(value: 'name'),
+                class: 'dropdown-item ' + (@sort_setting == 'name' ? 'is_active' : ''),
+                method: 'patch')
+      = link_to('Created',
+                item_sort_path(value: 'created'),
+                class: 'dropdown-item ' + (@sort_setting == 'created' ? 'is_active' : ''),
+                method: 'patch')
+      = link_to('Updated',
+                item_sort_path(value: 'updated'),
+                class: 'dropdown-item ' + (@sort_setting == 'updated' ? 'is_active' : ''),
+                method: 'patch')
 
   - if ['home#index', 'bookmarks#search'].include? @loaded_action
     = form_tag(search_bookmarks_path, :method => 'get', class: "flex-grow-1 mr-2")

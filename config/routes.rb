@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :profiles
 
   put '/settings', to: 'settings#update', as: 'settings_update'
+  patch '/settings/item_sort', to: 'settings#item_sort', as: 'item_sort'
   resources :settings
 
   get '/about',   to: 'home#index'

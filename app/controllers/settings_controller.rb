@@ -42,6 +42,17 @@ class SettingsController < ApplicationController
     redirect_to settings_path
   end
 
+  def item_sort
+    # TODO: from collection records
+    propaties = ['optional', 'name', 'created', 'updated']
+    return if propaties.include?(params[:value]) == false
+
+    setting = current_account.settings.find_by(key: 'item_sort')
+    setting.value = params[:value]
+
+    redirect_to root_path if setting.save
+  end
+
   private
 
   def set_setting
