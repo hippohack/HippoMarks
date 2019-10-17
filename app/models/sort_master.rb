@@ -1,0 +1,2 @@
+class SortMaster < ApplicationRecord
+end
