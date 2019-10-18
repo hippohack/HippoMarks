@@ -96,7 +96,7 @@
 # folder3.save!
 # print "folder3 saved.\n"
 
-['optional', 'name', 'created', 'updated'].each do |v|
+['optional', 'name', 'created_at', 'updated_at'].each do |v|
   SortMaster.create(
     name: v.capitalize,
     slug: v
