@@ -18,8 +18,7 @@
                 .form-group
                   = label_tag setting.key, nil
                   = hidden_field_tag "setting[#{index}][key]", setting.key
-                  / TODO: Make collection record
-                  = select_tag "setting[#{index}][value]", options_for_select([['Optional', 'optional'], ['Name', 'name'], ['Created', 'created'], ['Updated', 'updated']], setting.value), class: 'form-control'
+                  = select_tag "setting[#{index}][value]", options_from_collection_for_select(SortMaster.all, 'slug', 'name', setting.value), class: 'form-control'
               - elsif setting.key == 'show_many_visits' || setting.key == 'show_history'
                 .form-group
                   = label_tag setting.key, nil, for: ''

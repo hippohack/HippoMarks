@@ -43,8 +43,7 @@ class SettingsController < ApplicationController
   end
 
   def item_sort
-    # TODO: from collection records
-    propaties = ['optional', 'name', 'created', 'updated']
+    propaties = SortMaster.all.pluck(:slug)
     return if propaties.include?(params[:value]) == false
 
     setting = current_account.settings.find_by(key: 'item_sort')

@@ -17,23 +17,11 @@ nav.navbar.navbar-light.bg-dark
       i.fa.fa-sort-amount-asc.fa-lg aria-hidden="true"
 
     .dropdown-menu.sort-setting-btn-menu aria-labelledby="dropdownMenuButton"
-      / TODO: get collection records. and loop.
-      = link_to('Optional',
-                item_sort_path(value: 'optional'),
-                class: 'dropdown-item ' + (@sort_setting == 'optional' ? 'is_active' : ''),
-                method: 'patch')
-      = link_to('Name',
-                item_sort_path(value: 'name'),
-                class: 'dropdown-item ' + (@sort_setting == 'name' ? 'is_active' : ''),
-                method: 'patch')
-      = link_to('Created',
-                item_sort_path(value: 'created'),
-                class: 'dropdown-item ' + (@sort_setting == 'created' ? 'is_active' : ''),
-                method: 'patch')
-      = link_to('Updated',
-                item_sort_path(value: 'updated'),
-                class: 'dropdown-item ' + (@sort_setting == 'updated' ? 'is_active' : ''),
-                method: 'patch')
+      - SortMaster.all.each do |sort|
+        = link_to(sort.name,
+                  item_sort_path(value: sort.slug),
+                  class: 'dropdown-item ' + (@sort_setting == sort.slug ? 'is_active' : ''),
+                  method: 'patch')
 
   - if ['home#index', 'bookmarks#search'].include? @loaded_action
     = form_tag(search_bookmarks_path, :method => 'get', class: "flex-grow-1 mr-2")
