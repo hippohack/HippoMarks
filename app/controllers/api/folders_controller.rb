@@ -4,8 +4,15 @@ class Api::FoldersController < ApplicationController
 
   def show
     folder = current_account.folders.find(params[:id])
-    @folders = folder.folders.order(created_at: :desc)
-    @bookmarks = folder.bookmarks.order(created_at: :desc)
+    sort_setting = current_account.settings.find_by(key: 'item_sort').value
+
+    unless sort_setting == 'optional'
+      @folders = folder.folders.order(sort_setting.to_sym)
+      @bookmarks = folder.bookmarks.order(sort_setting.to_sym)
+    else
+      @folders = folder.folders.order(:sort_num)
+      @bookmarks = folder.bookmarks.order(:sort_num)
+    end
   end
 
   def create

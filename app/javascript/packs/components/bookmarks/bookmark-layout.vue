@@ -261,16 +261,12 @@
       },
       async reordered(e) {
         alert('reordered')
-        console.log({e})
         var item = this.items[e.detail.ids[0]]
         var new_sort_num = e.detail.index
-        console.log({item, new_sort_num})
 
-        // TODO: ソート番号のアップデート
-        // TODO: this.itemsの再フェッチ
+        // ソート番号のアップデート & 再フェッチ
         var type = item.url ? 'bookmarks' : 'folders';
         var result = await this.$root.updateSortNum(type, item.id, new_sort_num)
-        console.log({result})
 
         if (result) this.refresh_folder();
       },
