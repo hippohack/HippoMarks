@@ -60,17 +60,19 @@ class Api::FoldersController < ApplicationController
     folder = current_account.folders.find(params[:id])
     parent_folder = current_account.folders.find(folder.folder_id)
 
+    new_sort_num = params[:sort_num] + 1
+
     # ソートした位置で分岐
-    if folder.sort_num < params[:sort_num]
+    if folder.sort_num < new_sort_num
       # 対象以前のものをデクリメント
-      edit_targets = parent_folder.folders.where('sort_num <= ?', params[:sort_num])
+      edit_targets = parent_folder.folders.where('sort_num <= ?', new_sort_num)
       edit_targets.update_all('sort_num = sort_num - 1')
     else
       edit_targets = parent_folder.folders.where('sort_num <= ?', folder.sort_num)
       edit_targets.update_all('sort_num = sort_num + 1')
     end
 
-    folder.sort_num = params[:sort_num]
+    folder.sort_num = new_sort_num
     folder.save!
   end
 

@@ -41,6 +41,7 @@
         v-for="(item, index) in items"
         v-bind:key="index"
         style="position: relative;"
+        :data-id="index"
       >
         <bookmark-item-nest
           :_item="item"
@@ -70,6 +71,25 @@
         is_add_folder: false,
         new_folder_name: null,
         is_saved: false,
+        options: {
+          dropzoneSelector: '.bookmarks__items',
+          draggableSelector: '.bookmarks__item',
+          handlerSelector: null,
+          reactivityEnabled: true,
+          multipleDropzonesItemsDraggingEnabled: true,
+          showDropzoneAreas: true,
+          onDrop: function(event) {
+            alert('onDrop')
+          },
+          onDragstart: function(event) {
+            if (this.$root.sort_setting != 'optional') {
+              alert('Changing the order is valid only when sort setting is "optional".')
+            }
+          },
+          onDragend: function(event) {
+            alert('onDragend')
+          }
+        }
       }
     },
     props: {
@@ -131,8 +151,28 @@
       removed() {
         alert('removed')
       },
-      reordered() {
+      async reordered(e) {
         alert('reordered')
+        var item = this.fetch_items[e.detail.ids[0]]
+        var new_sort_num = e.detail.index
+
+        // ソート番号のアップデート & 再フェッチ
+        var type = item.url ? 'bookmarks' : 'folders';
+        var result = await this.$root.updateSortNum(type, item.id, new_sort_num)
+
+        if (result) this.refresh_folder();
+      },
+      refresh_folder() {
+        axios.get(`/api/folders/${this._folder_id}/`).then(
+          response => {
+            // FIXME: なんかいったん空にしないとうまく反映しない。
+            this.fetch_items = null;
+            this.$nextTick(function () {
+              this.fetch_items = response.data.items[0].concat(response.data.items[1])
+            });
+          },
+          error => { console.log(error); }
+        );
       }
     }
   }
