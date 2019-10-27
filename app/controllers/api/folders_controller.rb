@@ -49,6 +49,18 @@ class Api::FoldersController < ApplicationController
     render :show
   end
 
+  def update_sort_num
+    folder = current_account.folders.find(params[:id])
+    parent_folder = current_account.folders.find(folder.folder_id)
+
+    # 対象以前のものをデクリメント
+    edit_targets = parent_folder.folders.where('sort_num <= ?', params[:sort_num])
+    edit_targets.update_all('sort_num = sort_num - 1')
+
+    folder.sort_num = params[:sort_num]
+    folder.save
+  end
+
   private
     def folder_params
       params.fetch(:folder, {}).permit(

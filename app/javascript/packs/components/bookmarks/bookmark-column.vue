@@ -1,27 +1,37 @@
 <template>
   <div class="col bookmarks__col">
     <div class="menu-ui d-flex justify-content-end">
-      <a v-if="typeof _folder_id == 'number'"
-         class="menu-ui__add_folder mr-0"
-         @click="is_add_folder = true"
-         href="javascript:void(0)">
+      <a
+        v-if="typeof _folder_id == 'number'"
+        class="menu-ui__add_folder mr-0"
+        @click="is_add_folder = true"
+        href="javascript:void(0)"
+      >
         <i class="fa fa-plus" aria-hidden="true"></i> Add folder
       </a>
       <div v-else style="visibility: hidden;">else</div>
     </div>
-    <div class="bookmarks__items" v-if="items">
+    <div
+      class="bookmarks__items"
+      v-if="items"
+      @added="added"
+      @removed="removed"
+      @reordered="reordered"
+    >
       <!-- add folder // -->
       <div v-if="is_add_folder" class="bookmarks__item">
         <div>
           <a href="javascript:void(0)" class="bookmarks__link">
             <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>
-            <input type="text"
-                   name="folder[name]"
-                   v-model="new_folder_name"
-                   @blur="create_folder"
-                   @keyup.enter="create_folder"
-                   placeholder="folder name..."
-                   class="py-1 px-2">
+            <input
+              type="text"
+              name="folder[name]"
+              v-model="new_folder_name"
+              @blur="create_folder"
+              @keyup.enter="create_folder"
+              placeholder="folder name..."
+              class="py-1 px-2"
+            >
           </a>
         </div>
       </div>
@@ -115,6 +125,15 @@
           error => { console.log(error); }
         );
       },
+      added() {
+        alert('added')
+      },
+      removed() {
+        alert('removed')
+      },
+      reordered() {
+        alert('reordered')
+      }
     }
   }
 </script>

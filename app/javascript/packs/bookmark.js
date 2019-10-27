@@ -1,6 +1,7 @@
 import TurbolinksAdapter from 'vue-turbolinks'
 // import Vue from 'vue'
 import Vue from 'vue/dist/vue.esm'
+import VueDraggable from 'vue-draggable'
 // import Router from './router/router'
 import BookmarkLayout from './components/bookmarks/bookmark-layout.vue'
 import BookmarkColumns from './components/bookmarks/bookmark-columns.vue'
@@ -15,6 +16,7 @@ import ItemMenu from './components/shared/item-menu.vue'
 import axios from 'axios';
 
 Vue.use(TurbolinksAdapter)
+Vue.use(VueDraggable)
 
 Vue.component('bookmark-columns', BookmarkColumns)
 Vue.component('bookmark-column', BookmarkColumn)
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         show_item_menu_id: null,
         pageX: null,
         pageY: null,
+        sort_setting: null
       }
     },
     methods: {
@@ -93,7 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
         this.show_item_menu = false
         this.pageX = null
         this.pageY = null
-      }
+      },
+      updateSortNum(type, item_id, newSortNum) {
+        return axios.patch(`/api/${type}/${item_id}/update_sort_num`, {'sort_num': newSortNum})
+      },
     }
   })
 })
