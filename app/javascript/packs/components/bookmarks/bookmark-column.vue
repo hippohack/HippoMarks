@@ -146,7 +146,7 @@
         );
       },
       added() {
-        // alert('added')
+        alert('added')
       },
       removed() {
         // alert('removed')
