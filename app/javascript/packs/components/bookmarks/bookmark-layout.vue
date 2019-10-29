@@ -148,7 +148,7 @@
           multipleDropzonesItemsDraggingEnabled: true,
           showDropzoneAreas: true,
           onDrop: function(event) {
-            alert('onDrop')
+            // alert('onDrop')
           },
           onDragstart: function(event) {
             if (componentInstance.$root.sort_setting != 'optional') {
@@ -156,7 +156,7 @@
             }
           },
           onDragend: function(event) {
-            alert('onDragend')
+            // alert('onDragend')
           }
         }
       };
@@ -254,15 +254,16 @@
         this.refresh_folder()
       },
       added() {
-        alert('added')
+        // alert('added')
       },
       removed() {
-        alert('removed')
+        // alert('removed')
       },
       async reordered(e) {
-        alert('reordered')
+        // alert('reordered')
         var item = this.items[e.detail.ids[0]]
         var new_sort_num = e.detail.index
+        console.log({new_sort_num})
 
         // ソート番号のアップデート & 再フェッチ
         var type = item.url ? 'bookmarks' : 'folders';

@@ -60,17 +60,21 @@ class Api::FoldersController < ApplicationController
     folder = current_account.folders.find(params[:id])
     parent_folder = current_account.folders.find(folder.folder_id)
 
-    new_sort_num = params[:sort_num] + 1
+    new_sort_num = params[:sort_num]
 
-    # ソートした位置で分岐
-    if folder.sort_num < new_sort_num
-      # 対象以前のものをデクリメント
-      edit_targets = parent_folder.folders.where('sort_num <= ?', new_sort_num)
-      edit_targets.update_all('sort_num = sort_num - 1')
-    else
-      edit_targets = parent_folder.folders.where('sort_num <= ?', folder.sort_num)
-      edit_targets.update_all('sort_num = sort_num + 1')
-    end
+    # 下に移動したときindexが一個多いので引く
+    new_sort_num -= 1 if new_sort_num > folder.sort_num
+
+    return if folder.sort_num == new_sort_num
+
+    # TODO: 対象の以前以後の再設定
+    # マイナスなる問題あり
+    # どっかのタイミングの狂う
+    before_targets = parent_folder.folders.where(sort_num: (folder.sort_num + 1)..new_sort_num)
+    after_targets = parent_folder.folders.where('sort_num > ?', new_sort_num)
+
+    before_targets.update_all('sort_num = sort_num - 1')
+    after_targets.update_all('sort_num = sort_num + 1')
 
     folder.sort_num = new_sort_num
     folder.save!
