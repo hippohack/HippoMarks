@@ -60,31 +60,36 @@ class Api::FoldersController < ApplicationController
     folder = current_account.folders.find(params[:id])
     parent_folder = current_account.folders.find(folder.folder_id)
 
+    old_sort_num = folder.sort_num
     new_sort_num = params[:sort_num]
 
     # 下に移動したときindexが一個多いので引く
-    new_sort_num -= 1 if new_sort_num > folder.sort_num
-    direction = new_sort_num > folder.sort_num ? 'down' : 'up'
+    new_sort_num -= 1 if new_sort_num > old_sort_num
+    direction = new_sort_num > old_sort_num ? 'down' : 'up'
 
-    return if folder.sort_num == new_sort_num
+    return if old_sort_num == new_sort_num
 
-    # TODO: 対象の以前以後の再設定
+    # ソート番号の再設定
     parent_folder.folders.each do |f|
-      old_sort_num = f.sort_num
-
-      if direction == 'down' && folder.id == f.id
+      if folder.id == f.id
         f.sort_num = new_sort_num
         f.save!
         next
       end
 
-      if direction == 'down' && f.sort_num <= new_sort_num
+      if direction == 'down' && f.sort_num <= new_sort_num && old_sort_num < f.sort_num
         f.sort_num -= 1
         f.save!
         next
       end
 
-      next
+      if direction == 'up' && f.sort_num >= new_sort_num && old_sort_num > f.sort_num
+        f.sort_num += 1
+        f.save!
+        next
+      end
+
+      raise if f.sort_num < 0
     end
   end
 
