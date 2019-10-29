@@ -64,20 +64,28 @@ class Api::FoldersController < ApplicationController
 
     # 下に移動したときindexが一個多いので引く
     new_sort_num -= 1 if new_sort_num > folder.sort_num
+    direction = new_sort_num > folder.sort_num ? 'down' : 'up'
 
     return if folder.sort_num == new_sort_num
 
     # TODO: 対象の以前以後の再設定
-    # マイナスなる問題あり
-    # どっかのタイミングの狂う
-    before_targets = parent_folder.folders.where(sort_num: (folder.sort_num + 1)..new_sort_num)
-    after_targets = parent_folder.folders.where('sort_num > ?', new_sort_num)
+    parent_folder.folders.each do |f|
+      old_sort_num = f.sort_num
 
-    before_targets.update_all('sort_num = sort_num - 1')
-    after_targets.update_all('sort_num = sort_num + 1')
+      if direction == 'down' && folder.id == f.id
+        f.sort_num = new_sort_num
+        f.save!
+        next
+      end
 
-    folder.sort_num = new_sort_num
-    folder.save!
+      if direction == 'down' && f.sort_num <= new_sort_num
+        f.sort_num -= 1
+        f.save!
+        next
+      end
+
+      next
+    end
   end
 
   private
