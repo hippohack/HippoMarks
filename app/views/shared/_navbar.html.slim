@@ -47,7 +47,7 @@ nav.navbar.navbar-light.bg-dark
           = link_to 'Import Bookmarks', import_path, class: 'dropdown-item'
           / = link_to 'Export Bookmarks', '#TODO:', class: 'dropdown-item'
           hr.my-1
-          a.dropdown-item href="#{ edit_account_registration_path }" アカウント設定
-          a.dropdown-item href="#{ settings_path }" システム設定
+          a.dropdown-item href="#{ edit_account_registration_path }" Account settings
+          a.dropdown-item href="#{ settings_path }" System settings
           hr.my-1
           = link_to 'Logout', destroy_account_session_path, class: 'dropdown-item', method: :delete
