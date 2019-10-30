@@ -56,12 +56,36 @@ class Api::FoldersController < ApplicationController
     render :show
   end
 
+  def move_folder
+    raise unless params[:folder_id]
+
+    folder = current_account.folders.find(params[:id])
+    folder.folder_id = params[:folder_id]
+    # folder.sort_num = params[:sort_num]
+    folder.save!
+
+    adjust_sort_num(folder.id, folder.folder_id, folder.sort_num, params[:sort_num])
+  end
+
   def update_sort_num
     folder = current_account.folders.find(params[:id])
-    parent_folder = current_account.folders.find(folder.folder_id)
 
-    old_sort_num = folder.sort_num
-    new_sort_num = params[:sort_num]
+    adjust_sort_num(folder.id, folder.folder_id, folder.sort_num, params[:sort_num])
+  end
+
+  private
+
+  def folder_params
+    params.fetch(:folder, {}).permit(
+      :account_id,
+      :folder_id,
+      :name,
+      :parent_count,
+    )
+  end
+
+  def adjust_sort_num(folder_id, parent_folder_id, old_sort_num, new_sort_num)
+    parent_folder = current_account.folders.find(parent_folder_id)
 
     # 下に移動したときindexが一個多いので引く
     new_sort_num -= 1 if new_sort_num > old_sort_num
@@ -71,7 +95,7 @@ class Api::FoldersController < ApplicationController
 
     # ソート番号の再設定
     parent_folder.folders.each do |f|
-      if folder.id == f.id
+      if folder_id == f.id
         f.sort_num = new_sort_num
         f.save!
         next
@@ -92,15 +116,5 @@ class Api::FoldersController < ApplicationController
       raise if f.sort_num < 0
     end
   end
-
-  private
-    def folder_params
-      params.fetch(:folder, {}).permit(
-        :account_id,
-        :folder_id,
-        :name,
-        :parent_count,
-      )
-    end
 
 end

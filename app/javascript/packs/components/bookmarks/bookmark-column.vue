@@ -17,6 +17,7 @@
       @added="added"
       @removed="removed"
       @reordered="reordered"
+      :data-folder-id="_folder_id"
     >
       <!-- add folder // -->
       <div v-if="is_add_folder" class="bookmarks__item">
@@ -42,6 +43,8 @@
         v-bind:key="index"
         style="position: relative;"
         :data-id="index"
+        :data-item-id="item.id"
+        :data-item-type="item.url ? 'bookmarks' : 'folders'"
       >
         <bookmark-item-nest
           :_item="item"
@@ -145,11 +148,18 @@
           error => { console.log(error); }
         );
       },
-      added() {
-        alert('added')
+      async added(e) {
+        // alert('added')
+        var item = {id: e.detail.items[0].dataset.itemId, type: e.detail.items[0].dataset.itemType}
+        var new_folder_id = e.detail.droptarget.dataset.folderId
+        var new_sort_num = e.detail.index
+
+        var result = await this.$root.moveFolder(item.type, item.id, new_folder_id, new_sort_num)
+
+        if (result) this.refresh_folder();
       },
       removed() {
-        // alert('removed')
+        alert('removed')
       },
       async reordered(e) {
         // alert('reordered')

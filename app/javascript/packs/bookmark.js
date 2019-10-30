@@ -100,6 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
       updateSortNum(type, item_id, newSortNum) {
         return axios.patch(`/api/${type}/${item_id}/update_sort_num`, {'sort_num': newSortNum})
       },
+      moveFolder(type, item_id, newFolderId, newSortNum) {
+        return axios.patch(`/api/${type}/${item_id}/move_folder`, {'folder_id': newFolderId, 'sort_num': newSortNum})
+      },
     }
   })
 })

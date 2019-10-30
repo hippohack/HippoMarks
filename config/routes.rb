@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     get '/folders/many_visits', to: 'folders#many_visits', as: 'many_visits'
     get '/folders/history', to: 'folders#history', as: 'history'
     patch '/folders/:id/update_sort_num', to: 'folders#update_sort_num'
+    patch '/folders/:id/move_folder', to: 'folders#move_folder'
     resources :folders
     resources :tasks, only: [:index, :create, :update]
   end
