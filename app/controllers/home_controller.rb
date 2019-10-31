@@ -9,7 +9,6 @@ class HomeController < ApplicationController
       @folders = @top_folder.folders.order(@sort_setting.to_sym)
       @bookmarks = @top_folder.bookmarks.order(@sort_setting.to_sym)
     else
-      # TODO: sort_numの設定
       @folders = @top_folder.folders.order(:sort_num)
       @bookmarks = @top_folder.bookmarks.order(:sort_num)
     end
