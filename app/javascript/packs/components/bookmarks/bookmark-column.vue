@@ -156,10 +156,18 @@
 
         var result = await this.$root.moveFolder(item.type, item.id, new_folder_id, new_sort_num)
 
-        if (result) this.refresh_folder();
+        if (result) {
+          this.$root.folder_moved = true
+          console.log(this.$root.folder_moved)
+          this.refresh_folder();
+        }
       },
-      removed() {
-        alert('removed')
+      removed(e) {
+        // alert('removed')
+        // FIXME: アップデートされる前にとってくるときがある
+        if (this.$root.folder_moved) this.refresh_folder();
+        this.$root.folder_moved = false
+        console.log(this.$root.folder_moved)
       },
       async reordered(e) {
         // alert('reordered')

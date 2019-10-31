@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
         show_item_menu_id: null,
         pageX: null,
         pageY: null,
-        sort_setting: null
+        sort_setting: null,
+        folder_moved: false
       }
     },
     methods: {
