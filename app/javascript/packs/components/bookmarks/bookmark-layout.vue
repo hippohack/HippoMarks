@@ -250,7 +250,7 @@
         })
       },
       create_folder() {
-        this.$root.add_folder(this._top_folder.id, 0, this.new_folder_name);
+        this.$root.add_folder(this._top_folder.id, 1, this.new_folder_name);
         this.is_add_folder = false;
         this.new_folder_name = null;
 
