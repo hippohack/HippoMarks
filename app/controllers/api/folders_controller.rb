@@ -16,11 +16,9 @@ class Api::FoldersController < ApplicationController
   end
 
   def create
-    logger.debug 'DEBUG >>>'
-    logger.debug params
-    logger.debug '<<< DEBUG'
     @folder = current_account.folders.new(folder_params)
     @folder.account_id = current_account.id
+    @folder.sort_num = last_sort_num(@folder.folder_id) + 1
     raise if @folder.save == false
 
     folder_data = FolderData.folders(current_account)
@@ -81,7 +79,14 @@ class Api::FoldersController < ApplicationController
       :folder_id,
       :name,
       :parent_count,
+      :sort_num
     )
+  end
+
+  def last_sort_num(folder_id)
+    folder = current_account.folders.find(folder_id)
+    last = folder.folders.order(:sort_num).last
+    last.sort_num
   end
 
   def adjust_sort_num(folder_id, parent_folder_id, old_sort_num, new_sort_num)
