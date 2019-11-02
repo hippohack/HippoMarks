@@ -15,6 +15,8 @@ class SettingsController < ApplicationController
       diff.each do |d|
         if ['show_many_visits', 'show_history'].include? d
           updates.push [key: d, value: 'true']
+        elsif ['item_sort'].include? d
+          updates.push [key: d, value: 'optional']
         else
           updates.push [key: d, value: nil]
         end
@@ -35,8 +37,19 @@ class SettingsController < ApplicationController
     params.fetch(:setting, {}).each do |key, param|
       setting = @settings.find_by(key: param[:key])
       setting.update!(setting_attributes(param))
+      flash[:notice] = 'Updated system settings.'
     end
-    render :edit
+    redirect_to settings_path
+  end
+
+  def item_sort
+    propaties = SortMaster.all.pluck(:slug)
+    return if propaties.include?(params[:value]) == false
+
+    setting = current_account.settings.find_by(key: 'item_sort')
+    setting.value = params[:value]
+
+    redirect_to root_path if setting.save
   end
 
   private
@@ -75,6 +88,7 @@ class SettingsController < ApplicationController
       [key: 'home_url', value: '/'],
       [key: 'show_many_visits', value: 'true'],
       [key: 'show_history', value: 'true'],
+      [key: 'item_sort', value: 'optional']
     ]
   end
 

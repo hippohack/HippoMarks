@@ -8,7 +8,7 @@
   = render "shared/flash"
   .container-fluid
     main.main.bookmarks
-      bookmark-layout :_top_folder="#{ @top_folder.to_json }" :_folders="#{ @folders.to_json }" :_bookmarks="#{ @bookmarks.to_json }" :_home_url="#{ ENV.fetch('HOMEURL').to_json }" :_settings="#{ current_account.settings.to_json }"
+      bookmark-layout :_top_folder="#{ @top_folder.to_json }" :_folders="#{ @folders.to_json }" :_bookmarks="#{ @bookmarks.to_json }" :_home_url="#{ ENV.fetch('HOMEURL').to_json }" :_settings="#{ current_account.settings.to_json }" :_show_item_menu="show_item_menu" :_show_item_menu_id="show_item_menu_id" :_sort_setting="#{ @sort_setting.to_json }"
 
 = render "shared/footer"
 

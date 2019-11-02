@@ -1,6 +1,7 @@
 import TurbolinksAdapter from 'vue-turbolinks'
 // import Vue from 'vue'
 import Vue from 'vue/dist/vue.esm'
+import VueDraggable from 'vue-draggable'
 // import Router from './router/router'
 import BookmarkLayout from './components/bookmarks/bookmark-layout.vue'
 import BookmarkColumns from './components/bookmarks/bookmark-columns.vue'
@@ -10,10 +11,12 @@ import BookmarkItemNest from './components/bookmarks/bookmark-item--nest.vue'
 import Folders from './components/folders/folders.vue'
 import Folder from './components/folders/folder.vue'
 import ContextMenu from './components/shared/context-menu.vue'
+import ItemMenu from './components/shared/item-menu.vue'
 
 import axios from 'axios';
 
 Vue.use(TurbolinksAdapter)
+Vue.use(VueDraggable)
 
 Vue.component('bookmark-columns', BookmarkColumns)
 Vue.component('bookmark-column', BookmarkColumn)
@@ -22,6 +25,7 @@ Vue.component('bookmark-item-nest', BookmarkItemNest)
 Vue.component('folders', Folders)
 Vue.component('folder', Folder)
 Vue.component('context-menu', ContextMenu)
+Vue.component('item-menu', ItemMenu)
 
 // FIXME: DOM表示しない問題があるためDOMContentLoadedに変更してる
 document.addEventListener('DOMContentLoaded', () => {
@@ -37,7 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
         is_new_folder: false,
         new_folder_parent_id: "",
         isActiveAvatorEdit: false,
-        file: ''
+        file: '',
+        show_item_menu: false,
+        show_item_menu_id: null,
+        pageX: null,
+        pageY: null,
+        sort_setting: null,
+        folder_moved: false
       }
     },
     methods: {
@@ -63,7 +73,37 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       submitSiteImageEdit() {
         $('.site-image-form__submit').click();
-      }
+      },
+      add_folder(folder_id, parent_count, name) {
+        axios.post(`/api/folders/`, {
+            folder_id: folder_id,
+            parent_count: parent_count,
+            name: name
+          })
+          .then(response => {
+            console.log({response})
+          })
+          .catch(error => {
+            console.log({error})
+          });
+      },
+      showItemMenu(target_item_id) {
+        this.show_item_menu = true
+        this.show_item_menu_id = target_item_id
+        this.pageX = event.pageX
+        this.pageY = event.pageY
+      },
+      hideItemMenu() {
+        this.show_item_menu = false
+        this.pageX = null
+        this.pageY = null
+      },
+      updateSortNum(type, item_id, newSortNum) {
+        return axios.patch(`/api/${type}/${item_id}/update_sort_num`, {'sort_num': newSortNum})
+      },
+      moveFolder(type, item_id, newFolderId, newSortNum) {
+        return axios.patch(`/api/${type}/${item_id}/move_folder`, {'folder_id': newFolderId, 'sort_num': newSortNum})
+      },
     }
   })
 })

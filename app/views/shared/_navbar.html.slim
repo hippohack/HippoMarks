@@ -7,6 +7,22 @@ nav.navbar.navbar-light.bg-dark
     = link_to(setting_home_url, class: 'px-2 mr-2 text-white', target: '_blank') do
       i.fa.fa-home.fa-lg aria-hidden="true"
 
+  - if ['home#index'].include? @loaded_action
+    = link_to('javascript:void(0);',
+              class: 'px-2 mr-3 text-white dropdown-toggle sort-setting-btn',
+              id: 'dropdownMenuButton',
+              'data-toggle': 'dropdown',
+              'aria-haspopup': "true",
+              'aria-expanded': "false") do
+      i.fa.fa-sort-amount-asc.fa-lg aria-hidden="true"
+
+    .dropdown-menu.sort-setting-btn-menu aria-labelledby="dropdownMenuButton"
+      - SortMaster.all.each do |sort|
+        = link_to(sort.name,
+                  item_sort_path(value: sort.slug),
+                  class: 'dropdown-item ' + (@sort_setting == sort.slug ? 'is_active' : ''),
+                  method: 'patch')
+
   - if ['home#index', 'bookmarks#search'].include? @loaded_action
     = form_tag(search_bookmarks_path, :method => 'get', class: "flex-grow-1 mr-2")
       = search_field_tag :s, params[:s], { class: "form-control", id: "search-input", placeholder: "Search..." }
@@ -31,7 +47,7 @@ nav.navbar.navbar-light.bg-dark
           = link_to 'Import Bookmarks', import_path, class: 'dropdown-item'
           / = link_to 'Export Bookmarks', '#TODO:', class: 'dropdown-item'
           hr.my-1
-          a.dropdown-item href="#{ edit_account_registration_path }" アカウント設定
-          a.dropdown-item href="#{ settings_path }" システム設定
+          a.dropdown-item href="#{ edit_account_registration_path }" Account settings
+          a.dropdown-item href="#{ settings_path }" System settings
           hr.my-1
           = link_to 'Logout', destroy_account_session_path, class: 'dropdown-item', method: :delete

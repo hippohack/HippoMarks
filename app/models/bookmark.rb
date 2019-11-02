@@ -34,8 +34,10 @@ class Bookmark < ApplicationRecord
     doc = Nokogiri::HTML.parse(result)
 
     doc.xpath('/html/body/dl').each do |dl|
+      sort_num = 0
       dl.xpath('./dt').each do |item|
-        Bookmark.save_import_data(item, 1, account)
+        Bookmark.save_import_data(item, 1, account, nil, sort_num)
+        sort_num += 1
       end
     end
 
