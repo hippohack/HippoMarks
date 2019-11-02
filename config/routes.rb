@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :profiles
 
   put '/settings', to: 'settings#update', as: 'settings_update'
+  patch '/settings/item_sort', to: 'settings#item_sort', as: 'item_sort'
   resources :settings
 
   get '/about',   to: 'home#index'
@@ -35,6 +36,8 @@ Rails.application.routes.draw do
     resources :bookmarks
     get '/folders/many_visits', to: 'folders#many_visits', as: 'many_visits'
     get '/folders/history', to: 'folders#history', as: 'history'
+    patch '/folders/:id/update_sort_num', to: 'folders#update_sort_num'
+    patch '/folders/:id/move_folder', to: 'folders#move_folder'
     resources :folders
     resources :tasks, only: [:index, :create, :update]
   end

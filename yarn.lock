@@ -7087,6 +7087,11 @@ void-elements@^2.0.1:
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
   integrity sha1-wGavtYK7HLQSjWDqkjkulNXp2+w=
 
+vue-draggable@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/vue-draggable/-/vue-draggable-2.0.2.tgz#301aa1707698fb764044ae22d7c6bcbb878a523f"
+  integrity sha512-UpJi45fY7PVE2IuWmZpHqyrz6hCM0cFZoYf+Sp6kia1RWvAmzwkBZVqw7ULd/M/04dE38nQmEruWNDQ8sbYUSw==
+
 vue-hot-reload-api@^2.3.0:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"

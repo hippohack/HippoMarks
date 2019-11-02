@@ -4,16 +4,22 @@ class Api::FoldersController < ApplicationController
 
   def show
     folder = current_account.folders.find(params[:id])
-    @folders = folder.folders.order(created_at: :desc)
-    @bookmarks = folder.bookmarks.order(created_at: :desc)
+    sort_setting = current_account.settings.find_by(key: 'item_sort').value
+
+    unless sort_setting == 'optional'
+      @folders = folder.folders.order(sort_setting.to_sym)
+      @bookmarks = folder.bookmarks.order(sort_setting.to_sym)
+    else
+      @folders = folder.folders.order(:sort_num)
+      @bookmarks = folder.bookmarks.order(:sort_num)
+    end
   end
 
   def create
-    logger.debug 'DEBUG >>>'
-    logger.debug params
-    logger.debug '<<< DEBUG'
     @folder = current_account.folders.new(folder_params)
     @folder.account_id = current_account.id
+    # TODO: 最後じゃなくて最初にする
+    @folder.sort_num = last_sort_num(@folder.folder_id) + 1
     raise if @folder.save == false
 
     folder_data = FolderData.folders(current_account)
@@ -49,14 +55,72 @@ class Api::FoldersController < ApplicationController
     render :show
   end
 
+  def move_folder
+    raise unless params[:folder_id]
+
+    folder = current_account.folders.find(params[:id])
+    folder.folder_id = params[:folder_id]
+    # folder.sort_num = params[:sort_num]
+    folder.save!
+
+    adjust_sort_num(folder.id, folder.folder_id, folder.sort_num, params[:sort_num])
+  end
+
+  def update_sort_num
+    folder = current_account.folders.find(params[:id])
+
+    adjust_sort_num(folder.id, folder.folder_id, folder.sort_num, params[:sort_num])
+  end
+
   private
-    def folder_params
-      params.fetch(:folder, {}).permit(
-        :account_id,
-        :folder_id,
-        :name,
-        :parent_count,
-      )
+
+  def folder_params
+    params.fetch(:folder, {}).permit(
+      :account_id,
+      :folder_id,
+      :name,
+      :parent_count,
+      :sort_num
+    )
+  end
+
+  def last_sort_num(folder_id)
+    folder = current_account.folders.find(folder_id)
+    last = folder.folders.order(:sort_num).last
+    last ? last.sort_num : -1
+  end
+
+  def adjust_sort_num(folder_id, parent_folder_id, old_sort_num, new_sort_num)
+    parent_folder = current_account.folders.find(parent_folder_id)
+
+    # 下に移動したときindexが一個多いので引く
+    new_sort_num -= 1 if new_sort_num > old_sort_num
+    direction = new_sort_num > old_sort_num ? 'down' : 'up'
+
+    return if old_sort_num == new_sort_num
+
+    # ソート番号の再設定
+    parent_folder.folders.each do |f|
+      if folder_id == f.id
+        f.sort_num = new_sort_num
+        f.save!
+        next
+      end
+
+      if direction == 'down' && f.sort_num <= new_sort_num && old_sort_num < f.sort_num
+        f.sort_num -= 1
+        f.save!
+        next
+      end
+
+      if direction == 'up' && f.sort_num >= new_sort_num && old_sort_num > f.sort_num
+        f.sort_num += 1
+        f.save!
+        next
+      end
+
+      raise if f.sort_num < 0
     end
+  end
 
 end
