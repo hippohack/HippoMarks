@@ -25,7 +25,8 @@ module Import
       params.merge!({ account_id: account.id, folder_id: folder_id })
       folder = account.folders.build(params)
       folder.account_id = account.id
-      folder.sort_num = sort_num
+      folder[:sort_num] = sort_num
+      # folder.sort_num = sort_num
       folder.save!
       folder
     end
