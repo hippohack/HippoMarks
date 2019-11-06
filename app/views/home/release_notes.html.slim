@@ -2,13 +2,6 @@ nav.navbar.navbar-light.bg-dark
   = link_to(root_path, class: 'navbar-brand text-white', 'data-turbolinks': false) do
     img.d-inline-block.align-top.mr-2 src="#{image_url('bookmarks.svg')}" width="30" height="30" alt=""
     | HippoMarks <span class="navbar__version">#{ENV.fetch('APP_VERSION')}</span>
-  ul.flex-row.navbar-nav.ml-auto
-    li.nav-item.ml-auto.px-2
-      a.btn.btn-sm.text-white href="#{new_account_session_path}"
-        | Login
-    li.nav-item.ml-auto.px-2
-      a.btn.btn-outline-info.btn-sm.text-white href="#{new_account_registration_path}"
-        | Sign up
 
 .container-fluid
   .row.justify-content-center.mx-0
