@@ -1,0 +1,46 @@
+nav.navbar.navbar-light.bg-dark
+  = link_to(root_path, class: 'navbar-brand text-white', 'data-turbolinks': false) do
+    img.d-inline-block.align-top.mr-2 src="#{image_url('bookmarks.svg')}" width="30" height="30" alt=""
+    | HippoMarks <span class="navbar__version">#{ENV.fetch('APP_VERSION')}</span>
+  ul.flex-row.navbar-nav.ml-auto
+    li.nav-item.ml-auto.px-2
+      a.btn.btn-sm.text-white href="#{new_account_session_path}"
+        | Login
+    li.nav-item.ml-auto.px-2
+      a.btn.btn-outline-info.btn-sm.text-white href="#{new_account_registration_path}"
+        | Sign up
+
+.container-fluid
+  .row.justify-content-center.mx-0
+    .release-notes.col-9
+      header.release-notes__head
+        .release-notes__title
+          h1 Release notes
+        .release-notes__lead
+          p This page describes application updates. We will try to make this app better.
+      .row.release-notes__body
+        .col-3
+          aside.release-notes__side
+            ul
+              li
+                a href="#v031" 2019/11/07（v0.3.1）
+              li
+                a href="#v030" 2019/11/05（v0.3.0）
+        .col-9
+          #v031.release-notes__content
+            h2 2019/11/07（v0.3.1）
+            p Has been updated.
+            h3 Fixed
+            ul
+              li <strong>Import:</strong> Address issues with the import process.
+
+          #v030.release-notes__content.mt-5
+            h2 2019/11/05（v0.3.0）
+            p Has been updated.
+            h3 Updated
+            ul
+              li <strong>Sort function: </strong>Added processing to change the order of folders by drag and drop.
+              li <strong>Set capture image:</strong> Changing the number of job retries.
+
+.pos-bottom
+  = render "shared/footer"

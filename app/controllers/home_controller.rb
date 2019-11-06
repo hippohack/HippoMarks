@@ -19,4 +19,8 @@ class HomeController < ApplicationController
   def welcome
     redirect_to root_path if account_signed_in?
   end
+
+  def release_notes
+    
+  end
 end

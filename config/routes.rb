@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   }
   root to: 'home#index'
   get '/welcome', to: 'home#welcome', as: 'welcome'
+  get '/release_notes', to: 'home#release_notes', as: 'release_notes'
 
   get '/bookmarks/add', to: 'bookmarks#add', as: 'add_bookmark'
   get '/bookmarks/:id/popup_edit', to: 'bookmarks#popup_edit', as: 'popup_edit_bookmark'
@@ -25,9 +26,6 @@ Rails.application.routes.draw do
   put '/settings', to: 'settings#update', as: 'settings_update'
   patch '/settings/item_sort', to: 'settings#item_sort', as: 'item_sort'
   resources :settings
-
-  get '/about',   to: 'home#index'
-  get '/contact', to: 'home#index'
 
   namespace :api, format: 'json' do
     get '/bookmarks', to: 'bookmarks#index', as: 'bookmarks'
