@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  get 'histories/index'
-  get 'histories/delete'
-  get 'histories/delete_all'
+  get 'histories', to: 'histories#index', as: 'histories'
+  delete 'histories/delete'
+  delete 'histories/delete_all'
   devise_for :accounts, controllers: {
     registrations: 'accounts/registrations',
     sessions: 'accounts/sessions'
@@ -25,7 +25,6 @@ Rails.application.routes.draw do
   get '/folders/manage', to: 'folders#manage', as: 'manage_folders'
   resources :folders
   resources :profiles
-  resources :histories
 
   put '/settings', to: 'settings#update', as: 'settings_update'
   patch '/settings/item_sort', to: 'settings#item_sort', as: 'item_sort'
