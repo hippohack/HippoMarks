@@ -1,8 +1,4 @@
-nav.navbar.navbar-light.bg-dark
-  = link_to(root_path, class: 'navbar-brand text-white', 'data-turbolinks': false) do
-    img.d-inline-block.align-top.mr-2 src="#{image_url('bookmarks.svg')}" width="30" height="30" alt=""
-    | HippoMarks <span class="navbar__version">#{ENV.fetch('APP_VERSION')}</span>
-
+= render "shared/navbar"
 .container-fluid
   .row.justify-content-center.mx-0
     .release-notes.col-9
