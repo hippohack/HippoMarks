@@ -16,4 +16,9 @@
 // const imagePath = (name) => images(name, true)
 
 // alert hide
-setTimeout(function() { $('.alert').slideUp() }, 4000)
+setTimeout(function() {
+  if ( $('.alert').hasClass('disable-hide') ) {
+    return;
+  }
+  $('.alert').slideUp()
+}, 4000)

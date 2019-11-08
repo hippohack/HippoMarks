@@ -391,3 +391,16 @@ main {
   }
 }
 
+.history-delete {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 10px 20px;
+}
+
+// vuejs transition
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+/* .fade-leave-active below version 2.1.8 */
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}

@@ -1,0 +1,76 @@
+<div id="app">
+  <%= render "shared/navbar" %>
+
+  <transition name="fade">
+    <div v-if="delete_histories.length" class="history-delete">
+      <div class="row justify-content-center">
+        <div class="col-8" style="padding: 0 30px;">
+          <div class="row" style="align-items: center;">
+            <div class="mr-auto">
+              {{ delete_histories.length }} Items selected
+            </div>
+            <div class="mr-2">
+              <%= link_to 'Cancel', 'javascript:void(0)', { class: "btn btn-sm", '@click': 'cancel_history_delete' } %>
+            </div>
+            <div>
+              <%= link_to 'Delete histories', 'javascript:void(0)', { class: "btn btn-danger btn-sm", '@click': 'submit_delete_histories_form' } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+
+  <main class="p-3">
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <h2>Histories</h2>
+        <p><strong>Note: </strong>Deleting the history will also reset the impression count.</p>
+
+        <% if @histories.blank? %>
+          <div class="alert alert-warning" role="alert">No search results containing <strong><%= params[:s] %></strong> were found in your bookmarks.</div>
+        <% end %>
+
+        <%= form_tag( histories_delete_all_path, method: 'delete', id: 'delete-histories-form' ) do %>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col">Last access time</th>
+                <th scope="col" class="text-center">Viewed times</th>
+                <th scope="col">Name</th>
+                <th scope="col">Domain</th>
+                <th> </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @histories&.each do |bookmark| %>
+                <tr>
+                  <td class="text-center align-middle">
+                    <%= check_box_tag 'histories[]', bookmark.id, nil, { class: 'check_history_delete_item', id: "histories_#{bookmark.id}", 'v-model': 'delete_histories' } %>
+                  </td>
+                  <td class="align-middle"><%= bookmark.last_access_time.to_s(:long) %></td>
+                  <td class="text-center align-middle"><%= bookmark.impressions %></td>
+                  <td class="align-middle"><%= bookmark.name %></td>
+                  <td class="align-middle"><%= url_to_domain(bookmark.url) %></td>
+                  <td class="align-middle text-right">
+                    <%= link_to 'Delete history', delete_history_path(bookmark.id), method: 'delete', class: "btn btn-danger btn-sm" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="footer bg-dark">
+  <div class="text-right text-white p-1 px-3">
+    <a class="copyright text-white" href="https://www.hippohack.me/" target="_blank">© HippoHack</a>
+  </div>
+</div>
+
+<%= javascript_pack_tag 'bookmark' %>
+<%= stylesheet_pack_tag 'bookmark' %>

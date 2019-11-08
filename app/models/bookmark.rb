@@ -12,7 +12,10 @@ class Bookmark < ApplicationRecord
 
   after_commit :enque_job, on: [ :create, :update ]
 
-  scope :histories, -> { where('last_access_time > ?', 0) }
+  scope :histories, -> {
+    where('last_access_time > ?', 0)
+      .order(last_access_time: :desc)
+  }
 
   include Import
   include Capture

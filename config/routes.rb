@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'histories', to: 'histories#index', as: 'histories'
-  delete 'histories/delete'
+  delete 'histories/:id/delete', to: 'histories#delete', as: 'delete_history'
   delete 'histories/delete_all'
   devise_for :accounts, controllers: {
     registrations: 'accounts/registrations',

@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
         pageX: null,
         pageY: null,
         sort_setting: null,
-        folder_moved: false
+        folder_moved: false,
+        delete_histories: []
       }
     },
     methods: {
@@ -104,6 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
       moveFolder(type, item_id, newFolderId, newSortNum) {
         return axios.patch(`/api/${type}/${item_id}/move_folder`, {'folder_id': newFolderId, 'sort_num': newSortNum})
       },
+      cancel_history_delete() {
+        this.delete_histories = []
+      },
+      submit_delete_histories_form() {
+        document.querySelector('#delete-histories-form').submit();
+      }
     }
   })
 })
