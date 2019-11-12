@@ -47,7 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
         pageX: null,
         pageY: null,
         sort_setting: null,
-        folder_moved: false
+        folder_moved: false,
+        delete_histories: [],
+        check_all: false
       }
     },
     methods: {
@@ -104,6 +106,30 @@ document.addEventListener('DOMContentLoaded', () => {
       moveFolder(type, item_id, newFolderId, newSortNum) {
         return axios.patch(`/api/${type}/${item_id}/move_folder`, {'folder_id': newFolderId, 'sort_num': newSortNum})
       },
+      cancel_history_delete() {
+        this.delete_histories = []
+      },
+      submit_delete_histories_form() {
+        document.querySelector('#delete-histories-form').submit();
+      },
+    },
+    watch: {
+      check_all(val, oldVal) {
+        this.delete_histories = []
+        var elms = document.querySelectorAll('.check_history_delete_item')
+        if (val) {
+          // FIXME: とりまハードコーディング
+          for(var i = 0; i < elms.length; i++) {
+            elms[i].checked = 'checked';
+            this.delete_histories.push(elms[i].value)
+          }
+        } else {
+          for(var i = 0; i < elms.length; i++) {
+            elms[i].checked = null;
+          }
+          this.delete_histories = []
+        }
+      }
     }
   })
 })
