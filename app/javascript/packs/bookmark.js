@@ -110,7 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
         this.delete_histories = []
       },
       submit_delete_histories_form() {
-        document.querySelector('#delete-histories-form').submit();
+        var res = confirm('Are you sure?')
+        if (res) {
+          document.querySelector('#delete-histories-form').submit();
+        }
       },
     },
     watch: {
