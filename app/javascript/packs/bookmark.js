@@ -48,7 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
         pageY: null,
         sort_setting: null,
         folder_moved: false,
-        delete_histories: []
+        delete_histories: [],
+        check_all: false
       }
     },
     methods: {
@@ -110,6 +111,24 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       submit_delete_histories_form() {
         document.querySelector('#delete-histories-form').submit();
+      },
+    },
+    watch: {
+      check_all(val, oldVal) {
+        this.delete_histories = []
+        var elms = document.querySelectorAll('.check_history_delete_item')
+        if (val) {
+          // FIXME: とりまハードコーディング
+          for(var i = 0; i < elms.length; i++) {
+            elms[i].checked = 'checked';
+            this.delete_histories.push(elms[i].value)
+          }
+        } else {
+          for(var i = 0; i < elms.length; i++) {
+            elms[i].checked = null;
+          }
+          this.delete_histories = []
+        }
       }
     }
   })

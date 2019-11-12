@@ -28,14 +28,16 @@
         <p><strong>Note: </strong>Deleting the history will also reset the impression count.</p>
 
         <% if @histories.blank? %>
-          <div class="alert alert-warning" role="alert">No search results containing <strong><%= params[:s] %></strong> were found in your bookmarks.</div>
+          <div class="alert alert-warning disable-hide" role="alert">Were found in your histories.</div>
         <% end %>
 
         <%= form_tag( histories_delete_all_path, method: 'delete', id: 'delete-histories-form' ) do %>
           <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">
+                  <%= check_box_tag(:check_all, 'check_all', nil, { id: 'check_all', 'v-model': 'check_all' }) %>
+                </th>
                 <th scope="col">Last access time</th>
                 <th scope="col" class="text-center">Viewed times</th>
                 <th scope="col">Name</th>
