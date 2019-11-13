@@ -12,13 +12,18 @@ class HistoriesController < ApplicationController
   def delete_all
     if params[:histories]
       @histories = current_account.bookmarks.where(id: params[:histories])
-      @histories.update_all(last_access_time: nil, impressions: 0)
-      redirect_to histories_path
+      if @histories.update_all(last_access_time: nil, impressions: 0)
+        flash[:notice] = 'Histories has been deleted.'
+        redirect_to histories_path
+        return
+      end
       return
     end
 
     @histories = current_account.bookmarks.histories
-    @histories.update_all(last_access_time: nil, impressions: 0)
-    redirect_to histories_path
+    if @histories.update_all(last_access_time: nil, impressions: 0)
+      flash[:notice] = 'Histories has been deleted.'
+      redirect_to histories_path
+    end
   end
 end
