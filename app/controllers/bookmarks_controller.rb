@@ -116,6 +116,9 @@ class BookmarksController < ApplicationController
 
   def search
     @bookmarks = current_account.bookmarks.search(params[:s])
+    respond_to do |format|
+      format.json
+    end
   end
 
   def replace_img

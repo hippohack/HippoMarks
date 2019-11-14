@@ -12,6 +12,7 @@ import Folders from './components/folders/folders.vue'
 import Folder from './components/folders/folder.vue'
 import ContextMenu from './components/shared/context-menu.vue'
 import ItemMenu from './components/shared/item-menu.vue'
+import Search from './components/search.vue'
 
 import axios from 'axios';
 
@@ -26,6 +27,7 @@ Vue.component('folders', Folders)
 Vue.component('folder', Folder)
 Vue.component('context-menu', ContextMenu)
 Vue.component('item-menu', ItemMenu)
+Vue.component('search', Search)
 
 // FIXME: DOM表示しない問題があるためDOMContentLoadedに変更してる
 document.addEventListener('DOMContentLoaded', () => {
@@ -49,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sort_setting: null,
         folder_moved: false,
         delete_histories: [],
-        check_all: false
+        check_all: false,
       }
     },
     methods: {
