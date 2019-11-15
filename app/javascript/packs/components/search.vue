@@ -9,21 +9,28 @@
       v-bind:class="{ hasItems : search_results }"
       v-model="search_keyword"
       @keyup="get_bookmarks"
+      @focus="get_bookmarks"
+      @blur="search_results = null"
     >
     <div class="search-results" v-if="search_results">
       <div v-if="search_results.length == 0">
         <span class="result-error ml-1">The bookmark you were looking for was not found.</span>
       </div>
-      <div
-        v-for="(item, index) in search_results"
-        v-bind:key="index"
-        class="search-results__item"
-      >
-        <img v-if="item.icon" :src="item.icon" alt="" width="18px">
-        <i v-else class="fa fa-link" style="font-size: 18px;"></i>
-        <a :href="item.url" target="_blank">
-          <span class="ml-2">{{ item.name }}</span>
-        </a>
+      <div v-if="!Array.isArray(search_results) && search_results == 'searching'">
+        <span>Searching...</span>
+      </div>
+      <div v-if="Array.isArray(search_results)">
+        <div
+          v-for="(item, index) in search_results"
+          v-bind:key="index"
+          class="search-results__item"
+        >
+          <img v-if="item.icon" :src="item.icon" alt="" width="18px">
+          <i v-else class="fa fa-link" style="font-size: 18px;"></i>
+          <a :href="item.url" target="_blank">
+            <span class="ml-2">{{ item.name }}</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -51,6 +58,7 @@ export default {
   },
   methods: {
     get_bookmarks: _.throttle(function() {
+      this.search_results = 'searching'
       axios.get(`/bookmarks/search/?s=${this.search_keyword}`).then(
         response => {
           console.log({response})
