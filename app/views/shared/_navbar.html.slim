@@ -24,7 +24,7 @@ nav.navbar.navbar-light.bg-dark
                   method: 'patch')
 
   - if ['home#index', 'bookmarks#search'].include? @loaded_action
-    = form_tag(search_bookmarks_path, :method => 'get', class: "flex-grow-1 mr-2")
+    .flex-grow-1.mr-2
       search :_param="#{ params[:s].to_json }" :_home_url="#{ ENV.fetch('HOMEURL').to_json }"
 
   - if account_signed_in?
