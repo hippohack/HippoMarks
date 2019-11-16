@@ -1,7 +1,12 @@
 class HomeController < ApplicationController
-  before_action :authenticate_account!, except: [:welcome, :release_notes]
+  # before_action :authenticate_account!, except: [:welcome, :release_notes]
 
   def index
+    unless account_signed_in?
+      redirect_to welcome_path
+      return
+    end
+
     @top_folder = current_account.folders.top_folder(current_account.bookmarkbar_folder_id)
     @sort_setting = current_account.settings.find_by(key: 'item_sort').value
 
@@ -12,8 +17,6 @@ class HomeController < ApplicationController
       @folders = @top_folder.folders.order(:sort_num)
       @bookmarks = @top_folder.bookmarks.order(:sort_num)
     end
-
-    # raise
   end
 
   def welcome
