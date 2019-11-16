@@ -68,12 +68,12 @@ export default {
       );
     }, 1000),
     /**
-     * リンクを押す前にデータがnullになるのを防ぐため1000ms遅らせてる
+     * リンクを押す前にデータがnullになるのを防ぐため200ms遅らせてる
      */
     defocus_search_results() {
       setTimeout(() => {
         this.search_results = null
-      }, 1000)
+      }, 200)
     }
   }
 }
