@@ -1,0 +1,46 @@
+= render "shared/navbar"
+.container-fluid
+  .row.justify-content-center.mx-0
+    .release-notes.col-9
+      header.release-notes__head
+        .release-notes__title
+          h1 Release notes
+        .release-notes__lead
+          p This page describes application updates. We will try to make this app better.
+      .row.release-notes__body
+        .col-3
+          aside.release-notes__side
+            ul
+              li
+                a href="#v040" 2019/11/16（v0.4.0）
+              li
+                a href="#v031" 2019/11/07（v0.3.1）
+              li
+                a href="#v030" 2019/11/05（v0.3.0）
+        .col-9
+          #v032.release-notes__content.mt-0
+            h2 2019/11/16（v0.4.0）
+            p Has been updated.
+            h3 Updated
+            ul
+              li <strong>Release notes: </strong>Added a page that clearly shows the updated contents of the application.
+              li <strong>History delete: </strong>Added a function to delete history.
+              li <strong>Bookmark search: </strong>Use ajax communication to search bookmarks.
+
+          #v031.release-notes__content.mt-5
+            h2 2019/11/07（v0.3.1）
+            p Has been updated.
+            h3 Fixed
+            ul
+              li <strong>Import:</strong> Address issues with the import process.
+
+          #v030.release-notes__content.mt-5
+            h2 2019/11/05（v0.3.0）
+            p Has been updated.
+            h3 Updated
+            ul
+              li <strong>Sort function: </strong>Added processing to change the order of folders by drag and drop.
+              li <strong>Set capture image:</strong> Changing the number of job retries.
+
+.pos-bottom
+  = render "shared/footer"

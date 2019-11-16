@@ -355,3 +355,52 @@ main {
   background-color: #e6e6e6;
   border: dashed 2px #ccc;
 }
+
+// release-notes
+.release-notes {
+  color: #333;
+
+  &__head {
+    padding: 60px 15px;
+    // background-color: $mainColor;
+  }
+
+  &__body {
+    // margin-top: 40px;
+  }
+
+  &__side {
+    ul {
+      padding: 0 15px;
+
+      li {
+        list-style-type: none;
+        margin-bottom: 20px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  &__content {
+    h3 {
+      margin-top: 30px;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.history-delete {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 10px 20px;
+}
+
+// vuejs transition
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+/* .fade-leave-active below version 2.1.8 */
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}

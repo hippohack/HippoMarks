@@ -15,4 +15,10 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-console.log('Hello World from Webpacker')
+// alert hide
+setTimeout(function() {
+  if ( $('.alert').hasClass('disable-hide') ) {
+    return;
+  }
+  $('.alert').slideUp()
+}, 4000)

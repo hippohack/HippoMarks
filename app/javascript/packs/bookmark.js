@@ -12,6 +12,7 @@ import Folders from './components/folders/folders.vue'
 import Folder from './components/folders/folder.vue'
 import ContextMenu from './components/shared/context-menu.vue'
 import ItemMenu from './components/shared/item-menu.vue'
+import Search from './components/search.vue'
 
 import axios from 'axios';
 
@@ -26,6 +27,7 @@ Vue.component('folders', Folders)
 Vue.component('folder', Folder)
 Vue.component('context-menu', ContextMenu)
 Vue.component('item-menu', ItemMenu)
+Vue.component('search', Search)
 
 // FIXME: DOM表示しない問題があるためDOMContentLoadedに変更してる
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,7 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
         pageX: null,
         pageY: null,
         sort_setting: null,
-        folder_moved: false
+        folder_moved: false,
+        delete_histories: [],
+        check_all: false,
       }
     },
     methods: {
@@ -104,6 +108,33 @@ document.addEventListener('DOMContentLoaded', () => {
       moveFolder(type, item_id, newFolderId, newSortNum) {
         return axios.patch(`/api/${type}/${item_id}/move_folder`, {'folder_id': newFolderId, 'sort_num': newSortNum})
       },
+      cancel_history_delete() {
+        this.delete_histories = []
+      },
+      submit_delete_histories_form() {
+        var res = confirm('Are you sure?')
+        if (res) {
+          document.querySelector('#delete-histories-form').submit();
+        }
+      },
+    },
+    watch: {
+      check_all(val, oldVal) {
+        this.delete_histories = []
+        var elms = document.querySelectorAll('.check_history_delete_item')
+        if (val) {
+          // FIXME: とりまハードコーディング
+          for(var i = 0; i < elms.length; i++) {
+            elms[i].checked = 'checked';
+            this.delete_histories.push(elms[i].value)
+          }
+        } else {
+          for(var i = 0; i < elms.length; i++) {
+            elms[i].checked = null;
+          }
+          this.delete_histories = []
+        }
+      }
     }
   })
 })
