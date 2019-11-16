@@ -10,7 +10,7 @@
       v-model="search_keyword"
       @keyup="get_bookmarks"
       @focus="get_bookmarks"
-      @blur="search_results = null"
+      @blur="defocus_search_results"
     >
     <div class="search-results" v-if="search_results">
       <div v-if="search_results.length == 0">
@@ -66,7 +66,15 @@ export default {
         },
         error => { console.log(error); }
       );
-    }, 1000)
+    }, 1000),
+    /**
+     * リンクを押す前にデータがnullになるのを防ぐため1000ms遅らせてる
+     */
+    defocus_search_results() {
+      setTimeout(() => {
+        this.search_results = null
+      }, 1000)
+    }
   }
 }
 </script>
