@@ -1,6 +1,6 @@
 nav.navbar.navbar-light.bg-dark
   = link_to(welcome_path, class: 'navbar-brand text-white', 'data-turbolinks': false) do
-    img.d-inline-block.align-top.mr-2 src="#{image_url('bookmarks.svg')}" width="30" height="30" alt=""
+    img.d-inline-block.align-top.mr-2 src="#{image_path('bookmarks.svg')}" width="30" height="30" alt=""
     | HippoMarks <span class="navbar__version">#{ENV.fetch('APP_VERSION')}</span>
 
   - if account_signed_in?
