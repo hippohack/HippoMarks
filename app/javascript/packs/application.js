@@ -21,4 +21,4 @@ setTimeout(function() {
     return;
   }
   $('.alert').slideUp()
-}, 4000)
+}, 7000)
