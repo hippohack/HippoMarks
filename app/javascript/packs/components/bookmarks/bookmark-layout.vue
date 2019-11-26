@@ -99,7 +99,7 @@
             <div>URL: {{ current_bookmark.url | excerpt }}</div>
             <div>Keywords: {{ current_bookmark.keyword }}</div>
             <div>Impressions: {{ current_bookmark.impressions }} times</div>
-            <div>Last_access_at: {{ current_bookmark.last_access_time | moment }}</div>
+            <div>Last_access_at: {{ current_bookmark.last_access_time | dateTime }}</div>
             <div>Created_at: {{ current_bookmark.created_at | moment }}</div>
           </div>
         </div>
@@ -306,6 +306,9 @@
     filters: {
       moment(date) {
         return moment(date).format('YYYY/MM/DD');
+      },
+      dateTime(date) {
+        return moment(date).format('YYYY/MM/DD HH:MM');
       },
       excerpt(text) {
         if (text.length > 42) {
