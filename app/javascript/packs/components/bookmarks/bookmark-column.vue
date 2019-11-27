@@ -110,9 +110,6 @@
     },
     methods: {
       fetchFolderItems: function(folder_id) {
-        if (this.last_request_id == folder_id) {
-          return false
-        }
         axios.get(`/api/folders/${folder_id}/`).then(
           response => {
             this.fetch_items = response.data.items[0].concat(response.data.items[1])
