@@ -110,6 +110,7 @@
     },
     methods: {
       fetchFolderItems: function(folder_id) {
+        // computedでリクエストが飛びつづけるので変更がなければリターンする
         if (this.last_request_id == folder_id) {
           return false
         }

@@ -1,3 +1,5 @@
+# TODO: このモデルをつかわなくてもいいようにするべき
+
 class BookmarkbarItem < ApplicationRecord
   belongs_to :account
   has_one :bookmark

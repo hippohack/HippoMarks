@@ -40,6 +40,8 @@ class BookmarksController < ApplicationController
     end
 
     if @bookmark.save
+      CaptureJob.perform_later(@bookmark.id)
+
       if params[:popup]
         render :show
       else

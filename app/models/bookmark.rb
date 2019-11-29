@@ -10,7 +10,8 @@ class Bookmark < ApplicationRecord
     message: 'Missing URI scheme'
   }
 
-  after_commit :enque_job, on: [ :create, :update ]
+  ## コールバックで設定すると必要なアクションでも作動する？
+  # after_commit :enque_job, on: [ :create, :update ]
 
   scope :histories, -> {
     where('last_access_time > ?', 0)

@@ -6,6 +6,11 @@ Rails.application.routes.draw do
     registrations: 'accounts/registrations',
     sessions: 'accounts/sessions'
   }
+
+  devise_scope :account do
+    get 'accounts/sent_confirm', to: 'accounts/registrations#confirm', as: 'sent_confirm'
+  end
+
   root to: 'home#index'
   get '/welcome', to: 'home#welcome', as: 'welcome'
   get '/release_notes', to: 'home#release_notes', as: 'release_notes'
