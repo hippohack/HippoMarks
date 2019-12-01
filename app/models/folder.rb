@@ -12,6 +12,7 @@ class Folder < ApplicationRecord
   # Active Record Associations — Ruby on Rails Guides
   # https://guides.rubyonrails.org/association_basics.html#self-joins
   def folders
+    # raise
     Folder.where(folder_id: id)
   end
 
