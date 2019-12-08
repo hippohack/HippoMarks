@@ -52,6 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
         folder_moved: false,
         delete_histories: [],
         check_all: false,
+        // 表示しているトップ階層以下のカラムの数とフォルダーIDの管理
+        displayed_folder_ids: [],
+        displayed_folder_items: []
       }
     },
     methods: {
@@ -116,6 +119,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (res) {
           document.querySelector('#delete-histories-form').submit();
         }
+      },
+      fetchFolderItems(folder_id, level) {
+        alert(level)
+        axios.get(`/api/folders/${folder_id}/`).then(
+          response => {
+            console.log('response: ', response.data)
+            this.displayed_folder_items[level] = response.data.folder_items
+          },
+          error => { console.log(error); }
+        );
+      },
+      update_displayed_folders(folder_id, level) {
+        this.displayed_folder_ids[level] = folder_id
+
+        // TODO: フォルダー内のデータとってくる
+        this.fetchFolderItems(folder_id, level)
       },
     },
     watch: {

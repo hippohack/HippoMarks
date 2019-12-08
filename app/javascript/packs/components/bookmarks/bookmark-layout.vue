@@ -62,6 +62,7 @@
             :_home_url="_home_url"
             :_show_item_menu="_show_item_menu"
             :_show_item_menu_id="_show_item_menu_id"
+            :_level="0"
             @apply="receive"
             @apply_bookmark="catch_bookmark"
           ></bookmark-item>
@@ -72,6 +73,7 @@
     <div class="col" style="overflow: auto;">
       <div class="row">
         <div class="col" style="overflow:auto;">
+          <!-- ２つ目からのカラム郡 -->
           <bookmark-columns
             v-if="is_active"
             :_clicked_folder_id="clicked_folder_id"
@@ -171,7 +173,7 @@
       _settings: { type: Array },
       _show_item_menu: { type: Boolean },
       _show_item_menu_id: { type: Number },
-      _sort_setting : { type: String }
+      _sort_setting : { type: String },
     },
     mounted: function() {
       this.items = this._folder_items
@@ -180,6 +182,7 @@
       this.$root.sort_setting = this._sort_setting
     },
     computed: {
+      // ボトムのパンくずリスト
       folder_hierarchy() {
         if (!this.clicked_folder_id) { return }
 
@@ -194,7 +197,7 @@
         }
 
         let id = this.clicked_folder_id
-        let found = this._folders.find(function(element) {
+        let found = this._folder_items.find(function(element) {
           return element.id == id && !element.url
         })
 

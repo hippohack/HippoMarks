@@ -1,6 +1,12 @@
 <template>
   <div class="row flex-nowrap">
     <bookmark-column
+      v-for="(folder_id, index) in displayed_folder_ids"
+      v-bind:key="index"
+      :_folder_id="folder_id"
+      :_level="index+2"
+    ></bookmark-column>
+    <!-- <bookmark-column
       v-for="(column, index) in com_columns"
       v-bind:key="index"
       :_folder_id="column.folder_id"
@@ -10,7 +16,7 @@
       :_show_item_menu_id="_show_item_menu_id"
       @apply="receive"
       @apply_bookmark="relay_bookmark"
-    ></bookmark-column>
+    ></bookmark-column> -->
   </div>
 </template>
 
@@ -20,29 +26,32 @@
       return {
         is_active: false,
         columns: [],
-        clicked_folder_id: ""
+        clicked_folder_id: "",
+        __displayed_folder_ids: []
       }
     },
     props: {
       _clicked_folder_id: "",
       _home_url: "",
       _show_item_menu: { type: Boolean },
-      _show_item_menu_id: { type: Number }
-    },
-    mounted() {
-      this.clicked_folder_id = this._clicked_folder_id
+      _show_item_menu_id: { type: Number },
     },
     computed: {
+      displayed_folder_ids() {
+        // 直接ルートの値は監視してくれないので適当なものを監視してフック
+        this.clicked_folder_id = this._clicked_folder_id
+        return this.$root.displayed_folder_ids
+      },
       com_columns() {
         if (this.clicked_folder_id != this._clicked_folder_id) {
           this.columns = []
         }
         this.columns[0] = {
           folder_id: this._clicked_folder_id,
-          level: 0
+          level: 1
         }
         return this.columns
-      }
+      },
     },
     methods: {
       receive(values) {
