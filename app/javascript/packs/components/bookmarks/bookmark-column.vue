@@ -103,18 +103,25 @@
       _show_item_menu: { type: Boolean },
       _show_item_menu_id: { type: Number },
     },
-    mounted() {
-      this.folder_id = this._folder_id
-    },
     computed: {
       items() {
-        // TODO: rootからとってくる
-        this.folder_id = this._folder_id
-        return this.$root.displayed_folder_items[this._level]
-        // return this.fetch_items
+        if (this._folder_id != this.folder_id) {
+          this.fetchFolderItems(this._folder_id)
+          this.folder_id = this._folder_id
+        }
+        return this.fetch_items
       }
     },
     methods: {
+      fetchFolderItems(folder_id) {
+        axios.get(`/api/folders/${folder_id}/`).then(
+          response => {
+            console.log('response: ', response.data)
+            this.fetch_items = response.data.folder_items
+          },
+          error => { console.log(error); }
+        );
+      },
       editBookmark(id) {
         (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`${_home_url}/bookmarks/${id}/edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=710px,width=600px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
       },

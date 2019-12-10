@@ -120,21 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
           document.querySelector('#delete-histories-form').submit();
         }
       },
-      fetchFolderItems(folder_id, level) {
-        alert(level)
-        axios.get(`/api/folders/${folder_id}/`).then(
-          response => {
-            console.log('response: ', response.data)
-            this.displayed_folder_items[level] = response.data.folder_items
-          },
-          error => { console.log(error); }
-        );
-      },
       update_displayed_folders(folder_id, level) {
-        this.displayed_folder_ids[level] = folder_id
+        // 不要なカラム（フォルダーID）消す
+        var ids = this.displayed_folder_ids
+        this.displayed_folder_ids = ids.filter((id, index) => {
+          return index <= level
+        })
 
-        // TODO: フォルダー内のデータとってくる
-        this.fetchFolderItems(folder_id, level)
+        this.displayed_folder_ids[level] = folder_id
       },
     },
     watch: {

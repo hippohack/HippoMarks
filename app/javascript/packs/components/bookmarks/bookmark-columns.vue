@@ -4,7 +4,7 @@
       v-for="(folder_id, index) in displayed_folder_ids"
       v-bind:key="index"
       :_folder_id="folder_id"
-      :_level="index+2"
+      :_level="index"
     ></bookmark-column>
     <!-- <bookmark-column
       v-for="(column, index) in com_columns"
