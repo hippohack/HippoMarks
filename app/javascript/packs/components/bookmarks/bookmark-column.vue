@@ -188,7 +188,7 @@
             // FIXME: なんかいったん空にしないとうまく反映しない。
             this.fetch_items = null;
             this.$nextTick(function () {
-              this.fetch_items = response.data.items[0].concat(response.data.items[1])
+              this.fetch_items = response.data.folder_items
             });
           },
           error => { console.log(error); }

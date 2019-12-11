@@ -5,18 +5,12 @@
       v-bind:key="index"
       :_folder_id="folder_id"
       :_level="index"
-    ></bookmark-column>
-    <!-- <bookmark-column
-      v-for="(column, index) in com_columns"
-      v-bind:key="index"
-      :_folder_id="column.folder_id"
-      :_level="column.level"
       :_home_url="_home_url"
       :_show_item_menu="_show_item_menu"
       :_show_item_menu_id="_show_item_menu_id"
       @apply="receive"
       @apply_bookmark="relay_bookmark"
-    ></bookmark-column> -->
+    ></bookmark-column>
   </div>
 </template>
 
