@@ -69,6 +69,7 @@
     data() {
       return {
         fetch_items: [],
+        folder_id: null,
         last_request_id: null,
         seleted_folder_id: null,
         is_add_folder: false,
@@ -97,30 +98,29 @@
     },
     props: {
       _level: { type: Number },
-      _folder_id: "",
+      _folder_id: { type: Number },
       _home_url: "",
       _show_item_menu: { type: Boolean },
-      _show_item_menu_id: { type: Number }
+      _show_item_menu_id: { type: Number },
     },
     computed: {
       items() {
-        this.fetchFolderItems(this._folder_id)
+        if (this._folder_id != this.folder_id) {
+          this.fetchFolderItems(this._folder_id)
+          this.folder_id = this._folder_id
+        }
         return this.fetch_items
       }
     },
     methods: {
-      fetchFolderItems: function(folder_id) {
-        // computedでリクエストが飛びつづけるので変更がなければリターンする
-        if (this.last_request_id == folder_id) {
-          return false
-        }
+      fetchFolderItems(folder_id) {
         axios.get(`/api/folders/${folder_id}/`).then(
           response => {
-            this.fetch_items = response.data.items[0].concat(response.data.items[1])
+            console.log('response: ', response.data)
+            this.fetch_items = response.data.folder_items
           },
           error => { console.log(error); }
         );
-        this.last_request_id = folder_id
       },
       editBookmark(id) {
         (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`${_home_url}/bookmarks/${id}/edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=710px,width=600px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
@@ -130,7 +130,7 @@
         let found = this.fetch_items.find((elm) => {
           return elm.id == values.folder_id && !elm.url
         })
-        this.$emit('apply', { folder_id: values.folder_id, level: values.level, folder_name: found.name })
+        this.$emit('apply', { folder_id: values.folder_id, level: values.level-1, folder_name: found.name })
         // this.$forceUpdate()
       },
       relay_bookmark(values) {
@@ -188,7 +188,7 @@
             // FIXME: なんかいったん空にしないとうまく反映しない。
             this.fetch_items = null;
             this.$nextTick(function () {
-              this.fetch_items = response.data.items[0].concat(response.data.items[1])
+              this.fetch_items = response.data.folder_items
             });
           },
           error => { console.log(error); }

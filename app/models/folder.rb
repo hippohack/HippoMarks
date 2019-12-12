@@ -1,5 +1,5 @@
 class Folder < ApplicationRecord
-  belongs_to :account, primary_key: 'bookmarkbar_folder_id'
+  belongs_to :account, primary_key: 'bookmarkbar_folder_id', optional: true
   has_many :bookmarks, dependent: :destroy
   accepts_nested_attributes_for :bookmarks, allow_destroy: true
 
@@ -12,6 +12,7 @@ class Folder < ApplicationRecord
   # Active Record Associations — Ruby on Rails Guides
   # https://guides.rubyonrails.org/association_basics.html#self-joins
   def folders
+    # raise
     Folder.where(folder_id: id)
   end
 

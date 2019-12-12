@@ -6,13 +6,10 @@ class Api::FoldersController < ApplicationController
     folder = current_account.folders.find(params[:id])
     sort_setting = current_account.settings.find_by(key: 'item_sort').value
 
-    unless sort_setting == 'optional'
-      @folders = folder.folders.order(sort_setting.to_sym)
-      @bookmarks = folder.bookmarks.order(sort_setting.to_sym)
-    else
-      @folders = folder.folders.order(:sort_num)
-      @bookmarks = folder.bookmarks.order(:sort_num)
-    end
+    folders = folder.folders
+    bookmarks = folder.bookmarks
+
+    @folder_items = folder_item_mix(folders, bookmarks, sort_setting)
   end
 
   def create
