@@ -1,5 +1,5 @@
 class Folder < ApplicationRecord
-  belongs_to :account, primary_key: 'bookmarkbar_folder_id'
+  belongs_to :account, primary_key: 'bookmarkbar_folder_id', optional: true
   has_many :bookmarks, dependent: :destroy
   accepts_nested_attributes_for :bookmarks, allow_destroy: true
 
