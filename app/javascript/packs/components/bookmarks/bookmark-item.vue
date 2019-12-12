@@ -81,17 +81,18 @@
       _folder_id: "",
       _home_url: "",
       _show_item_menu: { type: Boolean },
-      _show_item_menu_id: { type: Number }
+      _show_item_menu_id: { type: Number },
+      _level: { type: Number }
     },
     mounted() {
       this.item = this._item
       this.folder_name = this._item.name
     },
     methods: {
-      openFolder: function(folder_id) {
-        console.log({folder_id})
+      openFolder: function(folder_id, level) {
         this.is_active = true
         this.$emit('apply', { clicked_folder_id: folder_id, is_active: true })
+        this.$root.update_displayed_folders(folder_id, this._level)
       },
       editFolder(values) {
         this.folder_editing = values.folder_editing

@@ -29,6 +29,24 @@
           </div>
         </div>
         <!-- // add folder -->
+        <div class="bookmarks__item" v-if="show_many_visits == 'true'">
+          <div :class="manyVisitsActive">
+            <a
+              class="bookmarks__link"
+              href="javascript:void(0)"
+              @click="openManyVisitsFolder()"
+            ><i class="fa fa-star mr-2" style="font-size: 18px;" aria-hidden="true"></i>Many visits</a>
+          </div>
+        </div>
+        <div class="bookmarks__item" v-if="show_history == 'true'">
+          <div :class="historyActive">
+            <a
+              class="bookmarks__link"
+              href="javascript:void(0)"
+              @click="openHistoryFolder()"
+            ><i class="fa fa-history mr-2" style="font-size: 18px;"></i>History</a>
+          </div>
+        </div>
         <div
           class="bookmarks__item"
           v-for="(item, index) in items"
@@ -44,27 +62,10 @@
             :_home_url="_home_url"
             :_show_item_menu="_show_item_menu"
             :_show_item_menu_id="_show_item_menu_id"
+            :_level="0"
             @apply="receive"
             @apply_bookmark="catch_bookmark"
           ></bookmark-item>
-        </div>
-        <div class="bookmarks__item" v-if="show_many_visits == 'true'">
-          <div :class="manyVisitsActive">
-            <a
-              class="bookmarks__link"
-              href="javascript:void(0)"
-              @click="openManyVisitsFolder()"
-            ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>Many visits</a>
-          </div>
-        </div>
-        <div class="bookmarks__item" v-if="show_history == 'true'">
-          <div :class="historyActive">
-            <a
-              class="bookmarks__link"
-              href="javascript:void(0)"
-              @click="openHistoryFolder()"
-            ><i class="fa fa-folder mr-2" style="font-size: 18px;"></i>History</a>
-          </div>
         </div>
       </div>
     </div>
@@ -72,6 +73,7 @@
     <div class="col" style="overflow: auto;">
       <div class="row">
         <div class="col" style="overflow:auto;">
+          <!-- ２つ目からのカラム郡 -->
           <bookmark-columns
             v-if="is_active"
             :_clicked_folder_id="clicked_folder_id"
@@ -166,21 +168,21 @@
     },
     props: {
       _top_folder: { type: Object },
-      _folders: { type: Array },
-      _bookmarks: { type: Array },
+      _folder_items: { type: Array },
       _home_url: "",
       _settings: { type: Array },
       _show_item_menu: { type: Boolean },
       _show_item_menu_id: { type: Number },
-      _sort_setting : { type: String }
+      _sort_setting : { type: String },
     },
     mounted: function() {
-      this.items = this._folders.concat(this._bookmarks)
+      this.items = this._folder_items
       this.show_many_visits = this.settingFind('show_many_visits').value
       this.show_history = this.settingFind('show_history').value
       this.$root.sort_setting = this._sort_setting
     },
     computed: {
+      // ボトムのパンくずリスト
       folder_hierarchy() {
         if (!this.clicked_folder_id) { return }
 
@@ -195,7 +197,7 @@
         }
 
         let id = this.clicked_folder_id
-        let found = this._folders.find(function(element) {
+        let found = this._folder_items.find(function(element) {
           return element.id == id && !element.url
         })
 
