@@ -30,8 +30,9 @@ export default {
     },
     delete_bookmark() {
       axios.delete(`/api/bookmarks/${this._item.id}`)
-        .then(function(response) {
+        .then((response) => {
           console.log(response)
+          this.$emit('delete_bookmark', { delete_bookmark: this._item.id })
         })
         .catch(function(error) {
           console.log(error)

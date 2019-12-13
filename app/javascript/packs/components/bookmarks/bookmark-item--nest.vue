@@ -25,7 +25,7 @@
     <a
       class="bookmarks__link"
       target="_blank"
-      v-if="item.url"
+      v-if="!deleted_bookmark && item.url"
       :href="item.url"
       :title="item.keyword"
       @click="incrementImpression(item.id)"
@@ -54,6 +54,7 @@
       @apply="receive"
       @folder_edit="editFolder"
       @delete_folder="delete_folder"
+      @delete_bookmark="delete_bookmark"
       @open_bookmark_edit="context_menu = false"
     ></context-menu>
   </div>
@@ -72,7 +73,8 @@
         context_menu: false,
         pageX: "",
         pageY: "",
-        deleted_folder: false
+        deleted_folder: false,
+        deleted_bookmark: false
       };
     },
     props: {
@@ -128,6 +130,10 @@
       },
       delete_folder(values) {
         this.deleted_folder = values.delete_folder
+      },
+      delete_bookmark(values) {
+        this.deleted_bookmark = values.delete_bookmark
+        this.context_menu = false
       },
       incrementImpression(id) {
         let res = axios.patch(`/api/bookmarks/${id}/increment_impression`, { 'increment': true } )
