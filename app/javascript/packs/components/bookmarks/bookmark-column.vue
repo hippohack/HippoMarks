@@ -144,7 +144,7 @@
         // folder内データの再フェッチ
         axios.get(`/api/folders/${this._folder_id}/`).then(
           response => {
-            this.fetch_items = response.data.items[0].concat(response.data.items[1])
+            this.fetch_items = response.data.folder_items
           },
           error => { console.log(error); }
         );
