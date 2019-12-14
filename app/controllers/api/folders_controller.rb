@@ -35,6 +35,7 @@ class Api::FoldersController < ApplicationController
     @folder.children.each do |child|
       current_account.folders.find(child.id).destroy
     end
+
     @folder.destroy
   end
 

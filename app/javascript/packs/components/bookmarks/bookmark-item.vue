@@ -51,6 +51,7 @@
       :_pageY="pageY"
       :_item="item"
       :_home_url="_home_url"
+      :_level="_level"
       @apply="receive"
       @folder_edit="editFolder"
       @delete_folder="delete_folder"

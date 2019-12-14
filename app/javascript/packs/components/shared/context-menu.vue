@@ -43,6 +43,7 @@ export default {
         .then((response) => {
           console.log(response)
           this.$emit('delete_folder', { delete_folder: this._item.id })
+          this.$root.update_displayed_folders(null, this._level)
         })
         .catch(function(error) {
           console.log(error)
@@ -64,7 +65,8 @@ export default {
     _pageX: "",
     _pageY: "",
     _item: {},
-    _home_url: ""
+    _home_url: "",
+    _level: ""
   },
   computed: {
     styles() {
