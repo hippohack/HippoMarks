@@ -38,7 +38,7 @@
             div.mr-auto
               = link_to '新しいフォルダ', 'javascript:void(0)', class: 'btn btn-outline-primary', id: 'new-folder', 'v-on:click': "show_new_folder"
             div.mr-2
-              = link_to 'キャンセル', '#', class: 'btn btn-outline-primary'
+              = link_to 'キャンセル', root_path, class: 'btn btn-outline-primary', 'data-turbolinks': false
             div
               = f.submit "Add Bookmark", class: 'btn btn-primary'
 
