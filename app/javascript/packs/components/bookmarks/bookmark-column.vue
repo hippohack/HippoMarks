@@ -137,7 +137,7 @@
         this.$emit('apply_bookmark', { bookmark: values.bookmark })
       },
       create_folder() {
-        this.$root.add_folder(this._folder_id, this._level, this.new_folder_name);
+        this.$root.add_folder(this._folder_id, this.new_folder_name);
         this.is_add_folder = false;
         this.new_folder_name = null;
 

@@ -81,10 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
       submitSiteImageEdit() {
         $('.site-image-form__submit').click();
       },
-      add_folder(folder_id, parent_count, name) {
+      add_folder(folder_id, name) {
         axios.post(`/api/folders/`, {
             folder_id: folder_id,
-            parent_count: parent_count,
             name: name
           })
           .then(response => {
