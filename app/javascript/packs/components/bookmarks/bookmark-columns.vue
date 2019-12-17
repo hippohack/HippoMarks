@@ -36,6 +36,7 @@
         this.clicked_folder_id = this._clicked_folder_id
         return this.$root.displayed_folder_ids
       },
+      // ↓ これいらないかも。
       com_columns() {
         if (this.clicked_folder_id != this._clicked_folder_id) {
           this.columns = []

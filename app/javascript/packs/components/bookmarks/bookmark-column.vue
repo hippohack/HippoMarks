@@ -1,5 +1,5 @@
 <template>
-  <div class="col bookmarks__col">
+  <div class="col bookmarks__col js_column-width">
     <div class="menu-ui d-flex justify-content-end">
       <a
         v-if="typeof _folder_id == 'number'"
@@ -109,6 +109,11 @@
           this.fetchFolderItems(this._folder_id)
           this.folder_id = this._folder_id
         }
+
+        // 増えたカラム分スクロールする
+        var column_width = $('.js_column-width').outerWidth()
+        document.querySelector('.js_scroll-columns').scrollLeft += column_width;
+
         return this.fetch_items
       }
     },

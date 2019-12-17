@@ -80,7 +80,11 @@ main {
     height: calc(100vh - 152px);
   }
   &__col--last {
+    min-width: 400px;
+    max-width: 400px;
     border-right: 0;
+    margin-left: -1px;
+    border-left: solid 1px #ccc;
   }
   &__items {
     padding-top: 15px;

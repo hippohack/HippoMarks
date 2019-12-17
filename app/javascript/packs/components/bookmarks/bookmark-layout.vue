@@ -72,7 +72,7 @@
 
     <div class="col" style="overflow: auto;">
       <div class="row">
-        <div class="col" style="overflow:auto;">
+        <div class="col js_scroll-columns" style="overflow: auto;">
           <!-- ２つ目からのカラム郡 -->
           <bookmark-columns
             v-if="is_active"
@@ -84,25 +84,28 @@
             @apply_bookmark="catch_bookmark"
           ></bookmark-columns>
         </div>
-        <div v-if="current_bookmark" class="col-4 bookmark__col bookmark__col--last border-left">
-          <div class="bookmarks__capture">
-            <!-- FIXME: 動いてない？ -->
-            <transition name="fade">
-              <img
-                v-if="current_bookmark.og_image_url"
-                :src="current_bookmark.og_image_url"
-                :alt="current_bookmark.name"
-              >
-              <img v-else src="https://dummyimage.com/600x400/e6e6e6/cccccc.png&text=+NO+IMAGE" alt="">
-            </transition>
-          </div>
-          <div class="bookmarks__description">
-            <div>Name: {{ current_bookmark.name }}</div>
-            <div>URL: {{ current_bookmark.url | excerpt }}</div>
-            <div>Keywords: {{ current_bookmark.keyword }}</div>
-            <div>Impressions: {{ current_bookmark.impressions }} times</div>
-            <div>Last_access_at: {{ current_bookmark.last_access_time | dateTime }}</div>
-            <div>Created_at: {{ current_bookmark.created_at | moment }}</div>
+
+        <div class="col-4 bookmarks__col bookmarks__col--last">
+          <div v-if="current_bookmark">
+            <div class="bookmarks__capture">
+              <!-- FIXME: 動いてない？ -->
+              <transition name="fade">
+                <img
+                  v-if="current_bookmark.og_image_url"
+                  :src="current_bookmark.og_image_url"
+                  :alt="current_bookmark.name"
+                >
+                <img v-else src="https://dummyimage.com/600x400/e6e6e6/cccccc.png&text=+NO+IMAGE" alt="">
+              </transition>
+            </div>
+            <div class="bookmarks__description">
+              <div>Name: {{ current_bookmark.name }}</div>
+              <div>URL: {{ current_bookmark.url | excerpt }}</div>
+              <div>Keywords: {{ current_bookmark.keyword }}</div>
+              <div>Impressions: {{ current_bookmark.impressions }} times</div>
+              <div>Last_access_at: {{ current_bookmark.last_access_time | dateTime }}</div>
+              <div>Created_at: {{ current_bookmark.created_at | moment }}</div>
+            </div>
           </div>
         </div>
       </div>
