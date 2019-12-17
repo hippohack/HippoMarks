@@ -200,7 +200,7 @@
         }
 
         let id = this.clicked_folder_id
-        let found = this._folder_items.find(function(element) {
+        let found = this.items.find(function(element) {
           return element.id == id && !element.url
         })
 
@@ -255,7 +255,7 @@
         })
       },
       create_folder() {
-        this.$root.add_folder(this._top_folder.id, 1, this.new_folder_name);
+        this.$root.add_folder(this._top_folder.id, this.new_folder_name);
         this.is_add_folder = false;
         this.new_folder_name = null;
 
@@ -301,7 +301,7 @@
             // FIXME: なんかいったん空にしないとうまく反映しない。
             this.items = null;
             this.$nextTick(function () {
-              this.items = response.data.items[0].concat(response.data.items[1])
+              this.items = response.data.folder_items
             });
           },
           error => { console.log(error); }
