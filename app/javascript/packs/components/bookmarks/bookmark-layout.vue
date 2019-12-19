@@ -200,14 +200,19 @@
         }
 
         let id = this.clicked_folder_id
-        let found = this.items.find(function(element) {
-          return element.id == id && !element.url
+
+        // this.itemsに値入る前に処理されるのでnextTick使ってる。
+        this.$nextTick(function() {
+          let found = this.items.find(function(element) {
+            return element.id == id && !element.url
+          })
+
+          if (this.folder_hierarchy_data[0] != found.name) {
+            this.folder_hierarchy_data = []
+            this.folder_hierarchy_data[0] = found.name
+          }
         })
 
-        if (this.folder_hierarchy_data[0] != found.name) {
-          this.folder_hierarchy_data = []
-          this.folder_hierarchy_data[0] = found.name
-        }
         return this.folder_hierarchy_data
       },
     },
