@@ -247,12 +247,14 @@
         this.manyVisitsActive = 'active'
         this.historyActive = null
         this.clicked_folder_id = 'many_visits'
+        this.$root.update_displayed_folders('many_visits', 0)
       },
       openHistoryFolder() {
         this.is_active = true
         this.historyActive = 'active'
         this.manyVisitsActive = null
         this.clicked_folder_id = 'history'
+        this.$root.update_displayed_folders('history', 0)
       },
       settingFind(target) {
         return this._settings.find((elm) => {

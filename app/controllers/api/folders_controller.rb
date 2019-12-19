@@ -44,16 +44,14 @@ class Api::FoldersController < ApplicationController
   end
 
   def many_visits
-    @folders = []
     # TODO: takeの数任意設定でもいいかも
-    @bookmarks = current_account.bookmarks.order(impressions: :desc).take(10)
+    @folder_items = current_account.bookmarks.order(impressions: :desc).take(10)
     render :show
   end
 
   def history
-    @folders = []
     # TODO: takeの数任意設定でもいいかも
-    @bookmarks = current_account.bookmarks.order(last_access_time: :desc).take(10)
+    @folder_items = current_account.bookmarks.order(last_access_time: :desc).take(10)
     render :show
   end
 

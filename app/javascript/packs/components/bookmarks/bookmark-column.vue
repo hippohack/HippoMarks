@@ -98,7 +98,7 @@
     },
     props: {
       _level: { type: Number },
-      _folder_id: { type: Number },
+      _folder_id: { type: [String, Number] },
       _home_url: "",
       _show_item_menu: { type: Boolean },
       _show_item_menu_id: { type: Number },
