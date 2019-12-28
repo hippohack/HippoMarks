@@ -98,6 +98,10 @@ class BookmarksController < ApplicationController
       end
     end
 
+    # iconのbase64変換
+    icon_img = Bookmark.img_to_base64(params[:bookmark][:icon].tempfile)
+    @bookmark.icon = icon_img
+
     if @bookmark.update(bookmark_params)
       if params[:popup]
         render :show
