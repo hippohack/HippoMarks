@@ -408,3 +408,17 @@ main {
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.icon-form {
+  &__image {
+    img {
+      margin-top: 3px;
+      max-width: 32px;
+      max-height: 32px;
+    }
+  }
+}

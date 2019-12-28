@@ -82,6 +82,23 @@ document.addEventListener('DOMContentLoaded', () => {
       submitSiteImageEdit() {
         $('.site-image-form__submit').click();
       },
+      iconSelect() {
+        $('#icon-select').click();
+      },
+      replaceIconImage(event) {
+        console.log({event})
+        if (event.target.files && event.target.files[0]) {
+          var src = URL.createObjectURL(event.target.files[0])
+          console.log({src})
+          var img = document.querySelector('.icon-form__image img')
+          if (!img) {
+            $('.icon-form__image .fa').remove()
+            $('.icon-form__image').append(`<img src="${src}">`)
+            return
+          }
+          img.src = src
+        }
+      },
       add_folder(folder_id, name) {
         axios.post(`/api/folders/`, {
             folder_id: folder_id,
