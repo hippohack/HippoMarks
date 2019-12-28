@@ -15,8 +15,7 @@
         <div v-if="is_add_folder" class="bookmarks__item">
           <div>
             <a href="javascript:void(0)" class="bookmarks__link">
-              <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>
-              <input
+              <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i><input
                 type="text"
                 name="folder[name]"
                 v-model="new_folder_name"
@@ -24,6 +23,7 @@
                 @keyup.enter="create_folder"
                 placeholder="folder name..."
                 class="py-1 px-2"
+                id="addFolderInput"
               >
             </a>
           </div>
@@ -198,6 +198,17 @@
 
         return this.$root.displayed_folder_names
       },
+    },
+    watch: {
+      is_add_folder(val, oldVal) {
+        if (val) {
+          setTimeout(() => {
+            var elm = document.getElementById('addFolderInput')
+            elm.setAttribute('tabindex', '-1')
+            elm.focus()
+          }, 100);
+        }
+      }
     },
     methods: {
       editBookmark(id) {
