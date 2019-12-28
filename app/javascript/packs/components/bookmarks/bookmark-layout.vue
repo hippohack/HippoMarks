@@ -80,7 +80,6 @@
             :_home_url="_home_url"
             :_show_item_menu="_show_item_menu"
             :_show_item_menu_id="_show_item_menu_id"
-            @apply2="push_folder_hierachy"
             @apply_bookmark="catch_bookmark"
           ></bookmark-columns>
         </div>
@@ -140,7 +139,6 @@
         clicked_folder_id: "",
         items: [],
         folder_editing: false,
-        folder_hierarchy_data: [],
         current_bookmark: null,
         show_many_visits: null,
         show_history: null,
@@ -186,34 +184,19 @@
     },
     computed: {
       // ボトムのパンくずリスト
+      // FIXME: マウス動かさないと画面に反映しない
       folder_hierarchy() {
         if (!this.clicked_folder_id) { return }
 
         if (this.clicked_folder_id == 'many_visits') {
-          this.folder_hierarchy_data[0] = 'Many visits'
-          return this.folder_hierarchy_data
+          this.$root.displayed_folder_names[0] = 'Many visits'
         }
 
         if (this.clicked_folder_id == 'history') {
-          this.folder_hierarchy_data[0] = 'History'
-          return this.folder_hierarchy_data
+          this.$root.displayed_folder_names[0] = 'History'
         }
 
-        let id = this.clicked_folder_id
-
-        // this.itemsに値入る前に処理されるのでnextTick使ってる。
-        this.$nextTick(function() {
-          let found = this.items.find(function(element) {
-            return element.id == id && !element.url
-          })
-
-          if (this.folder_hierarchy_data[0] != found.name) {
-            this.folder_hierarchy_data = []
-            this.folder_hierarchy_data[0] = found.name
-          }
-        })
-
-        return this.folder_hierarchy_data
+        return this.$root.displayed_folder_names
       },
     },
     methods: {
@@ -229,15 +212,6 @@
         this.is_active = values.is_active
         this.manyVisitsActive = null
         this.historyActive = null
-      },
-      push_folder_hierachy(values) {
-        if (this.folder_hierarchy_data.length > values.level) {
-          for (var i = values.level; i < this.folder_hierarchy_data.length+1; i++) {
-            this.folder_hierarchy_data.splice(i)
-          }
-        }
-        this.folder_hierarchy_data[values.level] = values.folder_name
-        this.$forceUpdate()
       },
       catch_bookmark(values) {
         this.current_bookmark = values.bookmark

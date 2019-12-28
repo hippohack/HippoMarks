@@ -93,7 +93,7 @@
       openFolder: function(folder_id, level) {
         this.is_active = true
         this.$emit('apply', { clicked_folder_id: folder_id, is_active: true })
-        this.$root.update_displayed_folders(folder_id, this._level)
+        this.$root.update_displayed_folders(folder_id, this._level, this.item.name)
       },
       editFolder(values) {
         this.folder_editing = values.folder_editing
