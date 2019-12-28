@@ -15,6 +15,7 @@ class ProfilesController < ApplicationController
       if params[:edit_avatar_image]
         render :replace_img
       else
+        flash[:notice] = 'Profile updated.'
         render :edit
       end
     end
