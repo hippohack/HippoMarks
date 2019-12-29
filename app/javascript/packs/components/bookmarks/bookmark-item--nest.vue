@@ -40,7 +40,7 @@
     </a>
 
     <item-menu
-      v-if="_show_item_menu && _show_item_menu_id == item.id"
+      v-if="show_item_menu && _show_item_menu_id == item.id"
       @context_menu="receive_contextmenu"
     ></item-menu>
 
@@ -74,7 +74,8 @@
         pageX: "",
         pageY: "",
         deleted_folder: false,
-        deleted_bookmark: false
+        deleted_bookmark: false,
+        show_item_menu: false
       };
     },
     props: {
@@ -92,6 +93,7 @@
     },
     mounted() {
       this.folder_name = this._item.name
+      this.show_item_menu = this._show_item_menu
     },
     methods: {
       openFolder: function(folder_id) {
@@ -134,6 +136,7 @@
       delete_bookmark(values) {
         this.deleted_bookmark = values.delete_bookmark
         this.context_menu = false
+        this.show_item_menu = false
       },
       incrementImpression(id) {
         let res = axios.patch(`/api/bookmarks/${id}/increment_impression`, { 'increment': true } )
