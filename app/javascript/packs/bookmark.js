@@ -144,7 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
           return index <= level
         })
 
-        this.displayed_folder_ids[level] = folder_id
+        if (folder_id != null) {
+          this.displayed_folder_ids[level] = folder_id
+        }
 
         // おなじくフォルダ名も
         var names = this.displayed_folder_names
