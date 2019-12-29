@@ -130,6 +130,8 @@
     },
     methods: {
       fetchFolderItems(folder_id) {
+        if (!folder_id) return false
+
         axios.get(`/api/folders/${folder_id}/`).then(
           response => {
             console.log('response: ', response.data)
