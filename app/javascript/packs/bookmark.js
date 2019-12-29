@@ -154,9 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         this.displayed_folder_names[level] = folder_name
       },
-      hoge() {
-        console.log('hoge')
-      }
     },
     watch: {
       check_all(val, oldVal) {
