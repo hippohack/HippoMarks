@@ -17,7 +17,6 @@
              name="folder[name]"
              v-model="folder_name"
              @blur="update"
-             @keyup.enter="update"
              ref="editFolderName"
              class="edit-form">
     </span>

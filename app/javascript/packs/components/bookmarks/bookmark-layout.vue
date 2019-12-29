@@ -20,7 +20,6 @@
                 name="folder[name]"
                 v-model="new_folder_name"
                 @blur="create_folder"
-                @keyup.enter="create_folder"
                 placeholder="folder name..."
                 class="py-1 px-2"
                 id="addFolderInput"
