@@ -1,5 +1,5 @@
 <template>
-  <div class="col bookmarks__col">
+  <div class="col bookmarks__col js_column-width">
     <div class="menu-ui d-flex justify-content-end">
       <a
         v-if="typeof _folder_id == 'number'"
@@ -23,15 +23,14 @@
       <div v-if="is_add_folder" class="bookmarks__item">
         <div>
           <a href="javascript:void(0)" class="bookmarks__link">
-            <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>
-            <input
+            <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i><input
               type="text"
               name="folder[name]"
               v-model="new_folder_name"
               @blur="create_folder"
-              @keyup.enter="create_folder"
               placeholder="folder name..."
               class="py-1 px-2"
+              id="addFolderInput"
             >
           </a>
         </div>
@@ -98,7 +97,7 @@
     },
     props: {
       _level: { type: Number },
-      _folder_id: { type: Number },
+      _folder_id: { type: [String, Number] },
       _home_url: "",
       _show_item_menu: { type: Boolean },
       _show_item_menu_id: { type: Number },
@@ -109,11 +108,29 @@
           this.fetchFolderItems(this._folder_id)
           this.folder_id = this._folder_id
         }
+
+        // 増えたカラム分スクロールする
+        var column_width = $('.js_column-width').outerWidth()
+        document.querySelector('.js_scroll-columns').scrollLeft += column_width;
+
         return this.fetch_items
+      }
+    },
+    watch: {
+      is_add_folder(val, oldVal) {
+        if (val) {
+          setTimeout(() => {
+            var elm = document.getElementById('addFolderInput')
+            elm.setAttribute('tabindex', '-1')
+            elm.focus()
+          }, 100);
+        }
       }
     },
     methods: {
       fetchFolderItems(folder_id) {
+        if (!folder_id) return false
+
         axios.get(`/api/folders/${folder_id}/`).then(
           response => {
             console.log('response: ', response.data)
@@ -137,14 +154,14 @@
         this.$emit('apply_bookmark', { bookmark: values.bookmark })
       },
       create_folder() {
-        this.$root.add_folder(this._folder_id, this._level, this.new_folder_name);
+        this.$root.add_folder(this._folder_id, this.new_folder_name);
         this.is_add_folder = false;
         this.new_folder_name = null;
 
         // folder内データの再フェッチ
         axios.get(`/api/folders/${this._folder_id}/`).then(
           response => {
-            this.fetch_items = response.data.items[0].concat(response.data.items[1])
+            this.fetch_items = response.data.folder_items
           },
           error => { console.log(error); }
         );

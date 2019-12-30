@@ -54,7 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
         check_all: false,
         // 表示しているトップ階層以下のカラムの数とフォルダーIDの管理
         displayed_folder_ids: [],
-        displayed_folder_items: []
+        displayed_folder_items: [],
+        displayed_folder_names: ['hgoe', 'fuga', 'piyo']
       }
     },
     methods: {
@@ -81,10 +82,26 @@ document.addEventListener('DOMContentLoaded', () => {
       submitSiteImageEdit() {
         $('.site-image-form__submit').click();
       },
-      add_folder(folder_id, parent_count, name) {
+      iconSelect() {
+        $('#icon-select').click();
+      },
+      replaceIconImage(event) {
+        console.log({event})
+        if (event.target.files && event.target.files[0]) {
+          var src = URL.createObjectURL(event.target.files[0])
+          console.log({src})
+          var img = document.querySelector('.icon-form__image img')
+          if (!img) {
+            $('.icon-form__image .fa').remove()
+            $('.icon-form__image').append(`<img src="${src}">`)
+            return
+          }
+          img.src = src
+        }
+      },
+      add_folder(folder_id, name) {
         axios.post(`/api/folders/`, {
             folder_id: folder_id,
-            parent_count: parent_count,
             name: name
           })
           .then(response => {
@@ -120,14 +137,24 @@ document.addEventListener('DOMContentLoaded', () => {
           document.querySelector('#delete-histories-form').submit();
         }
       },
-      update_displayed_folders(folder_id, level) {
+      update_displayed_folders(folder_id, level, folder_name) {
         // 不要なカラム（フォルダーID）消す
         var ids = this.displayed_folder_ids
         this.displayed_folder_ids = ids.filter((id, index) => {
           return index <= level
         })
 
-        this.displayed_folder_ids[level] = folder_id
+        if (folder_id != null) {
+          this.displayed_folder_ids[level] = folder_id
+        }
+
+        // おなじくフォルダ名も
+        var names = this.displayed_folder_names
+        this.displayed_folder_names = names.filter((name, index) => {
+          return index <= level
+        })
+
+        this.displayed_folder_names[level] = folder_name
       },
     },
     watch: {
@@ -146,6 +173,12 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           this.delete_histories = []
         }
+      },
+    },
+    computed: {
+      pankuzu_data() {
+        console.log('pankuzu updated😁')
+        return this.displayed_folder_names
       }
     }
   })

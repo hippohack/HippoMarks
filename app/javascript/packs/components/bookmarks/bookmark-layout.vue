@@ -15,15 +15,14 @@
         <div v-if="is_add_folder" class="bookmarks__item">
           <div>
             <a href="javascript:void(0)" class="bookmarks__link">
-              <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i>
-              <input
+              <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i><input
                 type="text"
                 name="folder[name]"
                 v-model="new_folder_name"
                 @blur="create_folder"
-                @keyup.enter="create_folder"
                 placeholder="folder name..."
                 class="py-1 px-2"
+                id="addFolderInput"
               >
             </a>
           </div>
@@ -72,7 +71,7 @@
 
     <div class="col" style="overflow: auto;">
       <div class="row">
-        <div class="col" style="overflow:auto;">
+        <div class="col js_scroll-columns" style="overflow: auto;">
           <!-- ２つ目からのカラム郡 -->
           <bookmark-columns
             v-if="is_active"
@@ -80,29 +79,31 @@
             :_home_url="_home_url"
             :_show_item_menu="_show_item_menu"
             :_show_item_menu_id="_show_item_menu_id"
-            @apply2="push_folder_hierachy"
             @apply_bookmark="catch_bookmark"
           ></bookmark-columns>
         </div>
-        <div v-if="current_bookmark" class="col-4 bookmark__col bookmark__col--last border-left">
-          <div class="bookmarks__capture">
-            <!-- FIXME: 動いてない？ -->
-            <transition name="fade">
-              <img
-                v-if="current_bookmark.og_image_url"
-                :src="current_bookmark.og_image_url"
-                :alt="current_bookmark.name"
-              >
-              <img v-else src="https://dummyimage.com/600x400/e6e6e6/cccccc.png&text=+NO+IMAGE" alt="">
-            </transition>
-          </div>
-          <div class="bookmarks__description">
-            <div>Name: {{ current_bookmark.name }}</div>
-            <div>URL: {{ current_bookmark.url | excerpt }}</div>
-            <div>Keywords: {{ current_bookmark.keyword }}</div>
-            <div>Impressions: {{ current_bookmark.impressions }} times</div>
-            <div>Last_access_at: {{ current_bookmark.last_access_time | dateTime }}</div>
-            <div>Created_at: {{ current_bookmark.created_at | moment }}</div>
+
+        <div class="col-4 bookmarks__col bookmarks__col--last">
+          <div v-if="current_bookmark">
+            <div class="bookmarks__capture">
+              <!-- FIXME: 動いてない？ -->
+              <transition name="fade">
+                <img
+                  v-if="current_bookmark.og_image_url"
+                  :src="current_bookmark.og_image_url"
+                  :alt="current_bookmark.name"
+                >
+                <img v-else src="https://dummyimage.com/600x400/e6e6e6/cccccc.png&text=+NO+IMAGE" alt="">
+              </transition>
+            </div>
+            <div class="bookmarks__description">
+              <div>Name: {{ current_bookmark.name }}</div>
+              <div>URL: {{ current_bookmark.url | excerpt }}</div>
+              <div>Keywords: {{ current_bookmark.keyword }}</div>
+              <div>Impressions: {{ current_bookmark.impressions }} times</div>
+              <div>Last_access_at: {{ current_bookmark.last_access_time | dateTime }}</div>
+              <div>Created_at: {{ current_bookmark.created_at | moment }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -137,7 +138,6 @@
         clicked_folder_id: "",
         items: [],
         folder_editing: false,
-        folder_hierarchy_data: [],
         current_bookmark: null,
         show_many_visits: null,
         show_history: null,
@@ -183,30 +183,31 @@
     },
     computed: {
       // ボトムのパンくずリスト
+      // FIXME: マウス動かさないと画面に反映しない
       folder_hierarchy() {
         if (!this.clicked_folder_id) { return }
 
         if (this.clicked_folder_id == 'many_visits') {
-          this.folder_hierarchy_data[0] = 'Many visits'
-          return this.folder_hierarchy_data
+          this.$root.displayed_folder_names[0] = 'Many visits'
         }
 
         if (this.clicked_folder_id == 'history') {
-          this.folder_hierarchy_data[0] = 'History'
-          return this.folder_hierarchy_data
+          this.$root.displayed_folder_names[0] = 'History'
         }
 
-        let id = this.clicked_folder_id
-        let found = this._folder_items.find(function(element) {
-          return element.id == id && !element.url
-        })
-
-        if (this.folder_hierarchy_data[0] != found.name) {
-          this.folder_hierarchy_data = []
-          this.folder_hierarchy_data[0] = found.name
-        }
-        return this.folder_hierarchy_data
+        return this.$root.displayed_folder_names
       },
+    },
+    watch: {
+      is_add_folder(val, oldVal) {
+        if (val) {
+          setTimeout(() => {
+            var elm = document.getElementById('addFolderInput')
+            elm.setAttribute('tabindex', '-1')
+            elm.focus()
+          }, 100);
+        }
+      }
     },
     methods: {
       editBookmark(id) {
@@ -222,15 +223,6 @@
         this.manyVisitsActive = null
         this.historyActive = null
       },
-      push_folder_hierachy(values) {
-        if (this.folder_hierarchy_data.length > values.level) {
-          for (var i = values.level; i < this.folder_hierarchy_data.length+1; i++) {
-            this.folder_hierarchy_data.splice(i)
-          }
-        }
-        this.folder_hierarchy_data[values.level] = values.folder_name
-        this.$forceUpdate()
-      },
       catch_bookmark(values) {
         this.current_bookmark = values.bookmark
       },
@@ -239,12 +231,14 @@
         this.manyVisitsActive = 'active'
         this.historyActive = null
         this.clicked_folder_id = 'many_visits'
+        this.$root.update_displayed_folders('many_visits', 0)
       },
       openHistoryFolder() {
         this.is_active = true
         this.historyActive = 'active'
         this.manyVisitsActive = null
         this.clicked_folder_id = 'history'
+        this.$root.update_displayed_folders('history', 0)
       },
       settingFind(target) {
         return this._settings.find((elm) => {
@@ -252,7 +246,7 @@
         })
       },
       create_folder() {
-        this.$root.add_folder(this._top_folder.id, 1, this.new_folder_name);
+        this.$root.add_folder(this._top_folder.id, this.new_folder_name);
         this.is_add_folder = false;
         this.new_folder_name = null;
 
@@ -298,7 +292,7 @@
             // FIXME: なんかいったん空にしないとうまく反映しない。
             this.items = null;
             this.$nextTick(function () {
-              this.items = response.data.items[0].concat(response.data.items[1])
+              this.items = response.data.folder_items
             });
           },
           error => { console.log(error); }

@@ -36,6 +36,7 @@
         this.clicked_folder_id = this._clicked_folder_id
         return this.$root.displayed_folder_ids
       },
+      // ↓ これいらないかも。
       com_columns() {
         if (this.clicked_folder_id != this._clicked_folder_id) {
           this.columns = []
@@ -55,7 +56,7 @@
           }
         }
         this.columns[values.level] = { folder_id: values.folder_id, level: values.level }
-        this.$emit('apply2', { folder_name: values.folder_name, level: values.level })
+        // this.$emit('apply2', { folder_name: values.folder_name, level: values.level })
         this.$forceUpdate()
       },
       relay_bookmark(values) {

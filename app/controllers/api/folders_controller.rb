@@ -14,9 +14,13 @@ class Api::FoldersController < ApplicationController
 
   def create
     @folder = current_account.folders.new(folder_params)
+    parent_folder = current_account.folders.find(@folder.folder_id)
+
+    @folder.parent_count = parent_folder.parent_count + 1
     @folder.account_id = current_account.id
     # TODO: 最後じゃなくて最初にする
     @folder.sort_num = last_sort_num(@folder.folder_id) + 1
+
     raise if @folder.save == false
 
     folder_data = FolderData.folders(current_account)
@@ -35,20 +39,19 @@ class Api::FoldersController < ApplicationController
     @folder.children.each do |child|
       current_account.folders.find(child.id).destroy
     end
+
     @folder.destroy
   end
 
   def many_visits
-    @folders = []
     # TODO: takeの数任意設定でもいいかも
-    @bookmarks = current_account.bookmarks.order(impressions: :desc).take(10)
+    @folder_items = current_account.bookmarks.order(impressions: :desc).take(10)
     render :show
   end
 
   def history
-    @folders = []
     # TODO: takeの数任意設定でもいいかも
-    @bookmarks = current_account.bookmarks.order(last_access_time: :desc).take(10)
+    @folder_items = current_account.bookmarks.order(last_access_time: :desc).take(10)
     render :show
   end
 

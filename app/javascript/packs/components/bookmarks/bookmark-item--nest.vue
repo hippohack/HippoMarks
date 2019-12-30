@@ -17,7 +17,6 @@
              name="folder[name]"
              v-model="folder_name"
              @blur="update"
-             @keyup.enter="update"
              ref="editFolderName"
              class="edit-form">
     </span>
@@ -25,7 +24,7 @@
     <a
       class="bookmarks__link"
       target="_blank"
-      v-if="item.url"
+      v-if="!deleted_bookmark && item.url"
       :href="item.url"
       :title="item.keyword"
       @click="incrementImpression(item.id)"
@@ -41,7 +40,7 @@
     </a>
 
     <item-menu
-      v-if="_show_item_menu && _show_item_menu_id == item.id"
+      v-if="show_item_menu && _show_item_menu_id == item.id"
       @context_menu="receive_contextmenu"
     ></item-menu>
 
@@ -51,9 +50,11 @@
       :_pageY="pageY"
       :_item="item"
       :_home_url="_home_url"
+      :_level="_level"
       @apply="receive"
       @folder_edit="editFolder"
       @delete_folder="delete_folder"
+      @delete_bookmark="delete_bookmark"
       @open_bookmark_edit="context_menu = false"
     ></context-menu>
   </div>
@@ -72,7 +73,9 @@
         context_menu: false,
         pageX: "",
         pageY: "",
-        deleted_folder: false
+        deleted_folder: false,
+        deleted_bookmark: false,
+        show_item_menu: false
       };
     },
     props: {
@@ -90,12 +93,13 @@
     },
     mounted() {
       this.folder_name = this._item.name
+      this.show_item_menu = this._show_item_menu
     },
     methods: {
       openFolder: function(folder_id) {
         this.is_active = true
         this.$emit('apply', { folder_id: folder_id, level: this._level+1 })
-        this.$root.update_displayed_folders(folder_id, this._level+1)
+        this.$root.update_displayed_folders(folder_id, this._level+1, this.folder_name)
       },
       editFolder(values) {
         this.folder_editing = values.folder_editing
@@ -128,6 +132,11 @@
       },
       delete_folder(values) {
         this.deleted_folder = values.delete_folder
+      },
+      delete_bookmark(values) {
+        this.deleted_bookmark = values.delete_bookmark
+        this.context_menu = false
+        this.show_item_menu = false
       },
       incrementImpression(id) {
         let res = axios.patch(`/api/bookmarks/${id}/increment_impression`, { 'increment': true } )

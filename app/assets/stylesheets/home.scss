@@ -80,7 +80,11 @@ main {
     height: calc(100vh - 152px);
   }
   &__col--last {
+    min-width: 400px;
+    max-width: 400px;
     border-right: 0;
+    margin-left: -1px;
+    border-left: solid 1px #ccc;
   }
   &__items {
     padding-top: 15px;
@@ -403,4 +407,18 @@ main {
 /* .fade-leave-active below version 2.1.8 */
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.icon-form {
+  &__image {
+    img {
+      margin-top: 3px;
+      max-width: 32px;
+      max-height: 32px;
+    }
+  }
 }
