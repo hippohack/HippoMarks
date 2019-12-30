@@ -8,7 +8,7 @@ module Capture
 
   included do
     # configure the driver to run in headless mode
-    @webdriver_options = Selenium::WebDriver::Chrome::Options.new
+    @webdriver_options = Selenium::WebDriver::Chrome::Options.new(binary: '/usr/bin/google-chrome')
     @webdriver_options.add_argument('--headless')
     @webdriver_options.add_argument('--no-sandbox')
     @webdriver_options.add_argument('--disable-gpu')
@@ -17,7 +17,6 @@ module Capture
 
   class_methods do
     def get_screenshot(url)
-      # TODO: Maybe you can shorten the timeout
       driver = Selenium::WebDriver.for :chrome, options: @webdriver_options
 
       begin
