@@ -8,7 +8,7 @@ module Capture
 
   included do
     # configure the driver to run in headless mode
-    @webdriver_options = Selenium::WebDriver::Chrome::Options.new
+    @webdriver_options = Selenium::WebDriver::Chrome::Options.new(binary: '/usr/bin/google-chrome')
     @webdriver_options.add_argument('--headless')
     @webdriver_options.add_argument('--no-sandbox')
     @webdriver_options.add_argument('--disable-gpu')
