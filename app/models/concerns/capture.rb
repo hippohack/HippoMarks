@@ -13,11 +13,11 @@ module Capture
     @webdriver_options.add_argument('--no-sandbox')
     @webdriver_options.add_argument('--disable-gpu')
     @webdriver_options.add_argument('--hide-scrollbars')
+    @webdriver_options.binary = '/usr/bin/google-chrome'
   end
 
   class_methods do
     def get_screenshot(url)
-      # TODO: Maybe you can shorten the timeout
       driver = Selenium::WebDriver.for :chrome, options: @webdriver_options
 
       begin
