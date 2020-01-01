@@ -1,6 +1,26 @@
 module FolderData
   extend ActiveSupport::Concern
 
+  def self.folder_tree(current_account)
+    folder(current_account.bookmarkbar_folder_id)
+  end
+
+  def self.folder(folder_id)
+    folder = Folder.find_by(id: folder_id)
+    children = children(folder.id)
+
+    { folder: folder, children: children }
+  end
+
+  def self.children(folder_id)
+    children = Folder.where(folder_id: folder_id)
+
+    mapped = children.map do |child|
+      folder(child.id)
+    end
+    mapped
+  end
+
   def self.folders(current_account)
     folders = current_account.folders.order("parent_count DESC")
     # 階層構造に整形
@@ -23,7 +43,7 @@ module FolderData
     
     # # topはいらないので消す
     # tmp_folders.delete(0)
-    # raise
+    raise
     
     return {
       folders: tmp_folders,
