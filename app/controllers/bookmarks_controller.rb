@@ -147,11 +147,9 @@ class BookmarksController < ApplicationController
   end
 
   def set_folder_data
-    folder_data = FolderData.folder_tree(current_account)
-    # folder_data = FolderData.folders(current_account)
-    @folders = folder_data[:folders]
-    @all_folders = folder_data[:all_folders]
-    @top_folder_id = folder_data[:top_folder_id]
+    @folders = FolderData.folder_tree(current_account)
+    @main_folder_id = current_account.bookmarkbar_folder_id
+    # raise
   end
 
   def save_search_query
