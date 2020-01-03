@@ -23,16 +23,9 @@
           .form-group
             = f.label :folder_id
             .folder-list.p-3
-              .folder-list__head
-                span.folder__state ▼
-                i class="fa fa-folder-o ml-2"
-                = f.radio_button :folder_id, @top_folder_id, class: "d-none"
-                = f.label :folder_id, "MAIN_FOLDER", style: "margin-left: 4px;", class: "folder__label", for: "bookmark_folder_id_#{@top_folder_id}"
+              folders :_folders="#{ @folders.to_json }"
 
-              .pl-4
-                folders :_hierarchy_data="#{ @folders.to_json }" :_all_folders="#{ @all_folders.to_json }" :_level="1" :_id="#{@top_folder_id}" :_is_new_folder="is_new_folder" :_new_folder_parent_id="new_folder_parent_id" :_top_folder_id="#{@top_folder_id}"
-
-          = hidden_field_tag :top_folder, @top_folder_id
+          = hidden_field_tag :top_folder, @main_folder_id
 
           .d-flex.mt-3
             div.mr-auto
