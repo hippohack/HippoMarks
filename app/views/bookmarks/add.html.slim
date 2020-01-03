@@ -21,6 +21,11 @@
                 = @bookmark.errors.messages[:url].first
 
           .form-group
+            = f.label :keyword
+            = f.text_field :keyword, class: 'form-control'
+            .form-text.text-muted ex: Tool, Color, Design
+
+          .form-group
             = f.label :folder_id
             .folder-list.p-3
               folders :_folders="#{ @folders.to_json }"
@@ -35,7 +40,7 @@
             div
               = f.submit "Add Bookmark", class: 'btn btn-primary'
 
-.pos-bottom
+.mt-5
   = render "shared/footer"
 
 = javascript_pack_tag 'bookmark'

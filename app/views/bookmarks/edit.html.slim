@@ -1,3 +1,6 @@
+/
+/ このテンプレの使い所が不明
+/
 #app
   = render "shared/navbar"
   = render "shared/flash"
@@ -29,6 +32,9 @@
           = link_to 'キャンセル', 'javascript:history.back()', class: 'btn btn-outline-primary'
         div
           = f.button "保存する", { type: 'button',  class: 'btn btn-primary', 'v-on:click': "submit" }
+
+.mt-5
+  = render "shared/footer"
 
 = javascript_pack_tag 'bookmark'
 = stylesheet_pack_tag 'bookmark'
