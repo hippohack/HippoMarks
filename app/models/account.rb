@@ -27,7 +27,6 @@ class Account < ApplicationRecord
     self.folders.build(
       name: 'MAIN_FOLDER',
       folder_id: nil,
-      parent_count: 0
     )
     self.save!
     self.bookmarkbar_folder_id = self.folders[0].id
@@ -38,7 +37,6 @@ class Account < ApplicationRecord
     self.folders.build(
       name: 'Favorite',
       folder_id: self.bookmarkbar_folder_id,
-      parent_count: 1
     )
     self.save!
 

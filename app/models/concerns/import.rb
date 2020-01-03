@@ -46,7 +46,6 @@ module Import
       else
         params = {
           name: obj.xpath('./h3').text,
-          parent_count: level
         }
         folder = save_folder(params, account, folder_id, sort_num)
         folder_id = folder.id

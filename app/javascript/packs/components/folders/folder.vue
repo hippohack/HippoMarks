@@ -55,7 +55,6 @@ export default {
       console.log('create...')
       axios.post(`/api/folders/`, {
           folder_id: this.folders.folder.id,
-          // parent_count: null,
           name: this.new_folder_name
         })
         .then(response => {

@@ -72,7 +72,6 @@ class Api::FoldersController < ApplicationController
       :account_id,
       :folder_id,
       :name,
-      :parent_count,
       :sort_num
     )
   end
