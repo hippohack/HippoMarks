@@ -14,18 +14,11 @@ class Api::FoldersController < ApplicationController
 
   def create
     @folder = current_account.folders.new(folder_params)
-    parent_folder = current_account.folders.find(@folder.folder_id)
-
-    @folder.parent_count = parent_folder.parent_count + 1
     @folder.account_id = current_account.id
     # TODO: 最後じゃなくて最初にする
     @folder.sort_num = last_sort_num(@folder.folder_id) + 1
 
     raise if @folder.save == false
-
-    folder_data = FolderData.folders(current_account)
-    @folders = folder_data[:folders]
-    @all_folders = folder_data[:all_folders]
   end
 
   def update

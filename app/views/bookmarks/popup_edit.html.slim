@@ -46,14 +46,14 @@
           .form-group
             = f.label :folder_id
             .folder-list.p-3
-              folders :_folders="#{ @folders.to_json }" :_main_folder_id="#{ @main_folder_id.to_json }" :_is_not_first="false"
+              folders :_folders="#{ @folders.to_json }"
 
           = hidden_field_tag :popup, 'true'
           = hidden_field_tag :top_folder, @top_folder_id
 
           .d-flex.mt-3
             div.mr-auto
-              = link_to '新しいフォルダ', 'javascript:void(0)', class: 'btn btn-outline-primary', id: 'new-folder', 'v-on:click': "show_new_folder"
+              = link_to '新しいフォルダ', 'javascript:void(0)', class: 'btn btn-outline-primary', id: 'new-folder', 'v-on:click': "show_new_folder(#{@main_folder_id.to_json})"
             div.mr-2
               = link_to 'キャンセル', 'javascript:window.close()', class: 'btn btn-outline-primary'
             div

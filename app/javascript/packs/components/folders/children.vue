@@ -1,7 +1,7 @@
 <template>
-  <div class="">
+  <div class="pl-4">
     <folder
-      v-for="(folder, index) in folders"
+      v-for="(folder, index) in _folders"
       v-bind:key="index"
       :_folders="folder"
     ></folder>
@@ -10,13 +10,8 @@
 
 <script>
 export default {
-  data() {
-    return {
-      folders: this._folders,
-    }
-  },
   props: {
     _folders: "",
-  }
+  },
 }
 </script>

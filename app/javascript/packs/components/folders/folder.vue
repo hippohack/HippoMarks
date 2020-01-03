@@ -1,33 +1,77 @@
 <template>
   <div class="">
-    <span v-if="_folders.children.length > 0" @click="opened_child_folder = !opened_child_folder">
+    <span v-if="folders.children.length > 0" @click="opened_child_folder = !opened_child_folder">
       <span v-if="opened_child_folder" class="folder__state">▼</span>
       <span v-else class="folder__state">▶</span>
     </span>
     <span v-else style="visibility: hidden;" class="folder__state">▶</span>
     <i class="fa fa-folder-o ml-1"></i>
-    <input type="radio" name="bookmark[folder_id]" :id="`item_${_folders.folder.id}`" :value="_folders.folder.id" class="d-none">
-    <label class="folder__label" :for="`item_${_folders.folder.id}`"> {{ _folders.folder.name }}</label>
+    <input
+      type="radio"
+      name="bookmark[folder_id]"
+      :id="`item_${folders.folder.id}`"
+      :value="folders.folder.id"
+      class="d-none"
+      @change="$root.new_folder_parent_id = folders.folder.id"
+    >
+    <label class="folder__label" :for="`item_${folders.folder.id}`"> {{ folders.folder.name }}</label>
 
-    <folders
+    <!-- create folder // -->
+    <div v-if="$root.is_create_folder && folders.folder.id == $root.new_folder_parent_id" style='padding-left: 2.2rem;'>
+      <i class="fa fa-folder-o ml-2"></i>
+      <input type="text" name="folder[name]" v-model="new_folder_name" @blur="create" placeholder="folder name..." class="py-1 px-2">
+    </div>
+    <!-- // create folder -->
+
+    <children
       v-if="opened_child_folder"
-      :key="_folders.folder.id"
-      :_folders="_folders.children"
-      :_is_not_first="true"
-    ></folders>
+      :key="folders.folder.id"
+      :_folders="folders.children"
+    ></children>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+axios.defaults.headers.common = {
+  'X-Requested-With': 'XMLHttpRequest',
+  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+};
+
 export default {
   data() {
     return {
-      is_active: false,
-      opened_child_folder: false
+      folders: this._folders,
+      opened_child_folder: false,
+      new_folder_name: "",
+      created_folder: "",
     }
   },
   props: {
     _folders: "",
+  },
+  methods: {
+    create() {
+      console.log('create...')
+      axios.post(`/api/folders/`, {
+          folder_id: this.folders.folder.id,
+          // parent_count: null,
+          name: this.new_folder_name
+        })
+        .then(response => {
+          console.log(response)
+          this.folders.children.push({folder: response.data.folder, children: []})
+          this.reset_and_show()
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    },
+    reset_and_show() {
+      this.new_folder_name = null
+      this.$root.is_create_folder = false
+      this.opened_child_folder = true
+    }
   }
 }
 </script>

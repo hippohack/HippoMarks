@@ -10,6 +10,7 @@ import BookmarkItem from './components/bookmarks/bookmark-item.vue'
 import BookmarkItemNest from './components/bookmarks/bookmark-item--nest.vue'
 import Folders from './components/folders/folders.vue'
 import Folder from './components/folders/folder.vue'
+import Children from './components/folders/children.vue'
 import ContextMenu from './components/shared/context-menu.vue'
 import ItemMenu from './components/shared/item-menu.vue'
 import Search from './components/search.vue'
@@ -25,6 +26,7 @@ Vue.component('bookmark-item', BookmarkItem)
 Vue.component('bookmark-item-nest', BookmarkItemNest)
 Vue.component('folders', Folders)
 Vue.component('folder', Folder)
+Vue.component('children', Children)
 Vue.component('context-menu', ContextMenu)
 Vue.component('item-menu', ItemMenu)
 Vue.component('search', Search)
@@ -40,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     data() {
       return {
-        is_new_folder: false,
         new_folder_parent_id: "",
         isActiveAvatorEdit: false,
         file: '',
@@ -55,16 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // 表示しているトップ階層以下のカラムの数とフォルダーIDの管理
         displayed_folder_ids: [],
         displayed_folder_items: [],
-        displayed_folder_names: ['hgoe', 'fuga', 'piyo']
+        displayed_folder_names: ['hgoe', 'fuga', 'piyo'],
+        is_create_folder: false,
       }
     },
     methods: {
-      show_new_folder() {
-        this.new_folder_parent_id = $("input[name='bookmark[folder_id]']:checked").val()
+      show_new_folder(main_folder_id) {
         if (!this.new_folder_parent_id) {
-          this.new_folder_parent_id = $("input[name='top_folder']").val()
+          this.new_folder_parent_id = main_folder_id
         }
-        this.is_new_folder = true
+        this.is_create_folder = true
       },
       submit() {
         $('form').submit();
