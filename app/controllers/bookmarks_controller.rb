@@ -63,12 +63,14 @@ class BookmarksController < ApplicationController
 
   def edit
     @bookmark = current_account.bookmarks.find(params[:id])
+    @belong_folder_ids = belong_folder_ids(@bookmark.id)
 
     set_folder_data
   end
 
   def popup_edit
     @bookmark = current_account.bookmarks.find(params[:id])
+    @belong_folder_ids = belong_folder_ids(@bookmark.id)
 
     if params[:bookmark].present?
       @bookmark.name = params[:bookmark][:name]
@@ -165,5 +167,21 @@ class BookmarksController < ApplicationController
                   'bookmark[folder_id]': params[:bookmark][:folder_id],
                   'bookmark[keyword]': params[:bookmark][:keyword],
                   messages: @bookmark.errors.messages
+  end
+
+  def belong_folder_ids(bookmark_id)
+    bookmark = Bookmark.find(bookmark_id)
+    belong_folder = Folder.find(bookmark.folder_id)
+
+    parent_folders(belong_folder.id).reverse
+  end
+
+  def parent_folders(folder_id, result = [])
+    return result unless folder_id.present?
+
+    parent = Folder.find(folder_id)
+    result.push parent.id
+    # raise
+    parent_folders(parent.folder_id, result)
   end
 end

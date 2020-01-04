@@ -21,7 +21,7 @@
       .form-group
         = f.label :folder_id
         .folder-list.p-3
-          folders :_folders="#{ @folders.to_json }"
+          folders :_folders="#{ @folders.to_json }" :_belong_folder_ids="#{ @belong_folder_ids.to_json }" :_bookmark="#{ @bookmark.to_json }"
 
       = hidden_field_tag :popup, 'true'
       = hidden_field_tag :top_folder, @main_folder_id

@@ -9,9 +9,10 @@
     <input
       type="radio"
       name="bookmark[folder_id]"
+      class="d-none"
+      :checked="folders.folder.id == _bookmark.folder_id"
       :id="`item_${folders.folder.id}`"
       :value="folders.folder.id"
-      class="d-none"
       @change="$root.new_folder_parent_id = folders.folder.id"
     >
     <label class="folder__label" :for="`item_${folders.folder.id}`"> {{ folders.folder.name }}</label>
@@ -27,6 +28,8 @@
       v-if="opened_child_folder"
       :key="folders.folder.id"
       :_folders="folders.children"
+      :_belong_folder_ids="_belong_folder_ids"
+      :_bookmark="_bookmark"
     ></children>
   </div>
 </template>
@@ -43,12 +46,15 @@ export default {
     return {
       folders: this._folders,
       opened_child_folder: false,
+      open_folder: Number,
       new_folder_name: "",
       created_folder: "",
     }
   },
   props: {
     _folders: "",
+    _belong_folder_ids: Array,
+    _bookmark: Object
   },
   methods: {
     create() {
@@ -69,6 +75,15 @@ export default {
     reset_and_show() {
       this.new_folder_name = null
       this.$root.is_create_folder = false
+      this.opened_child_folder = true
+    },
+  },
+  mounted() {
+    // TODO: Main_folderはデフォで開いておく
+    // if (hoge) { fuga }
+
+    // 所属するフォルダ開く
+    if (this._belong_folder_ids && this._belong_folder_ids.includes(this.folders.folder.id)) {
       this.opened_child_folder = true
     }
   }
