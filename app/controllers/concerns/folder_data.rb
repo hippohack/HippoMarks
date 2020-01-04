@@ -1,41 +1,27 @@
 module FolderData
   extend ActiveSupport::Concern
 
-  def self.folders(current_account)
-    folders = current_account.folders.order("parent_count DESC")
-    # 階層構造に整形
-    tmp_folders = {}
-
-    folders.each do |folder|
-      tmp_folders[folder.parent_count] = {}
-    end
-
-    folders.each do |folder|
-      if tmp_folders[folder.parent_count][folder.folder_id].is_a?(Array)
-        tmp_folders[folder.parent_count][folder.folder_id].push(folder)
-      else
-        tmp_folders[folder.parent_count][folder.folder_id ? folder.folder_id : "top_folder"] = [folder]
-      end
-    end
-
-    # TODO: リファクタリング
-    tmp_top_folder_id = tmp_folders[0]['top_folder'][0].id
-    
-    # # topはいらないので消す
-    # tmp_folders.delete(0)
-    # raise
-    
-    return {
-      folders: tmp_folders,
-      all_folders: folders,
-      top_folder_id: tmp_top_folder_id
-    }
+  def self.folder_tree(current_account)
+    [folder(current_account.bookmarkbar_folder_id)]
   end
 
-  def self.test
-    'hoge'
+  def self.folder(folder_id)
+    folder = Folder.find_by(id: folder_id)
+    children = children(folder.id)
+
+    { folder: folder, children: children }
   end
 
+  def self.children(folder_id)
+    children = Folder.where(folder_id: folder_id)
+
+    mapped = children.map do |child|
+      folder(child.id)
+    end
+    mapped
+  end
+
+  # フォルダとブックマークをミックスしてソート
   def folder_item_mix(folders, bookmarks, sort_type)
     res = []
     folders.each do |folder|
