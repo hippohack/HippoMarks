@@ -31,11 +31,15 @@ $mainColor: #01c68b;
 
 .hippo-icon {
   position: absolute;
-  top: 210px;
+  top: 225px;
   right: 0;
   left: 0;
   margin: auto;
   text-align: center;
   width: 104px;
   height: 102px;
+
+  img {
+    width: calc(200% / 2);
+  }
 }
