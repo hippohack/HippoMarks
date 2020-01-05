@@ -139,9 +139,11 @@
           error => { console.log(error); }
         );
       },
+
       editBookmark(id) {
         (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`${_home_url}/bookmarks/${id}/edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=710px,width=600px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
       },
+
       receive(values) {
         this.seleted_folder_id = values.folder_id
         let found = this.fetch_items.find((elm) => {
@@ -150,9 +152,11 @@
         this.$emit('apply', { folder_id: values.folder_id, level: values.level-1, folder_name: found.name })
         // this.$forceUpdate()
       },
+
       relay_bookmark(values) {
         this.$emit('apply_bookmark', { bookmark: values.bookmark })
       },
+
       create_folder() {
         this.$root.add_folder(this._folder_id, this.new_folder_name);
         this.is_add_folder = false;
@@ -166,6 +170,7 @@
           error => { console.log(error); }
         );
       },
+
       async added(e) {
         // alert('added')
         var item = {id: e.detail.items[0].dataset.itemId, type: e.detail.items[0].dataset.itemType}
@@ -180,6 +185,7 @@
           this.refresh_folder();
         }
       },
+
       removed(e) {
         // alert('removed')
         // FIXME: アップデートされる前にとってくるときがある
@@ -187,6 +193,8 @@
         this.$root.folder_moved = false
         console.log(this.$root.folder_moved)
       },
+
+      // TODO: 変更があったときにすべてのアイテムに対してdata-idの値をソート番号として更新する
       async reordered(e) {
         // alert('reordered')
         var item = this.fetch_items[e.detail.ids[0]]
@@ -199,6 +207,7 @@
 
         if (result) this.refresh_folder();
       },
+
       refresh_folder() {
         axios.get(`/api/folders/${this._folder_id}/`).then(
           response => {
