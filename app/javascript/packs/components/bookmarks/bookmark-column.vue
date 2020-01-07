@@ -194,16 +194,16 @@
         console.log(this.$root.folder_moved)
       },
 
-      // TODO: 変更があったときにすべてのアイテムに対してdata-idの値をソート番号として更新する
       async reordered(e) {
-        // alert('reordered')
         var item = this.fetch_items[e.detail.ids[0]]
         var new_sort_num = e.detail.index
-        console.log({new_sort_num})
+        var type = item.url ? 'bookmarks' : 'folders';
+        var result
+
+        console.log({e, new_sort_num})
 
         // ソート番号のアップデート & 再フェッチ
-        var type = item.url ? 'bookmarks' : 'folders';
-        var result = await this.$root.updateSortNum(type, item.id, new_sort_num)
+        result = await this.$root.updateSortNum(type, item.id, new_sort_num)
 
         if (result) this.refresh_folder();
       },

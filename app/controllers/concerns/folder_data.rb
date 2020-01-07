@@ -22,7 +22,7 @@ module FolderData
   end
 
   # フォルダとブックマークをミックスしてソート
-  def folder_item_mix(folders, bookmarks, sort_type)
+  def folder_item_mix(folders, bookmarks, sort_type = 'name')
     res = []
     folders.each do |folder|
       res.push(folder)
