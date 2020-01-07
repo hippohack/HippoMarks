@@ -165,7 +165,10 @@
         // folder内データの再フェッチ
         axios.get(`/api/folders/${this._folder_id}/`).then(
           response => {
-            this.fetch_items = response.data.folder_items
+            this.fetch_items = null;
+            this.$nextTick(function () {
+              this.fetch_items = response.data.folder_items
+            });
           },
           error => { console.log(error); }
         );
