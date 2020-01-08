@@ -19,23 +19,6 @@
       @reordered="reordered"
       :data-folder-id="_folder_id"
     >
-      <!-- add folder // -->
-      <div v-if="is_add_folder" class="bookmarks__item">
-        <div>
-          <a href="javascript:void(0)" class="bookmarks__link">
-            <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i><input
-              type="text"
-              name="folder[name]"
-              v-model="new_folder_name"
-              @blur="create_folder"
-              placeholder="folder name..."
-              class="py-1 px-2"
-              id="addFolderInput"
-            >
-          </a>
-        </div>
-      </div>
-      <!-- // add folder -->
       <div
         class="bookmarks__item"
         v-for="(item, index) in items"
@@ -57,6 +40,23 @@
           @apply_bookmark="relay_bookmark"
         ></bookmark-item-nest>
       </div>
+      <!-- add folder // -->
+      <div v-if="is_add_folder" class="bookmarks__item">
+        <div>
+          <a href="javascript:void(0)" class="bookmarks__link">
+            <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i><input
+              type="text"
+              name="folder[name]"
+              v-model="new_folder_name"
+              @blur="create_folder"
+              placeholder="folder name..."
+              class="py-1 px-2"
+              id="addFolderInput"
+            >
+          </a>
+        </div>
+      </div>
+      <!-- // add folder -->
     </div>
   </div>
 </template>
@@ -158,6 +158,11 @@
       },
 
       create_folder() {
+        if (this.new_folder_name == null) {
+          this.is_add_folder = false
+          return false
+        }
+
         this.$root.add_folder(this._folder_id, this.new_folder_name);
         this.is_add_folder = false;
         this.new_folder_name = null;
