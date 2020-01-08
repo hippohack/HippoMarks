@@ -40,7 +40,9 @@ class Bookmark < ApplicationRecord
     doc = Nokogiri::HTML.parse(result)
 
     doc.xpath('/html/body/dl').each do |dl|
-      sort_num = 0
+      # 既存のアイテムの最後のソート番号にプラス１した値からはじめる
+      sort_num = last_sort_num(account.bookmarkbar_folder_id, account.id)
+
       dl.xpath('./dt').each do |item|
         Bookmark.save_import_data(item, 1, account, nil, sort_num)
         sort_num += 1
@@ -97,6 +99,23 @@ class Bookmark < ApplicationRecord
     return nil if icon_url.blank?
 
     'data:image/png;base64,' + Base64.encode64(safe_open(icon_url))
+  end
+
+  # FIXME: ここにあるのどうなの
+  def self.last_sort_num(folder_id, account_id)
+    current_account = Account.find(account_id)
+    folder = current_account.folders.find(folder_id)
+    folder_last = folder.folders.order(:sort_num).last
+    bookmark_last = folder.bookmarks.order(:sort_num).last
+
+    if bookmark_last.present? && folder_last.present?
+      last = folder_last.sort_num < bookmark_last.sort_num ? bookmark_last : folder_last
+    end
+
+    last = bookmark_last if bookmark_last.present? && folder_last.blank?
+    last = folder_last if bookmark_last.blank? && folder_last.present?
+
+    last ? last.sort_num : -1
   end
 
   private

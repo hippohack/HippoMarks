@@ -3,9 +3,10 @@ $mainColor: #01c68b;
 .eyecatch {
   height: calc(100vh - 56px);
   background-image: image-url("og.png");
-  background-position: center -200px;
+  background-position: center -230px;
   background-repeat: no-repeat;
   background-color: $mainColor;
+  position: relative;
 
   &__lead {
     color: #fff;
@@ -20,6 +21,25 @@ $mainColor: #01c68b;
     .btn {
       width: 100%;
       padding: 15px;
+
+      &:hover {
+        color: $mainColor;
+      }
     }
+  }
+}
+
+.hippo-icon {
+  position: absolute;
+  top: 225px;
+  right: 0;
+  left: 0;
+  margin: auto;
+  text-align: center;
+  width: 104px;
+  height: 102px;
+
+  img {
+    width: calc(200% / 2);
   }
 }

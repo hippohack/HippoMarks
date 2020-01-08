@@ -15,8 +15,8 @@ class Api::FoldersController < ApplicationController
   def create
     @folder = current_account.folders.new(folder_params)
     @folder.account_id = current_account.id
-    # TODO: 最後じゃなくて最初にする
-    @folder.sort_num = last_sort_num(@folder.folder_id) + 1
+    # TODO: 最後じゃなくて最初にする？
+    @folder.sort_num = Bookmark.last_sort_num(@folder.folder_id, current_account.id) + 1
 
     raise if @folder.save == false
   end
@@ -60,9 +60,12 @@ class Api::FoldersController < ApplicationController
   end
 
   def update_sort_num
-    folder = current_account.folders.find(params[:id])
+    target = nil
 
-    adjust_sort_num(folder.id, folder.folder_id, folder.sort_num, params[:sort_num])
+    target = current_account.folders.find(params[:id]) if params[:type] == 'folders'
+    target = current_account.bookmarks.find(params[:id]) if params[:type] == 'bookmarks'
+
+    adjust_sort_num(target, params[:sort_num])
   end
 
   private
@@ -76,14 +79,10 @@ class Api::FoldersController < ApplicationController
     )
   end
 
-  def last_sort_num(folder_id)
-    folder = current_account.folders.find(folder_id)
-    last = folder.folders.order(:sort_num).last
-    last ? last.sort_num : -1
-  end
-
-  def adjust_sort_num(folder_id, parent_folder_id, old_sort_num, new_sort_num)
-    parent_folder = current_account.folders.find(parent_folder_id)
+  def adjust_sort_num(target_obj, new_sort_num)
+    old_sort_num = target_obj.sort_num
+    parent_folder = current_account.folders.find_by(id: target_obj.folder_id)
+    folder_items = folder_item_mix(parent_folder.folders, parent_folder.bookmarks, 'optional')
 
     # 下に移動したときindexが一個多いので引く
     new_sort_num -= 1 if new_sort_num > old_sort_num
@@ -92,26 +91,27 @@ class Api::FoldersController < ApplicationController
     return if old_sort_num == new_sort_num
 
     # ソート番号の再設定
-    parent_folder.folders.each do |f|
-      if folder_id == f.id
-        f.sort_num = new_sort_num
-        f.save!
+    folder_items.each do |item|
+      # 自身のフォルダのとき
+      if target_obj.id == item.id && target_obj.model_name.name == item.model_name.name
+        item.sort_num = new_sort_num
+        item.save!
         next
       end
 
-      if direction == 'down' && f.sort_num <= new_sort_num && old_sort_num < f.sort_num
-        f.sort_num -= 1
-        f.save!
+      if direction == 'down' && item.sort_num <= new_sort_num && old_sort_num < item.sort_num
+        item.sort_num -= 1
+        item.save!
         next
       end
 
-      if direction == 'up' && f.sort_num >= new_sort_num && old_sort_num > f.sort_num
-        f.sort_num += 1
-        f.save!
+      if direction == 'up' && item.sort_num >= new_sort_num && old_sort_num > item.sort_num
+        item.sort_num += 1
+        item.save!
         next
       end
 
-      raise if f.sort_num < 0
+      raise if item.sort_num < 0
     end
   end
 
