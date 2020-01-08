@@ -16,7 +16,7 @@ class Api::FoldersController < ApplicationController
     @folder = current_account.folders.new(folder_params)
     @folder.account_id = current_account.id
     # TODO: 最後じゃなくて最初にする？
-    @folder.sort_num = last_sort_num(@folder.folder_id) + 1
+    @folder.sort_num = Bookmark.last_sort_num(@folder.folder_id, current_account.id) + 1
 
     raise if @folder.save == false
   end
@@ -77,21 +77,6 @@ class Api::FoldersController < ApplicationController
       :name,
       :sort_num
     )
-  end
-
-  def last_sort_num(folder_id)
-    folder = current_account.folders.find(folder_id)
-    folder_last = folder.folders.order(:sort_num).last
-    bookmark_last = folder.bookmarks.order(:sort_num).last
-
-    if bookmark_last.present? && folder_last.present?
-      last = folder_last.sort_num < bookmark_last.sort_num ? bookmark_last : folder_last
-    end
-
-    last = bookmark_last if bookmark_last.present? && folder_last.blank?
-    last = folder_last if bookmark_last.blank? && folder_last.present?
-
-    last ? last.sort_num : -1
   end
 
   def adjust_sort_num(target_obj, new_sort_num)
