@@ -51,12 +51,15 @@ class Api::FoldersController < ApplicationController
   def move_folder
     raise unless params[:folder_id]
 
-    folder = current_account.folders.find(params[:id])
-    folder.folder_id = params[:folder_id]
-    # folder.sort_num = params[:sort_num]
-    folder.save!
+    target = nil
 
-    adjust_sort_num(folder.id, folder.folder_id, folder.sort_num, params[:sort_num])
+    target = current_account.folders.find(params[:id]) if params[:type] == 'folders'
+    target = current_account.bookmarks.find(params[:id]) if params[:type] == 'bookmarks'
+
+    target.folder_id = params[:folder_id]
+    target.save!
+
+    adjust_sort_num(target, params[:sort_num])
   end
 
   def update_sort_num
