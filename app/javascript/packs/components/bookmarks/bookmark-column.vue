@@ -196,10 +196,13 @@
 
       removed(e) {
         // alert('removed')
+
+        // とりまクライアント側でリムーブする
+        $(e.detail.items[0]).remove()
+
         // FIXME: アップデートされる前にとってくるときがある
         if (this.$root.folder_moved) this.refresh_folder();
         this.$root.folder_moved = false
-        console.log(this.$root.folder_moved)
       },
 
       async reordered(e) {

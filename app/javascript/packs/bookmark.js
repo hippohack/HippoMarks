@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return axios.patch(`/api/folders/${item_id}/update_sort_num`, { 'sort_num': newSortNum, 'type': type })
       },
       moveFolder(type, item_id, newFolderId, newSortNum) {
-        return axios.patch(`/api/${type}/${item_id}/move_folder`, {'folder_id': newFolderId, 'sort_num': newSortNum})
+        return axios.patch(`/api/folders/${item_id}/move_folder`, {'type': type, 'folder_id': newFolderId, 'sort_num': newSortNum})
       },
       cancel_history_delete() {
         this.delete_histories = []
