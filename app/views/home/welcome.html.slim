@@ -1,3 +1,5 @@
+- content_for :title, "Welcome"
+
 nav.navbar.navbar-light.bg-dark
   = link_to(root_path, class: 'navbar-brand text-white', 'data-turbolinks': false) do
     img.d-inline-block.align-top.mr-2 src="#{image_path('bookmarks.svg')}" width="30" height="30" alt=""
@@ -12,6 +14,8 @@ nav.navbar.navbar-light.bg-dark
 
 .eyecatch
   h1.text-hide HippoMarks
+  .hippo-icon
+    img src="#{image_path('hippo.png')}" alt=""/
   .row.justify-content-center.mx-0
     .eyecatch__lead
       p.text-center A bookmark bar that you can access from anywhere to change your browser.

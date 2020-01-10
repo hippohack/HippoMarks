@@ -28,24 +28,7 @@
           </div>
         </div>
         <!-- // add folder -->
-        <div class="bookmarks__item" v-if="show_many_visits == 'true'">
-          <div :class="manyVisitsActive">
-            <a
-              class="bookmarks__link"
-              href="javascript:void(0)"
-              @click="openManyVisitsFolder()"
-            ><i class="fa fa-star mr-2" style="font-size: 18px;" aria-hidden="true"></i>Many visits</a>
-          </div>
-        </div>
-        <div class="bookmarks__item" v-if="show_history == 'true'">
-          <div :class="historyActive">
-            <a
-              class="bookmarks__link"
-              href="javascript:void(0)"
-              @click="openHistoryFolder()"
-            ><i class="fa fa-history mr-2" style="font-size: 18px;"></i>History</a>
-          </div>
-        </div>
+
         <div
           class="bookmarks__item"
           v-for="(item, index) in items"
@@ -66,6 +49,27 @@
             @apply_bookmark="catch_bookmark"
           ></bookmark-item>
         </div>
+
+        <!-- FIXME: sort_numの付与の都合もありここに表示しかできない -->
+        <div class="bookmarks__item" v-if="show_many_visits == 'true'">
+          <div :class="manyVisitsActive">
+            <a
+              class="bookmarks__link"
+              href="javascript:void(0)"
+              @click="openManyVisitsFolder()"
+            ><i class="fa fa-star mr-2" style="font-size: 18px;" aria-hidden="true"></i>Many visits</a>
+          </div>
+        </div>
+        <div class="bookmarks__item" v-if="show_history == 'true'">
+          <div :class="historyActive">
+            <a
+              class="bookmarks__link"
+              href="javascript:void(0)"
+              @click="openHistoryFolder()"
+            ><i class="fa fa-history mr-2" style="font-size: 18px;"></i>History</a>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -269,6 +273,10 @@
       },
       removed(e) {
         // alert('removed')
+
+        // とりまクライアント側でリムーブする
+        $(e.detail.items[0]).remove()
+
         // FIXME: アップデートされる前にとってくるときがある
         if (this.$root.folder_moved) this.refresh_folder();
         this.$root.folder_moved = false

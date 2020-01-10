@@ -1,3 +1,5 @@
+<% content_for :title, "Histories" %>
+
 <div id="app">
   <%= render "shared/navbar" %>
   <%= render "shared/flash" %>
@@ -25,7 +27,7 @@
   <main class="p-3">
     <div class="row justify-content-center">
       <div class="col-8">
-        <h2>Histories</h2>
+        <h2><%= yield(:title) %></h2>
         <p><strong>Note: </strong>Deleting the history will also reset the impression count.</p>
 
         <% if @histories.blank? %>

@@ -1,5 +1,11 @@
+/
+/ このテンプレの使い所が不明
+/
+- content_for :title, "Edit"
+
 #app
   = render "shared/navbar"
+  = render "shared/flash"
   main.p-3
     = form_for @bookmark do |f|
       .form-group
@@ -17,16 +23,9 @@
       .form-group
         = f.label :folder_id
         .folder-list.p-3
-          .folder-list__head
-            span.folder__state ▼
-            i class="fa fa-folder-o ml-2"
-            = f.radio_button :folder_id, @top_folder_id, class: "d-none"
-            = f.label :folder_id, "MAIN_FOLDER", style: "margin-left: 4px;", class: "folder__label", for: "bookmark_folder_id_#{@top_folder_id}"
+          folders :_folders="#{ @folders.to_json }" :_belong_folder_ids="#{ @belong_folder_ids.to_json }" :_bookmark="#{ @bookmark.to_json }"
 
-          .pl-4
-            folders :_hierarchy_data="#{ @folders.to_json }" :_all_folders="#{ @all_folders.to_json }" :_level="1" :_id="#{@top_folder_id}" :_is_new_folder="is_new_folder" :_new_folder_parent_id="new_folder_parent_id" :_belong_folder="#{ @bookmark.folder_id }" :_bookmark="#{ @bookmark.to_json }" :_top_folder_id="#{@top_folder_id}"
-
-      = hidden_field_tag :top_folder, @top_folder_id
+      = hidden_field_tag :top_folder, @main_folder_id
 
       .d-flex.mt-3
         div.mr-auto
@@ -35,6 +34,9 @@
           = link_to 'キャンセル', 'javascript:history.back()', class: 'btn btn-outline-primary'
         div
           = f.button "保存する", { type: 'button',  class: 'btn btn-primary', 'v-on:click': "submit" }
+
+.mt-5
+  = render "shared/footer"
 
 = javascript_pack_tag 'bookmark'
 = stylesheet_pack_tag 'bookmark'

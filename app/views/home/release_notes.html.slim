@@ -1,16 +1,20 @@
+- content_for :title, "Release notes"
+
 = render "shared/navbar"
 .container-fluid
   .row.justify-content-center.mx-0
     .release-notes.col-9
       header.release-notes__head
         .release-notes__title
-          h1 Release notes
+          h1 = yield(:title)
         .release-notes__lead
           p This page describes application updates. We will try to make this app better.
       .row.release-notes__body
         .col-3
           aside.release-notes__side
             ul
+              li
+                a href="#v053" 2020/01/11（v0.5.3）
               li
                 a href="#v052" 2020/01/04（v0.5.2）
               li
@@ -26,7 +30,17 @@
               li
                 a href="#v030" 2019/11/05（v0.3.0）
         .col-9
-          #v052.release-notes__content.mt-0
+          #v053.release-notes__content.mt-0
+            h2 2020/01/11（v0.5.3）
+            p Has been updated.
+            h3 Updated
+            ul
+              li <strong>Welcome Page: </strong>The illustration of the Hippo was added to the welcome page. Thank you for my wife.
+              li <strong>Page title: </strong>The page title of each page has been set.
+              li <strong>Sort: </strong>Bug fixed.
+              li Minor corrections.
+
+          #v052.release-notes__content.mt-5
             h2 2020/01/04（v0.5.2）
             p Has been updated.
             h3 Updated

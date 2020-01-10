@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_18_124531) do
+ActiveRecord::Schema.define(version: 2020_01_03_215835) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -89,7 +89,6 @@ ActiveRecord::Schema.define(version: 2019_10_18_124531) do
   create_table "folders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "account_id", null: false
     t.integer "folder_id"
-    t.integer "parent_count", default: 0, null: false
     t.string "name", null: false
     t.integer "sort_num", default: 0
     t.datetime "created_at", null: false

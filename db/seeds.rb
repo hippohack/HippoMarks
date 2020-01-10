@@ -30,7 +30,6 @@
 # account.folders.build(
 #   name: 'user_bookmarkber',
 #   folder_id: nil,
-#   parent_count: 0
 # )
 # account.save!
 # print "account saved.\n"
@@ -54,7 +53,6 @@
 #   account_id: account.id,
 #   name: 'fuga',
 #   folder_id: account.bookmarkbar_folder_id,
-#   parent_count: 1
 # )
 # folder2.bookmarks.build(
 #   [
@@ -77,7 +75,6 @@
 #   account_id: account.id,
 #   name: 'maccho',
 #   folder_id: folder2.id,
-#   parent_count: 2
 # )
 # folder3.bookmarks.build(
 #   [

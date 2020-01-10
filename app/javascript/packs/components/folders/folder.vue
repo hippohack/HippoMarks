@@ -1,113 +1,90 @@
 <template>
-  <div v-bind:class="level === 1 ? null : 'pl-24px'">
-    <span v-if="find_child(_folder.id)" @click="is_active = !is_active">
-      <span v-if="!is_active" class="folder__state">▶</span>
-      <span v-else class="folder__state">▼</span>
+  <div class="">
+    <span v-if="folders.children.length > 0" @click="opened_child_folder = !opened_child_folder">
+      <span v-if="opened_child_folder" class="folder__state">▼</span>
+      <span v-else class="folder__state">▶</span>
     </span>
     <span v-else style="visibility: hidden;" class="folder__state">▶</span>
     <i class="fa fa-folder-o ml-1"></i>
-    <input type="radio" name="bookmark[folder_id]" :id="`item_${_folder.id}`" :value="_folder.id" class="d-none" v-model="_bookmark.folder_id">
-    <label class="folder__label" :for="`item_${_folder.id}`"> {{ find_folder(_folder.id).name }}</label>
-    <folders
-      v-if="is_active"
-      :key="_folder.id"
-      :_hierarchy_data="hierarchy_data"
-      :_all_folders="all_folders"
-      :_level="level+1"
-      :_id="_folder.id"
-      :_is_new_folder="is_new_folder"
-      :_new_folder_parent_id="new_folder_parent_id"
+    <input
+      type="radio"
+      name="bookmark[folder_id]"
+      class="d-none"
+      :checked="folders.folder.id == _bookmark.folder_id"
+      :id="`item_${folders.folder.id}`"
+      :value="folders.folder.id"
+      @change="$root.new_folder_parent_id = folders.folder.id"
+    >
+    <label class="folder__label" :for="`item_${folders.folder.id}`"> {{ folders.folder.name }}</label>
+
+    <!-- create folder // -->
+    <div v-if="$root.is_create_folder && folders.folder.id == $root.new_folder_parent_id" style='padding-left: 2.2rem;'>
+      <i class="fa fa-folder-o ml-2"></i>
+      <input type="text" name="folder[name]" v-model="new_folder_name" @blur="create" placeholder="folder name..." class="py-1 px-2">
+    </div>
+    <!-- // create folder -->
+
+    <children
+      v-if="opened_child_folder"
+      :key="folders.folder.id"
+      :_folders="folders.children"
+      :_belong_folder_ids="_belong_folder_ids"
       :_bookmark="_bookmark"
-    ></folders>
+    ></children>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+axios.defaults.headers.common = {
+  'X-Requested-With': 'XMLHttpRequest',
+  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+};
+
 export default {
   data() {
     return {
-      hierarchy_data: "",
-      all_folders: "",
-      level: "",
-      is_active: false,
-      has_child: false
+      folders: this._folders,
+      opened_child_folder: false,
+      open_folder: Number,
+      new_folder_name: "",
+      created_folder: "",
     }
   },
   props: {
-    _folder: "",
-    _all_folders: "",
-    _level: "",
-    _hierarchy_data: "",
-    _is_new_folder: "",
-    _new_folder_parent_id: "",
-    _belong_folder: "",
-    _bookmark: {
-      type: Object,
-      default: () => {
-        return {
-          folder_id: null
-        }
-      }
-    }
-  },
-  beforeMount() {
-    this.hierarchy_data = this._hierarchy_data
-    this.all_folders = this._all_folders
-    this.level = this._level
-  },
-  mounted() {
-    if (this.open_belong_folder(this._bookmark.folder_id)) {
-      console.log('mounted')
-      this.is_active = true;
-    }
-  },
-  computed: {
-    is_new_folder() {
-      return this._is_new_folder
-    },
-    new_folder_parent_id() {
-      return this._new_folder_parent_id
-    },
+    _folders: "",
+    _belong_folder_ids: Array,
+    _bookmark: Object
   },
   methods: {
-    find_folder(id) {
-      return this._all_folders.find(function(element) {
-        return element['id'] === id;
-      })
-    },
-    find_child(id) {
-      return this._all_folders.find(function(element) {
-        return element['folder_id'] === id
-      })
-    },
-    open_belong_folder(folder_id) {
-      if (!folder_id) return false
-
-      let res
-      let folder = this.find_folder(folder_id)
-
-      if (this.level > folder.parent_count) return false
-
-      // TODO: 同階層の全部を開いてしまうので調整必要
-      for (var key in this._hierarchy_data[folder.parent_count]) {
-        console.log(key)
-        res = this._hierarchy_data[folder.parent_count][key].find( (element) => {
-          console.log('doing')
-          return element['id'] === folder_id
+    create() {
+      console.log('create...')
+      axios.post(`/api/folders/`, {
+          folder_id: this.folders.folder.id,
+          name: this.new_folder_name
         })
-        if (res) break
-      }
-
-      return res
-    }
+        .then(response => {
+          console.log(response)
+          this.folders.children.push({folder: response.data.folder, children: []})
+          this.reset_and_show()
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    },
+    reset_and_show() {
+      this.new_folder_name = null
+      this.$root.is_create_folder = false
+      this.opened_child_folder = true
+    },
   },
-  // TODO: これで監視してみる？？ → いまんとこいらない
-  watch: {
-    _is_new_folder(val, oldVal) {
-      if(val) {
-        this.is_active = true
-      }
-      console.log('new: %s, old: %s', val, oldVal)
+  mounted() {
+    // TODO: Main_folderはデフォで開いておく
+    // if (hoge) { fuga }
+
+    // 所属するフォルダ開く
+    if (this._belong_folder_ids && this._belong_folder_ids.includes(this.folders.folder.id)) {
+      this.opened_child_folder = true
     }
   }
 }

@@ -19,23 +19,6 @@
       @reordered="reordered"
       :data-folder-id="_folder_id"
     >
-      <!-- add folder // -->
-      <div v-if="is_add_folder" class="bookmarks__item">
-        <div>
-          <a href="javascript:void(0)" class="bookmarks__link">
-            <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i><input
-              type="text"
-              name="folder[name]"
-              v-model="new_folder_name"
-              @blur="create_folder"
-              placeholder="folder name..."
-              class="py-1 px-2"
-              id="addFolderInput"
-            >
-          </a>
-        </div>
-      </div>
-      <!-- // add folder -->
       <div
         class="bookmarks__item"
         v-for="(item, index) in items"
@@ -57,6 +40,23 @@
           @apply_bookmark="relay_bookmark"
         ></bookmark-item-nest>
       </div>
+      <!-- add folder // -->
+      <div v-if="is_add_folder" class="bookmarks__item">
+        <div>
+          <a href="javascript:void(0)" class="bookmarks__link">
+            <i class="fa fa-folder-o mr-2" style="font-size: 18px;"></i><input
+              type="text"
+              name="folder[name]"
+              v-model="new_folder_name"
+              @blur="create_folder"
+              placeholder="folder name..."
+              class="py-1 px-2"
+              id="addFolderInput"
+            >
+          </a>
+        </div>
+      </div>
+      <!-- // add folder -->
     </div>
   </div>
 </template>
@@ -139,9 +139,11 @@
           error => { console.log(error); }
         );
       },
+
       editBookmark(id) {
         (function () { var a = window, b = document, c = encodeURIComponent, d = a.open(`${_home_url}/bookmarks/${id}/edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=710px,width=600px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();
       },
+
       receive(values) {
         this.seleted_folder_id = values.folder_id
         let found = this.fetch_items.find((elm) => {
@@ -150,10 +152,17 @@
         this.$emit('apply', { folder_id: values.folder_id, level: values.level-1, folder_name: found.name })
         // this.$forceUpdate()
       },
+
       relay_bookmark(values) {
         this.$emit('apply_bookmark', { bookmark: values.bookmark })
       },
+
       create_folder() {
+        if (this.new_folder_name == null) {
+          this.is_add_folder = false
+          return false
+        }
+
         this.$root.add_folder(this._folder_id, this.new_folder_name);
         this.is_add_folder = false;
         this.new_folder_name = null;
@@ -161,11 +170,15 @@
         // folder内データの再フェッチ
         axios.get(`/api/folders/${this._folder_id}/`).then(
           response => {
-            this.fetch_items = response.data.folder_items
+            this.fetch_items = null;
+            this.$nextTick(function () {
+              this.fetch_items = response.data.folder_items
+            });
           },
           error => { console.log(error); }
         );
       },
+
       async added(e) {
         // alert('added')
         var item = {id: e.detail.items[0].dataset.itemId, type: e.detail.items[0].dataset.itemType}
@@ -180,25 +193,32 @@
           this.refresh_folder();
         }
       },
+
       removed(e) {
         // alert('removed')
+
+        // とりまクライアント側でリムーブする
+        $(e.detail.items[0]).remove()
+
         // FIXME: アップデートされる前にとってくるときがある
         if (this.$root.folder_moved) this.refresh_folder();
         this.$root.folder_moved = false
-        console.log(this.$root.folder_moved)
       },
+
       async reordered(e) {
-        // alert('reordered')
         var item = this.fetch_items[e.detail.ids[0]]
         var new_sort_num = e.detail.index
-        console.log({new_sort_num})
+        var type = item.url ? 'bookmarks' : 'folders';
+        var result
+
+        console.log({e, new_sort_num})
 
         // ソート番号のアップデート & 再フェッチ
-        var type = item.url ? 'bookmarks' : 'folders';
-        var result = await this.$root.updateSortNum(type, item.id, new_sort_num)
+        result = await this.$root.updateSortNum(type, item.id, new_sort_num)
 
         if (result) this.refresh_folder();
       },
+
       refresh_folder() {
         axios.get(`/api/folders/${this._folder_id}/`).then(
           response => {

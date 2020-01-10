@@ -1,9 +1,11 @@
+- content_for :title, "Profile Edit"
+
 #app
   = render "shared/navbar"
   = render "shared/flash"
   main.p-3.
     = form_for @profile, html: { class: "profile-form" } do |f|
-      h2 Profile Edit
+      h2 = yield(:title)
       .d-flex
         .avator
           .avator__label Avator
@@ -35,7 +37,7 @@
                 span aria-hidden="true" &times;
             .modal-body
               = f.file_field :avatar, id: 'profile_avatar', class: 'd-none', '@change': "submitAvatar()"
-              button.avator-form__file-up-btn type="button" @click="fileSelect" <i class="fa fa-picture-o" aria-hidden="true"></i> 写真をアップロード
+              button.avator-form__file-up-btn type="button" @click="fileSelect()" <i class="fa fa-picture-o" aria-hidden="true"></i> 写真をアップロード
               = hidden_field_tag 'edit_avatar_image', true
               = f.submit "submit", class: 'd-none avator-form__submit'
 
