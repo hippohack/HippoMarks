@@ -1,10 +1,12 @@
+- content_for :title, "Release notes"
+
 = render "shared/navbar"
 .container-fluid
   .row.justify-content-center.mx-0
     .release-notes.col-9
       header.release-notes__head
         .release-notes__title
-          h1 Release notes
+          h1 = yield(:title)
         .release-notes__lead
           p This page describes application updates. We will try to make this app better.
       .row.release-notes__body

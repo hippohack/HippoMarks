@@ -1,9 +1,11 @@
+- content_for :title, "Setting edit"
+
 #app
   = render "shared/navbar"
   = render "shared/flash"
   .row.justify-content-center
     main.main.mt-4 style="max-width: 500px;"
-      h2 Setting edit
+      h2 = yield(:title)
       = form_tag settings_update_path, { class: "settings-form", method: 'put' }
         .d-flex
           .form-items

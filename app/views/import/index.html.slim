@@ -1,9 +1,11 @@
+- content_for :title, "Bookmarks import"
+
 #app
   = render "shared/navbar"
   .container-fluid
     .row.justify-content-center
       main.main.bookmarks.mt-4 style="max-width: 500px;"
-        h1 Bookmarks import
+        h1 = yield(:title)
         = form_tag('/import', multipart: true, method: 'post')
           .form-group.mt-3
             label for="import_file" Import file input
