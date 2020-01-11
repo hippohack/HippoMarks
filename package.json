@@ -9,6 +9,7 @@
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
+    "terser-webpack-plugin": "^2.3.2",
     "vue": "^2.6.10",
     "vue-draggable": "^2.0.2",
     "vue-loader": "^15.7.0",
@@ -17,6 +18,7 @@
     "vue-turbolinks": "^2.0.4"
   },
   "devDependencies": {
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack-dev-server": "^3.3.1"
   }
 }
