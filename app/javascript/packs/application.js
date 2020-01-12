@@ -15,10 +15,21 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-// alert hide
-setTimeout(function() {
-  if ( $('.alert').hasClass('disable-hide') ) {
-    return;
+document.addEventListener('DOMContentLoaded', () => {
+
+  const debugMode = $('body').data('js-debug')
+  // const debugMode = false
+
+  if (!debugMode) {
+    console.log = () => {}
   }
-  $('.alert').slideUp()
-}, 7000)
+
+  // alert hide
+  setTimeout(function() {
+    if ( $('.alert').hasClass('disable-hide') ) {
+      return;
+    }
+    $('.alert').slideUp()
+  }, 7000)
+
+})
