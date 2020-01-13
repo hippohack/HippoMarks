@@ -135,6 +135,13 @@ class BookmarksController < ApplicationController
     @bookmark = current_account.bookmarks.find(params[:id])
   end
 
+  def take_capture
+    @bookmark = current_account.bookmarks.find(params[:id])
+    @bookmark.og_image_url = Bookmark.get_site_capture(@bookmark.url)
+
+    render :replace_img if @bookmark.save!
+  end
+
   private
 
   def bookmark_params
