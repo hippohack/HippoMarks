@@ -80,6 +80,7 @@ export default {
         response => {
           console.log({response})
           this.search_results = response.data.bookmarks
+          this.focus_pos = 0
           this.focus_current = this.search_results[0]
         },
         error => { console.log(error); }
