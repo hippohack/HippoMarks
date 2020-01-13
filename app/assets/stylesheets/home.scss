@@ -251,6 +251,7 @@ main {
   &__image {
     position: relative;
     display: block;
+    border: 1px solid #ced4da;
 
     &:hover {
       &:before {

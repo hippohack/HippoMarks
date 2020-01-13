@@ -15,7 +15,7 @@
           = f.file_field :og_image_url, id: 'site-image-select', class: 'd-none', '@change': 'submitSiteImageEdit'
           .mt-3
             = link_to 'Take a capture', take_capture_path(id: @bookmark.id), class: 'btn btn-sm btn-outline-primary mr-2', remote: true
-            button.btn.btn-sm.btn-outline-primary @click="siteImageSelect" Edit
+            button.btn.btn-sm.btn-outline-primary @click="siteImageSelect" Upload
 
           = hidden_field_tag :popup, true
           = hidden_field_tag :site_image_edit, true
