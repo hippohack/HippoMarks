@@ -171,8 +171,14 @@ export default {
     &.is_focus {
       background-color: #e6e6e6;
     }
+    &:hover {
+      background-color: #f8f9fa;
+    }
     a {
       color: #333;
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 }
