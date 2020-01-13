@@ -8,8 +8,8 @@
       class="form-control"
       v-bind:class="{ hasItems : search_results }"
       v-model="search_keyword"
-      @keyup="search_bookmarks"
-      @focus="search_bookmarks"
+      @keyup="bookmark_action"
+      @focus="bookmark_action"
       @blur="defocus_search_results"
     >
     <div class="search-results" v-if="search_results">
@@ -26,7 +26,7 @@
           class="search-results__item"
           v-bind:class="{ is_focus : focus_current.id == item.id }"
         >
-          <a :href="item.url" target="_blank" class="js_search-result-focus d-block">
+          <a :href="item.url" target="_blank" :id="`js_bookmark_${item.id}`" class="js_search-result-focus d-block">
             <img v-if="item.icon" :src="item.icon" alt="" width="18px">
             <i v-else class="fa fa-link" style="font-size: 18px;"></i>
             <span class="ml-2">{{ item.name }}</span>
@@ -60,7 +60,7 @@ export default {
     }
   },
   methods: {
-    search_bookmarks(e) {
+    bookmark_action(e) {
       if (e.key == 'ArrowUp') {
         this.focus_up()
         return
@@ -68,6 +68,11 @@ export default {
 
       if (e.key == 'ArrowDown') {
         this.focus_down()
+        return
+      }
+
+      if (e.key == 'Enter') {
+        this.open_focus_bookmark()
         return
       }
 
@@ -119,6 +124,29 @@ export default {
 
         this.focus_current = this.search_results[this.focus_pos]
       }
+    },
+
+    open_focus_bookmark() {
+      console.log('open_focus_bookmark')
+      if (!this.focus_current) {
+        return false
+      }
+
+      this.incrementImpression(this.focus_current.id)
+
+      var win = window.open(this.focus_current.url, '_blank');
+      win.focus();
+    },
+
+    // TODO: 複数箇所で同じ処理書いてるのでまとめる
+    incrementImpression(id) {
+      let res = axios.patch(`/api/bookmarks/${id}/increment_impression`, { 'increment': true } )
+        .then((response) => {
+          console.log({response})
+        })
+        .catch((error) => {
+          console.log({error})
+        })
     },
   }
 }
