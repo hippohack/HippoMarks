@@ -31,3 +31,47 @@
 
 en:
   hello: "Hello world"
+  histories:
+    note_head: "Note"
+    note_body: "Deleting the history will also reset the impression count."
+    last-access-time: "Last access time"
+    viewed-times: "Viewed times"
+    name: "Name"
+    domain: "Domain"
+    delete: "Delete history"
+    items-selected: "Items selected"
+    delete-selected-items: "Delete histories"
+  footer:
+    blog: "Blogs"
+    release-note: "Release notes"
+    feedback: "Please give feedback"
+  sort:
+    Optional: "Optional"
+    Name: "Name"
+    Created_at: "Created_at"
+    Updated_at: "Updated_at"
+  nav:
+    histories: 'Histories'
+    add-bookmark: 'Add Bookmark'
+    import: 'Import Bookmarks'
+    account-setting: "Account settings"
+    system-setting: "System settings"
+    logout: 'Logout'
+  dictionary:
+    title:
+      home: "Home"
+      edit: "Edit"
+      profile-edit: "Profile Edit"
+      histories: "Histories"
+    button:
+      take-capture: "Take a capture"
+      upload: "Upload"
+      create-folder: "Create folder"
+      cancel: "Cancel"
+      save: "Save"
+      bookmark: "Bookmark"
+    form:
+      name: "Name"
+      twitter-account: "Twitter account"
+      avator: "Avator"
+  bookmarklet: "Bookmark pages more easily. Drag this bookmarklet to the Bookmarks bar of your browser"

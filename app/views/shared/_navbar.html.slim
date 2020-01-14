@@ -18,7 +18,7 @@ nav.navbar.navbar-light.bg-dark
 
     .dropdown-menu.sort-setting-btn-menu aria-labelledby="dropdownMenuButton"
       - SortMaster.all.each do |sort|
-        = link_to(sort.name,
+        = link_to(t("sort.#{sort.name}"),
                   item_sort_path(value: sort.slug),
                   class: 'dropdown-item ' + (@sort_setting == sort.slug ? 'is_active' : ''),
                   method: 'patch')
@@ -42,13 +42,13 @@ nav.navbar.navbar-light.bg-dark
               span
                 = current_account.profile.name
           hr.my-1
-          = link_to 'Histories', histories_path, class: 'dropdown-item', 'data-turbolinks': false
-          = link_to 'Add Bookmark', add_bookmark_path, class: 'dropdown-item', 'data-turbolinks': false
+          = link_to t('nav.histories'), histories_path, class: 'dropdown-item', 'data-turbolinks': false
+          = link_to t('nav.add-bookmark'), add_bookmark_path, class: 'dropdown-item', 'data-turbolinks': false
           / = link_to 'Manage Bookmarks', '#TODO:', class: 'dropdown-item'
-          = link_to 'Import Bookmarks', import_path, class: 'dropdown-item'
+          = link_to t('nav.import'), import_path, class: 'dropdown-item'
           / = link_to 'Export Bookmarks', '#TODO:', class: 'dropdown-item'
           hr.my-1
-          a.dropdown-item href="#{ edit_account_registration_path }" Account settings
-          a.dropdown-item href="#{ settings_path }" System settings
+          a.dropdown-item href="#{ edit_account_registration_path }" = t('nav.account-setting')
+          a.dropdown-item href="#{ settings_path }" = t('nav.system-setting')
           hr.my-1
-          = link_to 'Logout', destroy_account_session_path, class: 'dropdown-item', method: :delete
+          = link_to t('nav.logout'), destroy_account_session_path, class: 'dropdown-item', method: :delete
