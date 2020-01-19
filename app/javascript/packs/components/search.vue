@@ -8,8 +8,8 @@
       class="form-control"
       v-bind:class="{ hasItems : search_results }"
       v-model="search_keyword"
-      @keyup="get_bookmarks"
-      @focus="get_bookmarks"
+      @keyup="bookmark_action"
+      @focus="bookmark_action"
       @blur="defocus_search_results"
     >
     <div class="search-results" v-if="search_results">
@@ -24,10 +24,11 @@
           v-for="(item, index) in search_results"
           v-bind:key="index"
           class="search-results__item"
+          v-bind:class="{ is_focus : focus_current.id == item.id }"
         >
-          <img v-if="item.icon" :src="item.icon" alt="" width="18px">
-          <i v-else class="fa fa-link" style="font-size: 18px;"></i>
-          <a :href="item.url" target="_blank">
+          <a :href="item.url" target="_blank" :id="`js_bookmark_${item.id}`" class="js_search-result-focus d-block">
+            <img v-if="item.icon" :src="item.icon" alt="" width="18px">
+            <i v-else class="fa fa-link" style="font-size: 18px;"></i>
             <span class="ml-2">{{ item.name }}</span>
           </a>
         </div>
@@ -44,7 +45,9 @@ export default {
   data() {
     return {
       search_keyword: null,
-      search_results: null
+      search_results: null,
+      focus_pos: 0,
+      focus_current: null
     }
   },
   props: {
@@ -57,16 +60,38 @@ export default {
     }
   },
   methods: {
+    bookmark_action(e) {
+      if (e.key == 'ArrowUp') {
+        this.focus_up()
+        return
+      }
+
+      if (e.key == 'ArrowDown') {
+        this.focus_down()
+        return
+      }
+
+      if (e.key == 'Enter') {
+        this.open_focus_bookmark()
+        return
+      }
+
+      this.get_bookmarks()
+    },
+
     get_bookmarks: _.throttle(function() {
       this.search_results = 'searching'
       axios.get(`/bookmarks/search/?s=${this.search_keyword}`).then(
         response => {
           console.log({response})
           this.search_results = response.data.bookmarks
+          this.focus_pos = 0
+          this.focus_current = this.search_results[0]
         },
         error => { console.log(error); }
       );
     }, 1000),
+
     /**
      * リンクを押す前にデータがnullになるのを防ぐため200ms遅らせてる
      */
@@ -74,7 +99,55 @@ export default {
       setTimeout(() => {
         this.search_results = null
       }, 200)
-    }
+    },
+
+    focus_up() {
+      if (typeof this.search_results === 'object' && this.search_results.length > 0) {
+        console.log('up')
+        if (this.focus_pos == 0) {
+          this.focus_pos = this.search_results.length
+        }
+
+        this.focus_pos -= 1
+        this.focus_current = this.search_results[this.focus_pos]
+      }
+    },
+
+    focus_down() {
+      if (typeof this.search_results === 'object' && this.search_results.length > 0) {
+        console.log('down')
+        this.focus_pos += 1
+
+        if (this.focus_pos == this.search_results.length) {
+          this.focus_pos = 0
+        }
+
+        this.focus_current = this.search_results[this.focus_pos]
+      }
+    },
+
+    open_focus_bookmark() {
+      console.log('open_focus_bookmark')
+      if (!this.focus_current) {
+        return false
+      }
+
+      this.incrementImpression(this.focus_current.id)
+
+      var win = window.open(this.focus_current.url, '_blank');
+      win.focus();
+    },
+
+    // TODO: 複数箇所で同じ処理書いてるのでまとめる
+    incrementImpression(id) {
+      let res = axios.patch(`/api/bookmarks/${id}/increment_impression`, { 'increment': true } )
+        .then((response) => {
+          console.log({response})
+        })
+        .catch((error) => {
+          console.log({error})
+        })
+    },
   }
 }
 </script>
@@ -95,6 +168,9 @@ export default {
   border-bottom-right-radius: .5rem;
   &__item {
     padding: 5px 0;
+    &.is_focus {
+      background-color: #e6e6e6;
+    }
     a {
       color: #333;
     }

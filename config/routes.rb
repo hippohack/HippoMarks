@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get '/bookmarks/import', to: 'bookmarks#import', as: 'import_bookmarks'
   get '/bookmarks/export', to: 'bookmarks#export', as: 'export_bookmarks'
   get '/bookmarks/search', to: 'bookmarks#search', as: 'search_bookmarks'
+  get '/bookmarks/:id/take_capture/', to: 'bookmarks#take_capture', as: 'take_capture'
   resources :bookmarks
   
   get '/import', to: 'import#index'

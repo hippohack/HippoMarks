@@ -10,7 +10,7 @@
     <%= javascript_pack_tag 'application' %>
   </head>
 
-  <body>
+  <body data-js-debug="<%= @js_debug %>">
     <%= yield %>
   </body>
 </html>
