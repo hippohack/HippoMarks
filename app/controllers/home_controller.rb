@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   # before_action :authenticate_account!, except: [:welcome, :release_notes]
+  before_action :set_locale, except: %i[welcome release_notes]
 
   include FolderData
 

@@ -1,5 +1,5 @@
 class ImportController < ApplicationController
-  before_action :authenticate_account!
+  before_action :authenticate_account!, :set_locale
 
   def index
     if request.method == 'POST'
