@@ -16,10 +16,9 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     locale_setting = current_account.settings.find_by(key: 'lang').value
-    # TODO: 仮状態
-    I18n.locale = 'ja'
-    # I18n.locale = locale_setting == 'japanese' ? 'ja' : 'en'
-    # raise
+
+    # FIXME: 他言語が増えたときは修正が必要
+    I18n.locale = locale_setting == 'Japanese' ? 'ja' : 'en'
   end
 
 end
