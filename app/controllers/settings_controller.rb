@@ -1,5 +1,5 @@
 class SettingsController < ApplicationController
-  before_action :set_setting
+  before_action :set_setting, :set_locale
 
   def index
     save_default_values if @settings.blank?

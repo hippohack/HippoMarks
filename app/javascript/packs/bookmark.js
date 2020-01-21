@@ -184,6 +184,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-  // hippo ascii art
-  console.log('%c    //               //\n    / //           // /\n    /  ////////////   /\n    /                 /\n    /                 /\n    /                 /\n    /  ||      ||     /\n    /                 /\n  ///                 /\n /                    /\n /  |||     |||   //  /\n  /              //  /\n   //////////////////', 'color:#00c68c')
 })

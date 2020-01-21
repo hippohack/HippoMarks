@@ -1,14 +1,14 @@
-- content_for :title, "Profile Edit"
+- content_for :title, t('dictionary.title.profile-edit')
 
 #app
   = render "shared/navbar"
   = render "shared/flash"
   main.p-3.
     = form_for @profile, html: { class: "profile-form" } do |f|
-      h2 = yield(:title)
-      .d-flex
+      h2.mt-2 = yield(:title)
+      .d-flex.mt-4
         .avator
-          .avator__label Avator
+          .avator__label = t('dictionary.form.avator')
           .avator__img
             - if @profile.avatar.attached?
               span style="background-image:url(#{url_for(@profile.avatar)});"
@@ -18,13 +18,13 @@
               | <i class="fa fa-pencil" aria-hidden="true"></i> edit
         .form-items
           .form-group
-            = f.label :name
+            = f.label t('dictionary.form.name')
             = f.text_field :name, class: 'form-control'
           .form-group
-            = f.label :twitter_account
+            = f.label t('dictionary.form.twitter-account')
             = f.text_field :twitter_account, class: 'form-control'
 
-          = f.submit "保存する", { class: 'btn btn-primary' }
+          = f.submit t('dictionary.button.save'), { class: 'btn btn-primary' }
 
     / TODO: このモーダルいる？？
     .modal id="editAvator" tabindex="-1" role="dialog"

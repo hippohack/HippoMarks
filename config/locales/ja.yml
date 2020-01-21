@@ -1,0 +1,78 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+ja:
+  hello: "ハロー、ワールド"
+  histories:
+    note_head: "注意"
+    note_body: "履歴を削除すると、インプレッション数もリセットされます。"
+    last-access-time: "最終履歴"
+    viewed-times: "表示回数"
+    name: "サイト名"
+    domain: "ドメイン"
+    delete: "履歴を削除"
+    items-selected: "個の履歴を選択中です"
+    delete-selected-items: "選択した履歴を削除"
+  footer:
+    blog: "ブログ"
+    release-note: "変更履歴"
+    feedback: "フィードバックはこちらから"
+  sort:
+    Optional: "任意"
+    Name: "名前"
+    Created_at: "作成日"
+    Updated_at: "更新日"
+  nav:
+    histories: "履歴"
+    add-bookmark: "ブックマークを追加"
+    import: "ブックマークをインポート"
+    account-setting: "アカウント設定"
+    system-setting: "システム設定"
+    logout: "ログアウト"
+  dictionary:
+    title:
+      home: "ホーム"
+      edit: "更新"
+      profile-edit: "プロフィール編集"
+      histories: "履歴"
+    button:
+      take-capture: "キャプチャを撮る"
+      upload: "アップロード"
+      create-folder: "新規フォルダ"
+      cancel: "キャンセル"
+      save: "保存する"
+      bookmark: "ブックマーク"
+    form:
+      name: "名前"
+      twitter-account: "Twitterアカウント"
+      avator: "アバター"
+  bookmarklet: "ページをより簡単にブックマークするために、このブックマークレットをブラウザのブックマークバーにドラッグして登録しておきます"
+

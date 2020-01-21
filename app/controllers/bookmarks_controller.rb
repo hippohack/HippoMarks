@@ -1,5 +1,5 @@
 class BookmarksController < ApplicationController
-  before_action :authenticate_account!
+  before_action :authenticate_account!, :set_locale
   before_action :save_search_query
 
   include FolderData

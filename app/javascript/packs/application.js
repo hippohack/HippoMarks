@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const debugMode = $('body').data('js-debug')
   // const debugMode = false
+  const clog = console.log
 
   if (!debugMode) {
     console.log = () => {}
@@ -31,5 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     $('.alert').slideUp()
   }, 7000)
+
+  // hippo ascii art
+  clog('%c    //               //\n    / //           // /\n    /  ////////////   /\n    /                 /\n    /                 /\n    /                 /\n    /  ||      ||     /\n    /                 /\n  ///                 /\n /                    /\n /  |||     |||   //  /\n  /              //  /\n   //////////////////', 'color:#00c68c')
 
 })
