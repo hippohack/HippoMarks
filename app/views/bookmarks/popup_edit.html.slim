@@ -14,7 +14,7 @@
               = image_tag "https://dummyimage.com/600x400/e6e6e6/cccccc.png&text=+NO+IMAGE"
           = f.file_field :og_image_url, id: 'site-image-select', class: 'd-none', '@change': 'submitSiteImageEdit'
           .mt-3
-            = link_to t('dictionary.button.take-capture'), take_capture_path(id: @bookmark.id), class: 'btn btn-sm btn-outline-primary mr-2', remote: true
+            = link_to t('dictionary.button.take-capture'), take_capture_path(id: @bookmark.id), '@click': 'takeCaptureLoading', id: 'take-capture-btn', class: 'btn btn-sm btn-outline-primary mr-2', remote: true
             button.btn.btn-sm.btn-outline-primary @click="siteImageSelect"
               = t('dictionary.button.upload')
 

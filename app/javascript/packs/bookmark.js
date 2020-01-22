@@ -157,6 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         this.displayed_folder_names[level] = folder_name
       },
+      takeCaptureLoading(e) {
+        $(e.target).text('Now loading...')
+      }
     },
     watch: {
       check_all(val, oldVal) {
