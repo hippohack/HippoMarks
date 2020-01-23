@@ -52,6 +52,20 @@ class SettingsController < ApplicationController
     redirect_to root_path if setting.save
   end
 
+  def hide_bookmarklet
+    setting = current_account.settings.find_by(key: 'show_bookmarklet')
+
+    if setting.blank?
+      setting = current_account.settings.new(
+        key: 'show_bookmarklet'
+      )
+    end
+
+    setting.value = 'false'
+
+    setting.save
+  end
+
   private
 
   def set_setting
@@ -88,7 +102,8 @@ class SettingsController < ApplicationController
       [key: 'home_url', value: '/'],
       [key: 'show_many_visits', value: 'true'],
       [key: 'show_history', value: 'true'],
-      [key: 'item_sort', value: 'optional']
+      [key: 'item_sort', value: 'optional'],
+      [key: 'show_bookmarklet', value: 'true']
     ]
   end
 

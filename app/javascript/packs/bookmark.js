@@ -159,6 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       takeCaptureLoading(e) {
         $(e.target).text('Now loading...')
+      },
+      hideBookmarklet() {
+        $('#js_bookmarklet-bar').slideUp({ duration: 'fast' });
+        // スタイル調整。カラムの高さ48px追加。
+        document.querySelector('#app').classList += 'is_bookmarklet-hide'
       }
     },
     watch: {
