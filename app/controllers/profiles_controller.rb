@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
 
-  before_action :set_profile
+  before_action :set_profile, :set_locale
 
   def show
     render :edit

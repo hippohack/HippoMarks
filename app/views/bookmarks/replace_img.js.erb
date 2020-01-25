@@ -1,2 +1,10 @@
-elm = document.querySelector('.site-image-form__image > img');
+let elm = document.querySelector('.site-image-form__image > img');
 elm.src = "<%= j(@bookmark.og_image_url) %>";
+
+// Now loadingを戻す処理
+let btn = document.querySelector('#take-capture-btn');
+if (btn) {
+  btn.text = "Has completed.";
+  btn.setAttribute("aria-disabled", "true");
+  btn.classList += ' disabled';
+}

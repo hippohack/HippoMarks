@@ -1,4 +1,4 @@
-<% content_for :title, "Histories" %>
+<% content_for :title, t('dictionary.title.histories') %>
 
 <div id="app">
   <%= render "shared/navbar" %>
@@ -7,16 +7,16 @@
   <transition name="fade">
     <div v-if="delete_histories.length" class="history-delete">
       <div class="row justify-content-center">
-        <div class="col-8" style="padding: 0 30px;">
+        <div class="col-12" style="padding: 0 30px;">
           <div class="row" style="align-items: center;">
             <div class="mr-auto">
-              {{ delete_histories.length }} Items selected
+              {{ delete_histories.length }} <%= t('histories.items-selected') %>
             </div>
             <div class="mr-2">
-              <%= link_to 'Cancel', 'javascript:void(0)', { class: "btn btn-sm", '@click': 'cancel_history_delete' } %>
+              <%= link_to t('dictionary.button.cancel'), 'javascript:void(0)', { class: "btn btn-sm", '@click': 'cancel_history_delete' } %>
             </div>
             <div>
-              <%= link_to 'Delete histories', 'javascript:void(0)', { class: "btn btn-danger btn-sm", '@click': 'submit_delete_histories_form' } %>
+              <%= link_to t('histories.delete-selected-items'), 'javascript:void(0)', { class: "btn btn-danger btn-sm", '@click': 'submit_delete_histories_form' } %>
             </div>
           </div>
         </div>
@@ -26,9 +26,9 @@
 
   <main class="p-3">
     <div class="row justify-content-center">
-      <div class="col-8">
-        <h2><%= yield(:title) %></h2>
-        <p><strong>Note: </strong>Deleting the history will also reset the impression count.</p>
+      <div class="col-12">
+        <h2 class="mt-2"><%= yield(:title) %></h2>
+        <p><strong><%= t('histories.note_head') %>: </strong><%= t('histories.note_body') %></p>
 
         <% if @histories.blank? %>
           <div class="alert alert-warning disable-hide" role="alert">Were found in your histories.</div>
@@ -41,10 +41,10 @@
                 <th scope="col" class="text-center">
                   <%= check_box_tag(:check_all, 'check_all', nil, { id: 'check_all', 'v-model': 'check_all' }) %>
                 </th>
-                <th scope="col">Last access time</th>
-                <th scope="col" class="text-center">Viewed times</th>
-                <th scope="col">Name</th>
-                <th scope="col">Domain</th>
+                <th scope="col"><%= t('histories.last-access-time') %></th>
+                <th scope="col" class="text-center"><%= t('histories.viewed-times') %></th>
+                <th scope="col"><%= t('histories.name') %></th>
+                <th scope="col"><%= t('histories.domain') %></th>
                 <th> </th>
               </tr>
             </thead>
@@ -59,7 +59,7 @@
                   <td class="align-middle"><%= bookmark.name %></td>
                   <td class="align-middle"><%= url_to_domain(bookmark.url) %></td>
                   <td class="align-middle text-right">
-                    <%= link_to 'Delete history', delete_history_path(bookmark.id), method: 'delete', class: "btn btn-danger btn-sm" %>
+                    <%= link_to t('histories.delete'), delete_history_path(bookmark.id), method: 'delete', class: "btn btn-danger btn-sm" %>
                   </td>
                 </tr>
               <% end %>
@@ -71,11 +71,7 @@
   </main>
 </div>
 
-<div class="footer bg-dark">
-  <div class="text-right text-white p-1 px-3">
-    <a class="copyright text-white" href="https://www.hippohack.me/" target="_blank">© HippoHack</a>
-  </div>
-</div>
+<%= render "shared/footer" %>
 
 <%= javascript_pack_tag 'bookmark' %>
 <%= stylesheet_pack_tag 'bookmark' %>

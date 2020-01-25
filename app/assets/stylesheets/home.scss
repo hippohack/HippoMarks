@@ -60,9 +60,20 @@ main {
 }
 
 .bookmarklet {
+  position: relative;
   border-bottom: solid 1px #ccc;
+
   p {
     font-size: 0.9rem;
+  }
+
+  &__close {
+    position: absolute;
+    right: 0px;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -75,9 +86,17 @@ main {
     min-width: 276px;
     max-width: 276px;
     overflow: auto;
+
+    .is_bookmarklet-hide & {
+      height: calc(100vh - 130px);
+    }
   }
   &__col--first {
     height: calc(100vh - 152px);
+
+    .is_bookmarklet-hide & {
+      height: calc(100vh - 104px);
+    }
   }
   &__col--last {
     min-width: 400px;
@@ -251,6 +270,7 @@ main {
   &__image {
     position: relative;
     display: block;
+    border: 1px solid #ced4da;
 
     &:hover {
       &:before {

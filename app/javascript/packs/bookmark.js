@@ -157,6 +157,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         this.displayed_folder_names[level] = folder_name
       },
+      takeCaptureLoading(e) {
+        $(e.target).text('Now loading...')
+      },
+      hideBookmarklet() {
+        $('#js_bookmarklet-bar').slideUp({ duration: 'fast' });
+        // スタイル調整。カラムの高さ48px追加。
+        document.querySelector('#app').classList += 'is_bookmarklet-hide'
+      }
     },
     watch: {
       check_all(val, oldVal) {
@@ -184,6 +192,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-  // hippo ascii art
-  console.log('%c    //               //\n    / //           // /\n    /  ////////////   /\n    /                 /\n    /                 /\n    /                 /\n    /  ||      ||     /\n    /                 /\n  ///                 /\n /                    /\n /  |||     |||   //  /\n  /              //  /\n   //////////////////', 'color:#00c68c')
 })

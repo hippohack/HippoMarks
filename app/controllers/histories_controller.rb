@@ -1,4 +1,7 @@
 class HistoriesController < ApplicationController
+
+  before_action :set_locale
+
   def index
     @histories = current_account.bookmarks.histories
   end

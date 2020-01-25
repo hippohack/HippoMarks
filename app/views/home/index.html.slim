@@ -1,12 +1,15 @@
-- content_for :title, "Home"
+- content_for :title, t('dictionary.title.home')
 
-#app
+#app class="#{ @show_bookmarklet == 'true' ? '' : 'is_bookmarklet-hide' }"
   = render "shared/navbar"
-  .bookmarklet.bg-light
-    .text-center.py-2
-      p.m-0
-        | Bookmark pages more easily. Drag this bookmarklet to the Bookmarks bar of your browser:
-        a.btn.btn-sm.btn-primary.ml-2 href='javascript: (function () { var a = window, b = document, c = encodeURIComponent, d = a.open("#{ ENV.fetch("HOMEURL") }/bookmarks/new?op=edit&output=popup&bkmk=" + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=810px,width=600px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();' Bookmark
+  - if @show_bookmarklet == 'true'
+    #js_bookmarklet-bar.bookmarklet.bg-light
+      .text-center.py-2.d-flex.justify-content-center
+        p.m-0
+          = "#{t('bookmarklet')}:"
+          a.btn.btn-sm.btn-primary.ml-2 href='javascript: (function () { var a = window, b = document, c = encodeURIComponent, d = a.open("#{ ENV.fetch("HOMEURL") }/bookmarks/new?op=edit&output=popup&bkmk=" + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=810px,width=600px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();' = t('dictionary.button.bookmark')
+        a.close.bookmarklet__close @click="hideBookmarklet" href="#{ url_for(hide_bookmarklet_path) }" data-method="patch"
+          span ×
   = render "shared/flash"
   .container-fluid
     main.main.bookmarks

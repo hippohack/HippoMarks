@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   # before_action :authenticate_account!, except: [:welcome, :release_notes]
+  before_action :set_locale, except: %i[welcome release_notes]
 
   include FolderData
 
@@ -17,6 +18,8 @@ class HomeController < ApplicationController
     folders = @top_folder.folders
     bookmarks = @top_folder.bookmarks
     @top_folder_children = folder_item_mix(folders, bookmarks, @sort_setting)
+
+    @show_bookmarklet = current_account.settings.find_by(key: 'show_bookmarklet').value
   end
 
   def welcome

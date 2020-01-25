@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   put '/settings', to: 'settings#update', as: 'settings_update'
   patch '/settings/item_sort', to: 'settings#item_sort', as: 'item_sort'
+  patch '/settings/hide_bookmarklet', to: 'settings#hide_bookmarklet', as: 'hide_bookmarklet'
   resources :settings
 
   namespace :api, format: 'json' do
