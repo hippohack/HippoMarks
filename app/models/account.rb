@@ -48,13 +48,16 @@ class Account < ApplicationRecord
       keyword: 'bookmarks, main, start',
       og_image_url: ActionController::Base.helpers.asset_path('og.png')
     )
+
+    # TODO: 項目追加ごとに修正が必要
     self.settings.build(
       [
-        [key: 'lang', value: 'japanese'],
+        [key: 'lang', value: 'english'],
         [key: 'home_url', value: '/'],
         [key: 'show_many_visits', value: 'true'],
         [key: 'show_history', value: true],
-        [key: 'item_sort', value: 'optional']
+        [key: 'item_sort', value: 'optional'],
+        [key: 'show_bookmarklet', value: 'true']
       ]
     )
     self.save!

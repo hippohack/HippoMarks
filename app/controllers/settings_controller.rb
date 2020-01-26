@@ -98,7 +98,7 @@ class SettingsController < ApplicationController
   # TODO: 項目が増えるごとに更新が必要
   def default_settings
     [
-      [key: 'lang', value: 'japanese'],
+      [key: 'lang', value: 'english'],
       [key: 'home_url', value: '/'],
       [key: 'show_many_visits', value: 'true'],
       [key: 'show_history', value: 'true'],
