@@ -1,3 +1,2 @@
-web: bash -c "rm -f /usr/src/bookmarks/tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-worker: sleep 30s; ruby ./bin/delayed_job start
-webpack: sleep 30s; ./bin/webpack-dev-server
+worker: ruby ./bin/delayed_job start
+webpack: ./bin/webpack-dev-server
