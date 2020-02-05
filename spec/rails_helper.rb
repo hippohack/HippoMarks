@@ -62,4 +62,6 @@ RSpec.configure do |config|
   # Add: 2020/01/30 - Devise::MissingWarden
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
+
+  config.include FactoryBot::Syntax::Methods
 end

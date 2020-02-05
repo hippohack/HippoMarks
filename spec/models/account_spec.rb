@@ -27,11 +27,13 @@ RSpec.describe Account, type: :model do
 
   # 重複したメールアドレスなら無効な状態であること
   it 'is invalid with a duplicate email address' do
-    Account.create(
+    account = Account.new(
       email: 'benzoh.g@gmail.com',
       password: 'wordpress',
       bookmarkbar_folder_id: 101
     )
+    account.skip_confirmation!
+    account.save
 
     account = Account.new(
       email: 'benzoh.g@gmail.com',
