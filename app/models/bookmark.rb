@@ -96,6 +96,7 @@ class Bookmark < ApplicationRecord
     return nil if doc.blank?
 
     icon_url = doc.xpath('/html/head/link[@rel="shortcut icon"]/@href').to_s
+    icon_url = doc.xpath('/html/head/link[@rel="icon"]/@href').to_s if icon_url.blank?
     return nil if icon_url.blank?
 
     'data:image/png;base64,' + Base64.encode64(safe_open(icon_url))
