@@ -59,6 +59,8 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'dotenv-rails'
   gem 'foreman'
+  gem 'ruby-debug-ide'
+  gem 'solargraph'
 end
 
 group :development do
@@ -72,7 +74,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'letter_opener_web'
   gem 'debase'
-  gem 'ruby-debug-ide'
 end
 
 group :test do
