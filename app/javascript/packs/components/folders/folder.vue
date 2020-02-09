@@ -1,21 +1,23 @@
 <template>
   <div class="">
-    <span v-if="folders.children.length > 0" @click="opened_child_folder = !opened_child_folder">
-      <span v-if="opened_child_folder" class="folder__state">▼</span>
-      <span v-else class="folder__state">▶</span>
-    </span>
-    <span v-else style="visibility: hidden;" class="folder__state">▶</span>
-    <i class="fa fa-folder-o ml-1"></i>
-    <input
-      type="radio"
-      name="bookmark[folder_id]"
-      class="d-none"
-      :checked="folders.folder.id == _bookmark.folder_id"
-      :id="`item_${folders.folder.id}`"
-      :value="folders.folder.id"
-      @change="$root.new_folder_parent_id = folders.folder.id"
-    >
-    <label class="folder__label" :for="`item_${folders.folder.id}`"> {{ folders.folder.name }}</label>
+    <div v-if="_folders.folder.folder_id != null">
+      <span v-if="folders.children.length > 0" @click="opened_child_folder = !opened_child_folder">
+        <span v-if="opened_child_folder" class="folder__state">▼</span>
+        <span v-else class="folder__state">▶</span>
+      </span>
+      <span v-else style="visibility: hidden;" class="folder__state">▶</span>
+      <i class="fa fa-folder-o ml-1"></i>
+      <input
+        type="radio"
+        name="bookmark[folder_id]"
+        class="d-none"
+        :checked="folders.folder.id == _bookmark.folder_id"
+        :id="`item_${folders.folder.id}`"
+        :value="folders.folder.id"
+        @change="$root.new_folder_parent_id = folders.folder.id"
+      >
+      <label class="folder__label" :for="`item_${folders.folder.id}`"> {{ folders.folder.name }}</label>
+    </div>
 
     <!-- create folder // -->
     <div v-if="$root.is_create_folder && folders.folder.id == $root.new_folder_parent_id" style='padding-left: 2.2rem;'>
@@ -30,6 +32,7 @@
       :_folders="folders.children"
       :_belong_folder_ids="_belong_folder_ids"
       :_bookmark="_bookmark"
+      :_is_top="_folders.folder.folder_id == null"
     ></children>
   </div>
 </template>
@@ -54,7 +57,7 @@ export default {
   props: {
     _folders: "",
     _belong_folder_ids: Array,
-    _bookmark: Object
+    _bookmark: Object,
   },
   methods: {
     create() {
@@ -79,8 +82,10 @@ export default {
     },
   },
   mounted() {
-    // TODO: Main_folderはデフォで開いておく
-    // if (hoge) { fuga }
+    // Main_folderはデフォで開いておく
+    if (this._bookmark.id == null && this._folders.folder.folder_id == null) {
+      this.opened_child_folder = true
+    }
 
     // 所属するフォルダ開く
     if (this._belong_folder_ids && this._belong_folder_ids.includes(this.folders.folder.id)) {
