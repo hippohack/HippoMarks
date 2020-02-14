@@ -3,18 +3,18 @@
 <%= render "shared/navbar" %>
 <%= render "shared/flash" %>
 
-<div class="row justify-content-center">
+<div class="row m-0 justify-content-center">
   <div class="col mt-4 px-5" style="max-width: 500px;">
     <h2><%= yield(:title) %></h2>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: '' }) do |f| %>
       <div class="field form-group">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: (params[:demo_account] if params[:try_demo]) %>
       </div>
 
       <div class="field form-group">
         <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "current-password", class: 'form-control' %>
+        <%= f.password_field :password, autocomplete: "current-password", class: 'form-control', value: (ENV.fetch('DEMO_ACCOUNT_PASS') if params[:try_demo]) %>
       </div>
 
       <% if devise_mapping.rememberable? %>
@@ -38,3 +38,15 @@
 <div class="pos-bottom">
   <%= render "shared/footer" %>
 </div>
+
+<% if params[:try_demo] %>
+  <div class="disabled-screen">
+    <div class="disabled-screen__loading">
+      <div class="disabled-screen__note">
+        <p>Demo accounts are deleted in <strong>one hour</strong>. <br>
+        Please note that all saved data will be deleted.</p>
+        <button type="button" class="btn btn-info mt-2" onClick="document.querySelector('form').submit()">Confirmed</button>
+      </div>
+    </div>
+  </div>
+<% end %>

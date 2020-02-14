@@ -44,7 +44,7 @@ ja:
   footer:
     blog: "ブログ"
     release-note: "変更履歴"
-    feedback: "フィードバックはこちらから"
+    feedback: "フィードバック"
   sort:
     Optional: "任意"
     Name: "名前"

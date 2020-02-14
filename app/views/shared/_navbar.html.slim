@@ -40,7 +40,7 @@ nav.navbar.navbar-light.bg-dark
               - else
                 img.nav-item__avatar.d-inline-block.align-top.mr-2 src="#{image_url('bookmarks.svg')}" width="30" height="30" alt=""
               span
-                = current_account.profile.name
+                = truncate(current_account.profile.name, length: 25)
           hr.my-1
           = link_to t('nav.histories'), histories_path, class: 'dropdown-item', 'data-turbolinks': false
           = link_to t('nav.add-bookmark'), add_bookmark_path, class: 'dropdown-item', 'data-turbolinks': false

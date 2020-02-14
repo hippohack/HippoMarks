@@ -18,6 +18,15 @@ class Accounts::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  def demo
+    demo_account = Account.create_demo_account
+    
+    # アカウントを削除するJob仕込む
+    RemoveDemoAccountJob.set(wait: 1.hour).perform_later(demo_account.id)
+
+    redirect_to action: 'new', try_demo: true, demo_account: demo_account.email
+  end
+
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.
