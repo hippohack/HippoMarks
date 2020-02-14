@@ -28,10 +28,6 @@ class Account < ApplicationRecord
     account
   end
 
-  def self.delete_demo_account
-    
-  end
-
   private
 
   def account_initialize
@@ -58,7 +54,7 @@ class Account < ApplicationRecord
     self.save!
 
     self.bookmarks.build(
-      name: 'Bookmarks',
+      name: 'HippoMarks',
       url: ENV.fetch('HOMEURL'),
       folder_id: self.folders[1].id,
       icon: ActionController::Base.helpers.asset_path('favicon.png'),
