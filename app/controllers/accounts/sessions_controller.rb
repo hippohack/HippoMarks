@@ -18,6 +18,10 @@ class Accounts::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  def demo
+    redirect_to action: 'new', try_demo: true
+  end
+
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.

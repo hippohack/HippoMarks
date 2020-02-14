@@ -15,6 +15,15 @@ class Account < ApplicationRecord
 
   after_create :account_initialize
 
+  def self.create_demo_account
+    account = Account.new(
+      email: ENV.fetch('DEMO_ACCOUNT') { 'demo.account@hippohack.me' },
+      password: ENV.fetch('DEMO_ACCOUNT_PASS') {  'demonedemodemo' }
+    )
+    account.skip_confirmation!
+    account.save
+  end
+
   private
 
   def account_initialize

@@ -14,13 +14,14 @@ $mainColor: #01c68b;
   }
 
   &__btn-group {
-    width: 360px;
+    width: 420px;
     padding-top: 30px;
     padding-bottom: 30px;
 
     .btn {
       width: 100%;
       padding: 15px;
+      margin: 0 7.5px;
 
       &:hover {
         color: $mainColor;

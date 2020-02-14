@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   devise_scope :account do
     get 'accounts/sent_confirm', to: 'accounts/registrations#confirm', as: 'sent_confirm'
+    get 'accounts/try_demo', to: 'accounts/sessions#demo', as: 'try_demo'
   end
 
   root to: 'home#index'
