@@ -41,9 +41,12 @@
 
 <% if params[:try_demo] %>
   <div class="disabled-screen">
-    <div class="disabled-screen__loading"><p>Log in with a demo account...</p></div>
+    <div class="disabled-screen__loading">
+      <div class="disabled-screen__note">
+        <p>Demo accounts are deleted in one hour. <br>
+        Please note that all saved data will be deleted.</p>
+        <button type="button" class="btn btn-info mt-2" onClick="document.querySelector('form').submit()">Confirmed</button>
+      </div>
+    </div>
   </div>
-  <%= javascript_tag do %>
-    document.querySelector('form').submit();
-  <% end %>
 <% end %>
