@@ -24,8 +24,10 @@ nav.navbar.navbar-light.bg-dark
       / p.text-center もうエクスポート、インポートを繰り返す必要はありません。
   .row.justify-content-center.mx-0
     .eyecatch__btn-group
-      a.btn.btn-outline-light href="#{new_account_registration_path}" Sign up
-      div.mt-2.text-white
+      .d-flex
+        a.btn.btn-outline-light href="#{try_demo_path}" Try Demo
+        a.btn.btn-outline-light href="#{new_account_registration_path}" Sign up
+      div.mt-2.text-white.text-center
         | Do you already have an account?
         a.ml-3.text-white href="#{new_account_session_path}" Login >
 

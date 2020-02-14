@@ -158,7 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
         this.displayed_folder_names[level] = folder_name
       },
       takeCaptureLoading(e) {
-        $(e.target).text('Now loading...')
+        let html = "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> Loading...";
+        $(e.target).html(html);
       },
       hideBookmarklet() {
         $('#js_bookmarklet-bar').slideUp({ duration: 'fast' });

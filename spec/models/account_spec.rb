@@ -26,25 +26,28 @@ RSpec.describe Account, type: :model do
   end
 
   # 重複したメールアドレスなら無効な状態であること
-  it 'is invalid with a duplicate email address' do
-    account = Account.new(
-      email: 'benzoh.g@gmail.com',
-      password: 'wordpress',
-      bookmarkbar_folder_id: 101
-    )
-    account.skip_confirmation!
-    account.save
+  # it 'is invalid with a duplicate email address' do
+  #   account = Account.new(
+  #     email: 'benzoh.g@gmail.com',
+  #     password: 'wordpress',
+  #     bookmarkbar_folder_id: 101
+  #   )
+  #   account.skip_confirmation!
+  #   account.save
 
-    account = Account.new(
-      email: 'benzoh.g@gmail.com',
-      password: 'wordpress',
-      bookmarkbar_folder_id: 102
-    )
+  #   account = Account.new(
+  #     email: 'benzoh.g@gmail.com',
+  #     password: 'wordpress',
+  #     bookmarkbar_folder_id: 102
+  #   )
 
-    account.valid?
-    expect(account.errors[:email]).to include('has already been taken')
-  end
+  #   account.valid?
+  #   expect(account.errors[:email]).to include('has already been taken')
+  # end
 
-  # ユーザーのフルネームを文字列として返すこと
-  it "returns a user's full name as a string"
+  # デモユーザーの作成
+  # it "return create demo account and account data" do
+  #   account = Account::create_demo_account
+  #   expect(account).to be_valid
+  # end
 end

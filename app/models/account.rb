@@ -15,6 +15,18 @@ class Account < ApplicationRecord
 
   after_create :account_initialize
 
+  def self.create_demo_account
+    account = Account.new(
+      email: "#{SecureRandom.base64(4)}@hippohack.me",
+      password: ENV.fetch('DEMO_ACCOUNT_PASS') {  'demonedemodemo' }
+    )
+    # raise
+    account.skip_confirmation!
+    account.save
+
+    account
+  end
+
   private
 
   def account_initialize
@@ -41,7 +53,7 @@ class Account < ApplicationRecord
     self.save!
 
     self.bookmarks.build(
-      name: 'Bookmarks',
+      name: 'HippoMarks',
       url: ENV.fetch('HOMEURL'),
       folder_id: self.folders[1].id,
       icon: ActionController::Base.helpers.asset_path('favicon.png'),
