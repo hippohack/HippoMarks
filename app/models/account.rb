@@ -17,11 +17,19 @@ class Account < ApplicationRecord
 
   def self.create_demo_account
     account = Account.new(
-      email: ENV.fetch('DEMO_ACCOUNT') { 'demo.account@hippohack.me' },
+      # email: ENV.fetch('DEMO_ACCOUNT') { 'demo.account@hippohack.me' },
+      email: "demo.account.#{SecureRandom.base64(3)}@hippohack.me",
       password: ENV.fetch('DEMO_ACCOUNT_PASS') {  'demonedemodemo' }
     )
+    # raise
     account.skip_confirmation!
     account.save
+
+    account
+  end
+
+  def self.delete_demo_account
+    
   end
 
   private

@@ -19,7 +19,12 @@ class Accounts::SessionsController < Devise::SessionsController
   # end
 
   def demo
-    redirect_to action: 'new', try_demo: true
+    demo_account = Account.create_demo_account
+    
+    # アカウントを削除するJob仕込む
+    RemoveDemoAccountJob.set(wait: 1.hour).perform_later(demo_account.id)
+
+    redirect_to action: 'new', try_demo: true, demo_account: demo_account.email
   end
 
   # protected

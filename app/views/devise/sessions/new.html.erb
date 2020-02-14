@@ -9,7 +9,7 @@
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: '' }) do |f| %>
       <div class="field form-group">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: (ENV.fetch('DEMO_ACCOUNT') if params[:try_demo]) %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: (params[:demo_account] if params[:try_demo]) %>
       </div>
 
       <div class="field form-group">
