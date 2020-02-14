@@ -17,7 +17,6 @@ class Account < ApplicationRecord
 
   def self.create_demo_account
     account = Account.new(
-      # email: ENV.fetch('DEMO_ACCOUNT') { 'demo.account@hippohack.me' },
       email: "#{SecureRandom.base64(4)}@hippohack.me",
       password: ENV.fetch('DEMO_ACCOUNT_PASS') {  'demonedemodemo' }
     )
