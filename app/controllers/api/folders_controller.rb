@@ -37,14 +37,16 @@ class Api::FoldersController < ApplicationController
   end
 
   def many_visits
-    # TODO: takeの数任意設定でもいいかも
-    @folder_items = current_account.bookmarks.order(impressions: :desc).take(10)
+    take_count = current_account.settings.find_by(key: 'many_visits_num').value
+    take_count = 10 if take_count.blank?
+    @folder_items = current_account.bookmarks.order(impressions: :desc).take(take_count)
     render :show
   end
 
   def history
-    # TODO: takeの数任意設定でもいいかも
-    @folder_items = current_account.bookmarks.order(last_access_time: :desc).take(10)
+    take_count = current_account.settings.find_by(key: 'history_num').value
+    take_count = 10 if take_count.blank?
+    @folder_items = current_account.bookmarks.order(last_access_time: :desc).take(take_count)
     render :show
   end
 
