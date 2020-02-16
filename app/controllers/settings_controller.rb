@@ -7,9 +7,11 @@ class SettingsController < ApplicationController
     # 設定されてないものがあるかチェックしてなければ追加する
     # FIXME: 設定が増えるたびに編集するのか？
     diff = default_setting_keys
+    
     @settings.each do |s|
       diff.delete(s.key) if default_setting_keys.include?(s.key)
     end
+
     if diff.present?
       updates = []
       diff.each do |d|
@@ -26,11 +28,30 @@ class SettingsController < ApplicationController
       @settings = current_account.settings
     end
 
+    # 並び順制御
+    # TODO: 項目が増えたら要調整
+    sort_keys = [
+      'lang',
+      'home_url',
+      'show_many_visits',
+      'many_visits_num',
+      'show_history',
+      'history_num',
+      'item_sort',
+      'show_bookmarklet'
+    ]
+
+    settings = @settings
+    @settings = []
+    sort_keys.each do |key|
+      @settings.push settings.find_by(key: key)
+    end
+
     render :edit
   end
 
   def edit
-
+    
   end
 
   def update
