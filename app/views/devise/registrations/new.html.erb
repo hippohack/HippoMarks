@@ -4,8 +4,17 @@
 <%= render "shared/flash" %>
 
 <div class="row justify-content-center">
-  <div class="col-3 mt-4">
+  <div class="col-md-4 mt-4">
     <h2><%= yield(:title) %></h2>
+
+    <div class="oauth-login text-center">
+      <a class="oauth-login__patreon" href="https://www.patreon.com/oauth2/authorize?response_type=code&client_id=HasEDhCt46EfVGnJPjsPioLTKXGclqsPUvZSeP0iJ9iLSOFcvAb-PcMqttyWGP49&redirect_uri=https://bookmarks.hippohack.me">
+        <img src="<%= image_url('Patreon_Mark_Coral.jpg') %>">
+        <span>Log in with Patreon</span>
+      </a>
+    </div>
+
+    <div class="or"><span>OR</span></div>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%#= render "devise/shared/error_messages", resource: resource %>
@@ -55,7 +64,7 @@
 </div>
 
 <% if Rails.env.development? %>
-<pre>
+<pre class="mt-5">
   <%= debug resource.errors.messages %>
 </pre>
 <% end %>

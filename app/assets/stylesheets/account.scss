@@ -21,3 +21,39 @@
     box-shadow: 1px 1px 0 0 #ccc;
   }
 }
+
+.oauth-login {
+  margin-top: 40px;
+
+  &__patreon {
+    color: #f86754;
+    font-weight: bold;
+
+    img {
+      border-radius: 100%;
+      width: 40px;
+      margin-right: 5px;
+    }
+  }
+}
+
+.or {
+  position: relative;
+  text-align: center;
+  margin: 30px 0;
+
+  span {
+    background-color: #fff;
+    padding: 0 10px;
+  }
+
+  &:after {
+    content: "";
+    border-bottom: solid 1px #ccc;
+    position: absolute;
+    width: 100%;
+    bottom: 12px;
+    left: 0;
+    z-index: -1;
+  }
+}
