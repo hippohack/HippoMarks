@@ -49,6 +49,8 @@ gem 'aws-sdk-s3', require: false
 gem 'rails-i18n'
 gem 'meta-tags'
 gem 'patreon', '~> 0.5.0'
+gem 'omniauth'
+gem 'omniauth-twitter'
 
 group :development, :test do
   # Use mysql as the database for Active Record

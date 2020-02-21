@@ -8,10 +8,12 @@
     <h2><%= yield(:title) %></h2>
     
     <div class="oauth-login text-center">
-      <a class="oauth-login__patreon" href="https://www.patreon.com/oauth2/authorize?response_type=code&client_id=HasEDhCt46EfVGnJPjsPioLTKXGclqsPUvZSeP0iJ9iLSOFcvAb-PcMqttyWGP49&redirect_uri=https://bookmarks.hippohack.me">
+      <a class="oauth-login__patreon mr-2" href="https://www.patreon.com/oauth2/authorize?response_type=code&client_id=<%= ENV.fetch('PATREON_CLIENT_ID') %>
+      &redirect_uri=http://localhost:3000/accounts/auth/patreon/callback">
         <img src="<%= image_url('Patreon_Mark_Coral.jpg') %>">
         <span>Log in with Patreon</span>
       </a>
+      <%= link_to('Log in with Twitter', account_twitter_omniauth_authorize_path, class: 'ml-2') %>
     </div>
 
     <div class="or"><span>OR</span></div>

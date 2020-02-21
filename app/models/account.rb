@@ -2,7 +2,7 @@ class Account < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :omniauthable
 
   has_many :folders, dependent: :destroy
   accepts_nested_attributes_for :folders, allow_destroy: true
@@ -27,7 +27,28 @@ class Account < ApplicationRecord
     account
   end
 
+  def self.find_for_oauth(uid, provider)
+    account = Account.where(uid: uid, provider: provider).first
+
+    unless account
+      account = Account.new(
+        uid:      uid,
+        provider: provider,
+        email:    Account.dummy_email(uid, provider),
+        password: Devise.friendly_token[0, 20]
+      )
+      account.skip_confirmation!
+      account.save
+    end
+
+    account
+  end
+
   private
+
+  def self.dummy_email(uid, provider)
+    "#{uid}-#{provider}@example.com"
+  end
 
   def account_initialize
     self.build_profile(

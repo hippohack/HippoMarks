@@ -4,12 +4,14 @@ Rails.application.routes.draw do
   delete 'histories/delete_all'
   devise_for :accounts, controllers: {
     registrations: 'accounts/registrations',
-    sessions: 'accounts/sessions'
+    sessions: 'accounts/sessions',
+    omniauth_callbacks: 'accounts/omniauth_callbacks'
   }
 
   devise_scope :account do
     get 'accounts/sent_confirm', to: 'accounts/registrations#confirm', as: 'sent_confirm'
     get 'accounts/try_demo', to: 'accounts/sessions#demo', as: 'try_demo'
+    get 'accounts/auth/patreon/callback', to: 'accounts/omniauth_callbacks#patreon'
   end
 
   root to: 'home#index'
