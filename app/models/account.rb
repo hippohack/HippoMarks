@@ -27,14 +27,14 @@ class Account < ApplicationRecord
     account
   end
 
-  def self.find_for_oauth(uid, provider)
-    account = Account.where(uid: uid, provider: provider).first
+  def self.find_for_oauth(auth)
+    account = Account.where(uid: auth.uid, provider: auth.provider).first
 
     unless account
       account = Account.new(
-        uid:      uid,
-        provider: provider,
-        email:    Account.dummy_email(uid, provider),
+        uid:      auth.uid,
+        provider: auth.provider,
+        email:    Account.dummy_email(auth),
         password: Devise.friendly_token[0, 20]
       )
       account.skip_confirmation!
@@ -46,8 +46,8 @@ class Account < ApplicationRecord
 
   private
 
-  def self.dummy_email(uid, provider)
-    "#{uid}-#{provider}@example.com"
+  def self.dummy_email(auth)
+    "#{auth.uid}-#{auth.provider}@example.com"
   end
 
   def account_initialize
