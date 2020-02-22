@@ -67,7 +67,9 @@ class Account < ApplicationRecord
         [key: 'lang', value: 'english'],
         [key: 'home_url', value: '/'],
         [key: 'show_many_visits', value: 'true'],
+        [key: 'many_visits_num', value: '10'],
         [key: 'show_history', value: 'true'],
+        [key: 'history_num', value: '10'],
         [key: 'item_sort', value: 'optional'],
         [key: 'show_bookmarklet', value: 'true']
       ]

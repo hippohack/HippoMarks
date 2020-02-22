@@ -47,6 +47,7 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'aws-sdk-s3', require: false
 gem 'rails-i18n'
+gem 'meta-tags'
 
 group :development, :test do
   # Use mysql as the database for Active Record

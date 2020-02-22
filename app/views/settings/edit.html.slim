@@ -39,10 +39,9 @@
                   = hidden_field_tag "setting[#{index}][key]", setting.key
                   = text_field_tag "setting[#{index}][value]", setting.value, class: 'form-control'
 
-            = submit_tag "Save changes", { class: 'btn btn-primary mt-2' }
+            = submit_tag "Save changes", { class: 'btn btn-primary mt-2 mb-5' }
 
-.pos-bottom
-  = render "shared/footer"
+= render "shared/footer"
 
 = javascript_pack_tag 'bookmark'
 = stylesheet_pack_tag 'bookmark'
