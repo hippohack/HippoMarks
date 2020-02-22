@@ -4,16 +4,19 @@
 <%= render "shared/flash" %>
 
 <div class="row m-0 justify-content-center">
-  <div class="col mt-4 px-5" style="max-width: 500px;">
+  <div class="col mt-4 px-5" style="max-width: 600px;">
     <h2><%= yield(:title) %></h2>
     
     <div class="oauth-login text-center">
-      <a class="oauth-login__patreon mr-2" href="https://www.patreon.com/oauth2/authorize?response_type=code&client_id=<%= ENV.fetch('PATREON_CLIENT_ID') %>
+      <a class="oauth-login__patreon mr-4" href="https://www.patreon.com/oauth2/authorize?response_type=code&client_id=<%= ENV.fetch('PATREON_CLIENT_ID') %>
       &redirect_uri=http://localhost:3000/accounts/auth/patreon/callback">
         <img src="<%= image_url('Patreon_Mark_Coral.jpg') %>">
         <span>Log in with Patreon</span>
       </a>
-      <%= link_to('Log in with Twitter', account_twitter_omniauth_authorize_path, class: 'ml-2') %>
+      <%= link_to(account_twitter_omniauth_authorize_path, class: 'oauth-login__twitter ml-4') do %>
+        <img src="<%= image_url('Twitter_Social_Icon_Square_Color.png') %>">
+        <span>Log in with Twitter</span>
+      <% end %>   
     </div>
 
     <div class="or"><span>OR</span></div>
