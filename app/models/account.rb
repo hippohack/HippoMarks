@@ -37,6 +37,16 @@ class Account < ApplicationRecord
         email:    Account.dummy_email(auth),
         password: Devise.friendly_token[0, 20]
       )
+  
+      account.build_profile(
+        name: auth.info.name,
+        twitter_account: '@' + auth.info.nickname,
+        avatar: nil
+        # バリデーションにひっかかる
+        # 別途アップロード処理がいるのか
+        # avatar: auth.info.image
+      )
+      
       account.skip_confirmation!
       account.save
     end
@@ -46,16 +56,23 @@ class Account < ApplicationRecord
 
   private
 
+  def self.upload_avatar
+
+  end
+
   def self.dummy_email(auth)
     "#{auth.uid}-#{auth.provider}@example.com"
   end
 
   def account_initialize
-    self.build_profile(
-      name: self.email,
-      twitter_account: nil,
-      avatar: nil
-    )
+    # oauthで設定されている場合スキップする
+    if self.profile.name.blank?
+      self.build_profile(
+        name: self.email,
+        twitter_account: nil,
+        avatar: nil
+      )
+    end
 
     self.folders.build(
       name: 'MAIN_FOLDER',
