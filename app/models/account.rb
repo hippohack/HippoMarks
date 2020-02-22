@@ -81,8 +81,8 @@ class Account < ApplicationRecord
 
   private
 
-  def self.upload_avatar
-
+  def self.upload_avatar(image_url)
+    # TODO: OAuth でのログイン時にアバターをアップロードする
   end
 
   def self.dummy_email(auth)
