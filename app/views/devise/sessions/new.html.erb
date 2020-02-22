@@ -9,7 +9,7 @@
     
     <div class="oauth-login text-center">
       <a class="oauth-login__patreon mr-4" href="https://www.patreon.com/oauth2/authorize?response_type=code&client_id=<%= ENV.fetch('PATREON_CLIENT_ID') %>
-      &redirect_uri=http://localhost:3000/accounts/auth/patreon/callback">
+      &redirect_uri=<%= accounts_auth_patreon_callback_url %>">
         <img src="<%= image_url('Patreon_Mark_Coral.jpg') %>">
         <span>Log in with Patreon</span>
       </a>

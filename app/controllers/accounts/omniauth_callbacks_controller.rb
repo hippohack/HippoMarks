@@ -52,19 +52,22 @@ class Accounts::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
   end
 
   def callback_from_patreon
-    provider = 'Patreon'
-    
+    provider = 'patreon'
     oauth_client = Patreon::OAuth.new(ENV.fetch('PATREON_CLIENT_ID'), ENV.fetch('PATREON_CLIENT_SECRET'))
-    tokens = oauth_client.get_tokens(params[:code], 'http://localhost:3000/accounts/auth/patreon/callback')
+    tokens = oauth_client.get_tokens(params[:code], accounts_auth_patreon_callback_url)
     access_token = tokens['access_token']
 
-    @account = Account.find_for_oauth(access_token, provider)
+    api_client = Patreon::API.new(access_token)
+    user_response = api_client.fetch_user()
+    @user = user_response.data
+
+    @account = Account.find_for_oauth_with_patreon(@user.id, provider, @user.full_name, @user.email)
 
     if @account.persisted?
       flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: provider.capitalize)
       sign_in_and_redirect @account, event: :authentication
     else
-      session["devise.#{provider}_data"] = request.env['omniauth.auth']
+      flash[:error] = 'certification failed.'
       redirect_to new_account_registration_url
     end
 

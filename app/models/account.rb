@@ -40,11 +40,36 @@ class Account < ApplicationRecord
   
       account.build_profile(
         name: auth.info.name,
-        twitter_account: '@' + auth.info.nickname,
+        twitter_account: auth.provider == 'twitter' ? '@' + auth.info.nickname : nil,
         avatar: nil
         # バリデーションにひっかかる
         # 別途アップロード処理がいるのか
         # avatar: auth.info.image
+      )
+      
+      account.skip_confirmation!
+      account.save
+    end
+
+    account
+  end
+
+  def self.find_for_oauth_with_patreon(uid, provider, name, email)
+    account = Account.where(uid: uid, provider: provider).first
+
+    unless account
+      account = Account.new(
+        uid:      uid,
+        provider: provider,
+        email:    "#{uid}-#{provider}@example.com",
+        # email:    email,
+        password: Devise.friendly_token[0, 20]
+      )
+  
+      account.build_profile(
+        name: name,
+        twitter_account: nil,
+        avatar: nil
       )
       
       account.skip_confirmation!
