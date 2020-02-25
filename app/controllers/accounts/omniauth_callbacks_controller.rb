@@ -61,6 +61,12 @@ class Accounts::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
     user_response = api_client.fetch_user()
     @user = user_response.data
 
+    if @user.blank?
+      flash[:error] = 'certification failed.'
+      redirect_to new_account_registration_url
+      return
+    end
+
     @account = Account.find_for_oauth_with_patreon(@user.id, provider, @user.full_name, @user.email)
 
     if @account.persisted?
