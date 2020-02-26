@@ -19,7 +19,11 @@ class HomeController < ApplicationController
     bookmarks = @top_folder.bookmarks
     @top_folder_children = folder_item_mix(folders, bookmarks, @sort_setting)
 
-    @show_bookmarklet = current_account.settings.find_by(key: 'show_bookmarklet').value
+    if current_account.settings.find_by(key: 'show_bookmarklet')
+      @show_bookmarklet = current_account.settings.find_by(key: 'show_bookmarklet').value 
+    end
+    
+    @show_bookmarklet ||= 'true'
   end
 
   def welcome

@@ -55,7 +55,7 @@ export default {
       let a = window
       let b = document
       let c = encodeURIComponent
-      let d = a.open(`${this._home_url}/bookmarks/${this._item.id}/popup_edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 500) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=710px,width=960px,resizable=1,alwaysRaised=1")
+      let d = a.open(`${this._home_url}bookmarks/${this._item.id}/popup_edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 500) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=710px,width=960px,resizable=1,alwaysRaised=1")
 
       a.setTimeout(function () { d.focus() }, 300)
     }

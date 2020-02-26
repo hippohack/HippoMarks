@@ -1,0 +1,16 @@
+var res = confirm("<%= t('become_supporter?') %>");
+
+if (res) {
+  window.parent.focus();
+
+  setTimeout(function() {
+    window.open('https://www.patreon.com/join/hippohack');
+  }, 300);
+}
+
+let btn = document.querySelector('#take-capture-btn');
+if (btn) {
+  btn.text = "<%= t('dictionary.button.take-capture') %>";
+  btn.setAttribute("aria-disabled", "true");
+  btn.classList += ' disabled';
+}
