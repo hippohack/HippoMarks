@@ -25,7 +25,7 @@ nav.navbar.navbar-light.bg-dark
 
   - if ['home#index', 'bookmarks#search'].include? @loaded_action
     .flex-grow-1.mr-2
-      search :_param="#{ params[:s].to_json }" :_home_url="#{ ENV.fetch('HOMEURL').to_json }"
+      search :_param="#{ params[:s].to_json }" :_home_url="#{ root_url.to_json }"
 
   - if account_signed_in?
     ul.flex-row.navbar-nav.ml-auto

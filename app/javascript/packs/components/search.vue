@@ -39,7 +39,7 @@
                 <span class="ml-2">{{ item.name }}</span>
               </div>
               <div class="ml-auto" v-show="showEdit && editItemId == item.id">
-                <a href="#" class="d-block px-2">Edit</a>
+                <a href="javascript:void(0);" @click="edit_bookmark(item.id)" class="d-block px-2 search-results__edit">Edit</a>
               </div>
             </div>
           </a>
@@ -166,6 +166,15 @@ export default {
     hoverItemId(e) {
       this.showEdit = true;
       this.editItemId = $(e.target).parents('a').data('item-id');
+    },
+
+    edit_bookmark(item_id) {
+      let a = window
+      let b = document
+      let c = encodeURIComponent
+      let d = a.open(`${this._home_url}bookmarks/${item_id}/popup_edit?op=edit&output=popup&bkmk=` + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 500) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=710px,width=960px,resizable=1,alwaysRaised=1")
+
+      a.setTimeout(function () { d.focus() }, 300)
     }
   }
 }
@@ -185,6 +194,7 @@ export default {
   z-index: 100;
   border-bottom-left-radius: .5rem;
   border-bottom-right-radius: .5rem;
+
   &__item {
     padding: 5px 0;
     &.is_focus {
@@ -198,6 +208,15 @@ export default {
       &:hover {
         text-decoration: none;
       }
+    }
+  }
+
+  &__edit {
+    margin-right: 5px;
+
+    &:hover {
+      background-color: #e6e6e6;
+      border-radius: 3px;
     }
   }
 }
