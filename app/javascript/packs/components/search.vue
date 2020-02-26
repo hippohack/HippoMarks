@@ -24,12 +24,24 @@
           v-for="(item, index) in search_results"
           v-bind:key="index"
           class="search-results__item"
-          v-bind:class="{ is_focus : focus_current.id == item.id }"
-        >
-          <a :href="item.url" target="_blank" :id="`js_bookmark_${item.id}`" class="js_search-result-focus d-block">
-            <img v-if="item.icon" :src="item.icon" alt="" width="18px">
-            <i v-else class="fa fa-link" style="font-size: 18px;"></i>
-            <span class="ml-2">{{ item.name }}</span>
+          v-bind:class="{ is_focus : focus_current.id == item.id }">
+          <a :href="item.url"
+            target="_blank"
+            :id="`js_bookmark_${item.id}`"
+            class="js_search-result-focus d-block pl-2"
+            :data-item-id="item.id"
+            @mouseover="hoverItemId"
+            @mouseleave="showEdit = false">
+            <div class="d-flex">
+              <div>
+                <img v-if="item.icon" :src="item.icon" alt="" width="18px">
+                <i v-else class="fa fa-link" style="font-size: 18px;"></i>
+                <span class="ml-2">{{ item.name }}</span>
+              </div>
+              <div class="ml-auto" v-show="showEdit && editItemId == item.id">
+                <a href="#" class="d-block px-2">Edit</a>
+              </div>
+            </div>
           </a>
         </div>
       </div>
@@ -47,7 +59,9 @@ export default {
       search_keyword: null,
       search_results: null,
       focus_pos: 0,
-      focus_current: null
+      focus_current: null,
+      showEdit: false,
+      editItemId: null
     }
   },
   props: {
@@ -148,6 +162,11 @@ export default {
           console.log({error})
         })
     },
+
+    hoverItemId(e) {
+      this.showEdit = true;
+      this.editItemId = $(e.target).parents('a').data('item-id');
+    }
   }
 }
 </script>
