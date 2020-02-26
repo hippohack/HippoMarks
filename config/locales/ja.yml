@@ -33,7 +33,7 @@ ja:
   hello: "ハロー、ワールド"
   histories:
     note_head: "注意"
-    note_body: "履歴を削除すると、インプレッション数もリセットされます。"
+    note_body: "履歴を削除すると、インプレッション数もリセットされます。このページからのリンクは表示回数にカウントされません。"
     last-access-time: "最終履歴"
     viewed-times: "表示回数"
     name: "サイト名"

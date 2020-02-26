@@ -33,7 +33,7 @@ en:
   hello: "Hello world"
   histories:
     note_head: "Note"
-    note_body: "Deleting the history will also reset the impression count."
+    note_body: "Deleting the history will also reset the impression count. Links from this page are not counted as impressions."
     last-access-time: "Last access time"
     viewed-times: "Viewed times"
     name: "Name"
