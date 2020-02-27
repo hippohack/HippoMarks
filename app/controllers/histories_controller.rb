@@ -3,7 +3,7 @@ class HistoriesController < ApplicationController
   before_action :set_locale
 
   def index
-    @histories = current_account.bookmarks.histories
+    @histories = current_account.bookmarks.histories.paginate(page: params[:page], per_page: 10)
   end
 
   def delete
