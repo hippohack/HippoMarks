@@ -48,6 +48,11 @@ gem 'delayed_job_active_record'
 gem 'aws-sdk-s3', require: false
 gem 'rails-i18n'
 gem 'meta-tags'
+gem 'patreon', '~> 0.5.0'
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'will_paginate', '~> 3.2', '>= 3.2.1'
+gem 'bootstrap-will_paginate', '~> 1.0'
 
 group :development, :test do
   # Use mysql as the database for Active Record

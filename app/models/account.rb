@@ -2,7 +2,7 @@ class Account < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :omniauthable
 
   has_many :folders, dependent: :destroy
   accepts_nested_attributes_for :folders, allow_destroy: true
@@ -27,14 +27,77 @@ class Account < ApplicationRecord
     account
   end
 
+  def self.find_for_oauth(auth)
+    account = Account.where(uid: auth.uid, provider: auth.provider).first
+
+    unless account
+      account = Account.new(
+        uid:      auth.uid,
+        provider: auth.provider,
+        email:    Account.dummy_email(auth),
+        password: Devise.friendly_token[0, 20]
+      )
+  
+      account.build_profile(
+        name: auth.info.name,
+        twitter_account: auth.provider == 'twitter' ? '@' + auth.info.nickname : nil,
+        avatar: nil
+        # バリデーションにひっかかる
+        # 別途アップロード処理がいるのか
+        # avatar: auth.info.image
+      )
+      
+      account.skip_confirmation!
+      account.save
+    end
+
+    account
+  end
+
+  def self.find_for_oauth_with_patreon(uid, provider, name, email)
+    account = Account.where(uid: uid, provider: provider).first
+
+    unless account
+      account = Account.new(
+        uid:      uid,
+        provider: provider,
+        email:    "#{uid}-#{provider}@example.com",
+        # email:    email,
+        password: Devise.friendly_token[0, 20]
+      )
+  
+      account.build_profile(
+        name: name,
+        twitter_account: nil,
+        avatar: nil
+      )
+      
+      account.skip_confirmation!
+      account.save
+    end
+
+    account
+  end
+
   private
 
+  def self.upload_avatar(image_url)
+    # TODO: OAuth でのログイン時にアバターをアップロードする
+  end
+
+  def self.dummy_email(auth)
+    "#{auth.uid}-#{auth.provider}@example.com"
+  end
+
   def account_initialize
-    self.build_profile(
-      name: self.email,
-      twitter_account: nil,
-      avatar: nil
-    )
+    # oauthで設定されている場合スキップする
+    if self.profile.blank?
+      self.build_profile(
+        name: self.email,
+        twitter_account: nil,
+        avatar: nil
+      )
+    end
 
     self.folders.build(
       name: 'MAIN_FOLDER',

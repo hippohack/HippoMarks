@@ -56,7 +56,7 @@
                   </td>
                   <td class="align-middle"><%= bookmark.last_access_time.to_s(:long) %></td>
                   <td class="text-center align-middle"><%= bookmark.impressions %></td>
-                  <td class="align-middle"><%= bookmark.name %></td>
+                  <td class="align-middle"><a href="<%= bookmark.url %>" target="_blank"><%= bookmark.name %></a></td>
                   <td class="align-middle"><%= url_to_domain(bookmark.url) %></td>
                   <td class="align-middle text-right">
                     <%= link_to t('histories.delete'), delete_history_path(bookmark.id), method: 'delete', class: "btn btn-danger btn-sm" %>
@@ -65,6 +65,10 @@
               <% end %>
             </tbody>
           </table>
+
+          <div class="d-flex justify-content-center my-5">
+            <%= will_paginate @histories, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+          </div>
         <% end %>
       </div>
     </div>

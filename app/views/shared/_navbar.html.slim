@@ -25,7 +25,7 @@ nav.navbar.navbar-light.bg-dark
 
   - if ['home#index', 'bookmarks#search'].include? @loaded_action
     .flex-grow-1.mr-2
-      search :_param="#{ params[:s].to_json }" :_home_url="#{ ENV.fetch('HOMEURL').to_json }"
+      search :_param="#{ params[:s].to_json }" :_home_url="#{ root_url.to_json }"
 
   - if account_signed_in?
     ul.flex-row.navbar-nav.ml-auto
@@ -47,9 +47,13 @@ nav.navbar.navbar-light.bg-dark
           / = link_to 'Manage Bookmarks', '#TODO:', class: 'dropdown-item'
           = link_to t('nav.import'), import_path, class: 'dropdown-item'
           / = link_to 'Export Bookmarks', '#TODO:', class: 'dropdown-item'
-          a.dropdown-item href='javascript: (function () { var a = window, b = document, c = encodeURIComponent, d = a.open("#{ ENV.fetch("HOMEURL") }/bookmarks/new?op=edit&output=popup&bkmk=" + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=810px,width=600px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();' Bookmarklet
+          a.dropdown-item href='javascript: (function () { var a = window, b = document, c = encodeURIComponent, d = a.open("#{ root_url }bookmarks/new?op=edit&output=popup&bkmk=" + c(b.location) + "&title=" + c(b.title), "bkmk_popup", "left=" + ((a.screenX || a.screenLeft) + 700) + ",top=" + ((a.screenY || a.screenTop) + 10) + ",height=810px,width=600px,resizable=1,alwaysRaised=1"); a.setTimeout(function () { d.focus() }, 300) })();' Bookmarklet
           hr.my-1
           a.dropdown-item href="#{ edit_account_registration_path }" = t('nav.account-setting')
           a.dropdown-item href="#{ settings_path }" = t('nav.system-setting')
           hr.my-1
           = link_to t('nav.logout'), destroy_account_session_path, class: 'dropdown-item', method: :delete
+          hr.my-1
+          a.dropdown-item.be-patron href="https://www.patreon.com/bePatron?u=10953582" target="_blank"
+            img src="#{image_url('become_a_patron_button@2x.png')}" alt="Become a Patron!"
+        

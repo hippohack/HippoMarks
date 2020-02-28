@@ -96,8 +96,9 @@
                   v-if="current_bookmark.og_image_url"
                   :src="current_bookmark.og_image_url"
                   :alt="current_bookmark.name"
+                  loading="lazy"
                 >
-                <img v-else src="https://dummyimage.com/600x400/e6e6e6/cccccc.png&text=+NO+IMAGE" alt="">
+                <img v-else src="https://dummyimage.com/600x400/e6e6e6/cccccc.png&text=+NO+IMAGE" alt="" loading="lazy">
               </transition>
             </div>
             <div class="bookmarks__description">

@@ -33,7 +33,7 @@ en:
   hello: "Hello world"
   histories:
     note_head: "Note"
-    note_body: "Deleting the history will also reset the impression count."
+    note_body: "Deleting the history will also reset the impression count. Links from this page are not counted as impressions."
     last-access-time: "Last access time"
     viewed-times: "Viewed times"
     name: "Name"
@@ -75,3 +75,4 @@ en:
       twitter-account: "Twitter account"
       avator: "Avator"
   bookmarklet: "Bookmark pages more easily. Drag this bookmarklet to the Bookmarks bar of your browser"
+  become_supporter? : 'Sorry, you can only use a Supporter. \nCan you become a Supporter?'
