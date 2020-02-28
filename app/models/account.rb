@@ -91,7 +91,7 @@ class Account < ApplicationRecord
 
   def account_initialize
     # oauthで設定されている場合スキップする
-    if self.profile.name.blank?
+    if self.profile.blank?
       self.build_profile(
         name: self.email,
         twitter_account: nil,
