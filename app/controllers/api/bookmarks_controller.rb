@@ -35,6 +35,7 @@ class Api::BookmarksController < ApplicationController
   end
 
   # MEMO: history用のtouch処理をここに追加した
+  # MEMO: キャプチャ類の自動取得処理をここに追加した
   def increment_impression
     return nil if params[:increment] != true
 
@@ -44,5 +45,10 @@ class Api::BookmarksController < ApplicationController
 
     # FIXME: 2回クエリーが飛ぶので微妙
     @bookmark.touch(:last_access_time)
+
+    # 【サポーター限定】もしファビコンとキャプチャがなければ取ってくるJobを追加する
+    if @supporter_account
+      @bookmark.add_fetch_favicon_and_capture_job
+    end
   end
 end

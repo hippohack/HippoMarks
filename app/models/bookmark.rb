@@ -119,6 +119,12 @@ class Bookmark < ApplicationRecord
     last ? last.sort_num : -1
   end
 
+  def add_fetch_favicon_and_capture_job
+    if self.og_image_url.blank? && self.icon.blank?
+      enque_job
+    end
+  end
+
   private
 
   def enque_job
