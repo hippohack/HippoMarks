@@ -54,6 +54,10 @@ nav.navbar.navbar-light.bg-dark
           hr.my-1
           = link_to t('nav.logout'), destroy_account_session_path, class: 'dropdown-item', method: :delete
           hr.my-1
-          a.dropdown-item.be-patron href="https://www.patreon.com/bePatron?u=10953582" target="_blank"
-            img src="#{image_url('become_a_patron_button@2x.png')}" alt="Become a Patron!"
+          - if @supporter_account
+            .thank-support <span>🎉</span> Thank you for your support.
+          - else
+            a.dropdown-item.be-patron href="https://www.patreon.com/bePatron?u=10953582" target="_blank"
+              img src="#{image_url('become_a_patron_button@2x.png')}" alt="Become a Patron!"
+
         

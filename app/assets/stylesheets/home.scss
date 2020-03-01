@@ -4,6 +4,7 @@
 
 main {
   // margin-bottom: 20px;
+  display: block;
 }
 
 .navbar-nav .dropdown-menu {
@@ -450,5 +451,18 @@ main {
   
   img {
     width: 170px;
+  }
+}
+
+.thank-support {
+  color: #17a2b8;
+  padding: 5px;
+  font-weight: bold;
+  text-align: center;
+
+  span {
+    font-size: 20px;
+    position: relative;
+    bottom: -2px;
   }
 }
