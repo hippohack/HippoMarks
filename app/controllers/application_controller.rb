@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   # # CSRF - Rails5.2系ではCSRF対策、「protect_from_forgery with: :exception」はどこで設定されているのか｜teratail
   # # https://teratail.com/questions/177576
   # protect_from_forgery prepend: true
@@ -25,11 +24,37 @@ class ApplicationController < ActionController::Base
 
   def supporter_account?
     if account_signed_in?
-      api_client = Patreon::API.new(ENV.fetch('PATREON_CREATORS_ACCESS_TOKEN'))
+      # セッションに置いとく/ 反映には再ログインが必要ってことになる？
+      if !session[:supporter_account].nil?
+        @supporter_account = session[:supporter_account]
+        return
+      end
+
+      @tokens = PatreonToken.tokens
+
+      access_token = @tokens['access_token']
+      register = @tokens['register_date']
+
+      # MEMO: 本当に30日で切れる？もっと早いような。。
+      if register.nil? || (Date.parse(Date.today.strftime("%Y/%m/%d")) - Date.parse(register.strftime("%Y/%m/%d"))).to_i > 30
+        refresh_token = @tokens['refresh_token']
+        oauth_client = Patreon::OAuth.new(ENV.fetch('PATREON_CLIENT_ID'), ENV.fetch('PATREON_CLIENT_SECRET'))
+        tokens = oauth_client.refresh_token(refresh_token, accounts_auth_patreon_callback_url)
+        
+        @tokens['register_date'] = Date.today
+        @tokens['access_token'] = tokens['access_token']
+        @tokens['refresh_token'] = tokens['refresh_token']
+        @tokens.save!
+
+        access_token = tokens['access_token']
+      end
+
+      api_client = Patreon::API.new(access_token)
       response = api_client.fetch_campaign_and_patrons()
 
       unless response.data
         @supporter_account = false
+        session[:supporter_account] = false
         return
       end
       
@@ -41,11 +66,13 @@ class ApplicationController < ActionController::Base
         # FIXME: あってる？ゆるい？
         if (pledge.patron.id == current_account.uid && 'patreon' == current_account.provider) || pledge.patron.email == current_account.email
           @supporter_account = true
+          session[:supporter_account] = true
           return
         end
       end
       
       @supporter_account = false
+      session[:supporter_account] = false
     end
   end
 
