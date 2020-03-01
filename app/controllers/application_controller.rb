@@ -24,6 +24,12 @@ class ApplicationController < ActionController::Base
 
   def supporter_account?
     if account_signed_in?
+      # セッションに置いとく/ 反映には再ログインが必要ってことになる？
+      if !session[:supporter_account].nil?
+        @supporter_account = session[:supporter_account]
+        return
+      end
+
       @tokens = PatreonToken.tokens
 
       access_token = @tokens['access_token']
@@ -48,6 +54,7 @@ class ApplicationController < ActionController::Base
 
       unless response.data
         @supporter_account = false
+        session[:supporter_account] = false
         return
       end
       
@@ -59,11 +66,13 @@ class ApplicationController < ActionController::Base
         # FIXME: あってる？ゆるい？
         if (pledge.patron.id == current_account.uid && 'patreon' == current_account.provider) || pledge.patron.email == current_account.email
           @supporter_account = true
+          session[:supporter_account] = true
           return
         end
       end
       
       @supporter_account = false
+      session[:supporter_account] = false
     end
   end
 
