@@ -131,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       cancel_history_delete() {
         this.delete_histories = []
+        this.check_all = false
       },
       submit_delete_histories_form() {
         var res = confirm('Are you sure?')
