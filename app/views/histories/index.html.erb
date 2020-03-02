@@ -67,7 +67,7 @@
           </table>
 
           <div class="d-flex justify-content-center my-5">
-            <%= will_paginate @histories, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+            <%= will_paginate @histories, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer, 'data-turbolinks': 'false' %>
           </div>
         <% end %>
       </div>
