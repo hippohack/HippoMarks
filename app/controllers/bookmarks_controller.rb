@@ -136,11 +136,6 @@ class BookmarksController < ApplicationController
   end
 
   def take_capture
-    unless @supporter_account
-      render :error_supporter_only
-      return
-    end
-
     @bookmark = current_account.bookmarks.find(params[:id])
     @bookmark.og_image_url = Bookmark.get_site_capture(@bookmark.url)
 

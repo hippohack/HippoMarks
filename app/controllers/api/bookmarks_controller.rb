@@ -46,9 +46,6 @@ class Api::BookmarksController < ApplicationController
     # FIXME: 2回クエリーが飛ぶので微妙
     @bookmark.touch(:last_access_time)
 
-    # 【サポーター限定】もしファビコンとキャプチャがなければ取ってくるJobを追加する
-    if @supporter_account
-      @bookmark.add_fetch_favicon_and_capture_job
-    end
+    @bookmark.add_fetch_favicon_and_capture_job
   end
 end
